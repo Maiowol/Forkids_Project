@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/esm/locale';
 import { FaStar } from "react-icons/fa";
+import { AiOutlineFileImage } from "react-icons/ai";
 
 //elements & components
 import Header from '../../components/main/Header'
@@ -27,124 +28,171 @@ function PlaceAdd() {
   const [time, setTime] = useState('');
   const [place, setPlace] = useState('');
   const [age, setAge] = useState('');
+  const [imageSrc, setImageSrc] = useState('')
+  const image_ref = useState(null)
 
   const navigate = useNavigate();
 
+  // 이미지 미리보기
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  }
+
+  // const handleForm = (e) => {
+  //   setPost({
+  //     ...post,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+
   return (
     <>
-    <Header />
-    <Grid maxWidth="1440px" height="100%" margin="0 auto" padding="0 12px">
-    <Detail>
-      <div className='container'>
-        <div className='add_input'>
-        
-          <div style={{ marginBottom: "5px" }}>
-            <strong>제목</strong>
-            <input
-              onChange={e =>
-                setTitle(e.target.value)}
-              type="text"
-            />
-          </div>
-          <div>
-            <strong>위치</strong>
-            <input
-              onChange={e =>
-                setPlace(e.target.value)}
-              type="text"
-            /></div>
-               <span><FaStar className='icon'></FaStar></span>
-              <span className='starScore'> 4.0점</span>
-        </div>
-        <div className='box'>
-          <textarea
-            onChange={e =>
-              setContent(e.target.value)}
-          />
-          <Btn>
-            <button 
-            className='btn'
-            onClick={() => 
-              { navigate(`/`) }}
-            > 
-            취소 </button>
-            <button 
-            className='btn'
+      <Header />
+      <Grid maxWidth="1440px" height="100%"
+        margin="0 auto" padding="0 12px">
+        <Place>
+          <div className='place'>
+            <div className='images'>
+              <div className='title'>
+                대표이미지
+              </div>
+            </div>
+            <input type='file' 
+              ref={image_ref}
+                onChange={(e) => {
+                  encodeFileToBase64(e.target.files[0]);
+                }}
+                accept='image/jpg,image/png,image/jpeg,image/gif'
+                id='profile_img_upload' />
+            <div className='imageBox'>
+              
+              {/* <label
+               for='profile_img_upload'>
+              <AiOutlineFileImage />
+              </label> */}
+                <div className='img'></div>
+                <div className='img'></div>
+                <div className='img'></div>
+                <div className='img'></div>
+                <div className='img'></div>
+            </div>
+            <div className='mainBox'>
+              <div className='card-left'>
+                <div className='position'>
+                  <strong>제목</strong>
+                  <input type="text" />
+                </div>
+                <div className='position'>
+                  <strong>위치</strong>
+                  <input type="text" />
+                </div>
+                <div className='position'>
+                  <strong> 별점</strong>
+                  <span> ⭐⭐⭐⭐⭐</span>
+                  <span>4.0점</span>
+                </div>
+              </div>
+              <div className='card-right'>
+                <textarea />
+                {/* <span className='btnList'>
+                      <button className='ParkBtn'> 주차가능</button>
+                      <button className='KidBtn'> 예스키즈존</button>
+                    </span> */}
+              </div>
+
+            </div>
+            <Btn>
+              <button
+                className='btn'
+                onClick={() => { navigate(`/`) }}
+              >
+                취소 </button>
+              <button
+                className='btn'
               // onClick={addPost}
-              > 
-              등록하기</button>
-          </Btn>
-        </div>
-      </div>
-    </Detail>
-    </Grid> 
-    <Footer />
-  </>
-)
+              >
+                등록하기</button>
+            </Btn>
+          </div>
+        </Place>
+      </Grid>
+      <Footer />
+    </>
+  )
 };
 
-const Detail = styled.div`
-.toggle{
-  margin-left: 150px;
-  margin-top: 60px;
-  display: flex;
+const Place = styled.div`
+.place {
+    width: 100%; 
 }
 
-label {
-  margin-top: 15px;
+.title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 31px;
+    padding:10px;
+    margin-left: 70px;
+    margin-top: 40px;
 }
 
-.toggle > p{
-  margin:20px 0px 0px 30px;
-  font-size: 20px;
-}
-
-.container{
-  display:flex;
-  margin-top: 30px;
-}
-
-.add_input{
-  width:600px;
+.imageBox{
+  width:90%;
+  margin:auto;
+  height: 30%;
   display:flex;
   justify-content:center;
-  flex-direction:column;
-  font-size : 25px;
-  box-sizing: border-box;
-  margin-left: 40px;
+  align-items:center;
+  margin-bottom: 30px;
 }
 
-.add_input > div {
-  margin:50px 0px 0px 10px;
-  object-fit: cover;
-}
-
-.add_input > div >input{
+.img{
+  width:200px;
+  height:220px;
   border: 1px solid #E4E4E4;
   border-radius: 10px;
-  display: inline-block;
-  width: 450px;
-  padding: 10px;
-  margin-left: 30px;
-  outline: none;
-}
-
-.box{
-margin-top: 8%;
-  width:50%;
-  height:60vh;
+  margin-top: 30px;
   margin-left: 40px;
 }
 
-strong{
-padding-top: 30px;
+.images{
+    width:90%;
+    height: 5%;
+    margin:auto; 
+}
+
+.mainBox{  
+    display: flex;
+    margin-left: 200px;
+}
+
+.card-left > div > input {
+  border: 1px solid #E4E4E4;
+  border-radius: 10px;
+  width: 330px;
+  height: 50px;
+  margin-left: 20px;
+}
+
+.card-right{
+    width: 700px;
+    height: 440px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
 }
 
 textarea {
-  padding:20px;
-  margin-top: 73px;
-  height 500px;
-  width: 610px;
+  width: 500px;
+  height: 364px;
   border:1px solid #E4E4E4;
   border-radius:10px;
   font-size:20px;
@@ -154,92 +202,18 @@ textarea {
   resize: vertical; /* 상하만 가능 */
 }
 
-
-.Detail_profile{
-  width:144px;
-  height: 144px;
-  border-radius:50%;
-  /* display:flex; */
-  align-items:center;
-  display:block;
-  justify-content:center;
+.position{
+    margin: 40px 0px 30px 30px;
 }
 
-.Detail_username{
-  width: 70%;
+.position > span{
+    margin-right: 30px;
 }
-
-.username{
-  height: 50%;
-  display:flex;
-  align-items:center;
-  margin-left:30px;
-  font-size:33px;
-  width: 100%;
-}
-
-.inputbox{
-  position:absolute;
-  left:-1000%;
-  }
-
-label{
-  position: relative;
-  display: block;
-  width: 80px;
-  height: 35px;
-  background: #A58646;
-  border-radius: 60px;
-  transition: background .4s;
-} 
-
-label:after{
-  content:"";
-  position: absolute;
-  left: 0px;
-  top: 48%;
-  width: 40px;
-  height: 40px;
-  border-radius:100%;
-  background-color:#fff;
-  transform: translateY(-50%);
-  box-shadow:1px 3px 4px rgba(0,0,0.1);
-  transition: all .4s; 
-
-}
-
-input:checked + label:after {
-left:calc(100% - 40.5px);
-}
-input:checked + label{background-color:#6B4E16;}
-
-label span {display:none;}
-
 `
-
-const Monat = styled.div`
-display: flex;
-width: 50px;
-height: 60px;
-margin-right: 29px;
-padding-top: 13px;
-font-weight: bold;
-`;
-
-const Input = styled.input` 
-border: 1px solid #E4E4E4;
-border-radius: 10px;
-width: 450px;
-padding: 10px;
-display: flex;
-margin-bottom: 10px;
-`;
 
 const Btn = styled.div`
 display: flex;
-margin-right: -250px;
-margin-left: 170px;
-
+margin-left: 800px;
 
 .btn{
 width: 30%;

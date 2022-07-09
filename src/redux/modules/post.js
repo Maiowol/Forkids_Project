@@ -9,19 +9,16 @@ const UPDATE = 'post/UPDATE';
 const DELETE = 'post/DELETE';
 
 const initialState = {
-     list: [{}],
-     Card:{}
+  list: [{}]
 };
-
 
 // Action Creators
 export function createPost(post_list) {
-  // console.log("액션을 생성할 거야!")
   return { type: CREATE, post_list };
 }
 
 export function loadPost(post_list) {
-    return { type: LOAD, post_list };
+  return { type: LOAD, post_list };
 }
 
 export function detailPost(post_list) {
@@ -29,107 +26,127 @@ export function detailPost(post_list) {
 }
 
 export function updatePost(post_list) {
-    return { type: UPDATE, post_list };
+  return { type: UPDATE, post_list };
 }
 
-export function deletePost(post_list) {
-    return { type: DELETE, post_list };
+export function deletePost() {
+  return { type: DELETE, };
 }
 
 // middleware
-export const createPostDB = (post_data) => {
- const post = post_data;
-    return async function (dispatch) {
-      axios.post(`http://dlckdals04.shop/api/recruits`, post,
-      { headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
+export const createPostDB = async (post_data) => {
+  const post = post_data;
+  return function (dispatch) {
+    axios.post(`http://dlckdals04.shop/api/recruits`, post,
+      { headers: { Authorization: `Bearer ${getCookie("accessToken")}` } })
       .then((response) => {
-          // console.log(response.data);
-          dispatch(createPost(response.data))
-          window.alert('게시물 작성 성공')
-          window.location.href = "/recruit"
+        // console.log(response.data);
+        dispatch(createPost(response.data))
+        window.alert('게시물 작성을 성공했습니다.')
+        window.location.href = "/recruit"
       }).catch((error) => {
         // console.log(error.message);
+        window.alert('게시물 작성이 실패했습니다.')
       })
-    };
   };
-  
+};
+
 export const loadPostDB = () => {
-    return function (dispatch) {
-      axios.get(
-        `http://dlckdals04.shop/api/recruits`
-        // ' http://localhost:5001/posts'
-        )
+  return function (dispatch) {
+    axios.get(
+      `http://dlckdals04.shop/api/recruits`
+    )
       .then((response) => {
         // console.log(response.data);
         dispatch(loadPost(response));
       });
-    };
   };
+};
 
-  export const detailPostDB = (recruitPostId) => {
-    // console.log(recruitPostId, '아이디 확인')
-
-    return function (dispatch) {
-      axios.get(
-        'http://dlckdals04.shop/api/recruits/' + recruitPostId
-        // ' http://localhost:5001/posts'
-        )
+export const detailPostDB = (recruitPostId) => {
+  return function (dispatch) {
+    axios.get(
+      'http://dlckdals04.shop/api/recruits/' + recruitPostId
+    )
       .then((response) => {
-        // console.log(response.data);
-        dispatch(loadPost(response));
+        console.log(response.data);
+        dispatch(detailPost(response.data.recruitDetails));
       }).catch((response) => {
-        // console.log(response);
-    });
-    };
+        console.log(response);
+      });
   };
+};
 
-  export const deletePostDB = (id, recruits) => {
-    return function (dispatch) {
-      axios
-        .delete(`http://3.35.176.127/posts/${recruits}/${id}`,
-        { headers :
-           { Authorization: `Bearer ${getCookie("accessToken")}`} 
-        })
-        .then((response) => {
-          dispatch(deletePost(id));
-      
-        })
-        .catch((error) => {
-          // console.log("게시물 삭제 에러");
-        });
-    };
+export const updatePostDB = ( recruitPostId, newPost) => {
+  console.log(newPost)
+  return function (dispatch) {
+    axios
+    .put(`http://dlckdals04.shop/api/recruits/` + recruitPostId,
+    newPost,
+    {
+      headers:
+        { Authorization: `Bearer ${getCookie("accessToken")}` }
+    })
+          .then((res) => {
+              console.log(res.data.post);
+              dispatch(updatePost(recruitPostId, res.data.post));
+              alert("수정이 완료되었습니다.");
+              window.location.href = "/recruit"
+          })
+          .catch((error) => {
+              alert("게시글 수정 에러!");
+          });
   };
+};
+
+export const deletePostDB = (recruitPostId) => {
+  return function (dispatch) {
+    axios
+      .delete('http://dlckdals04.shop/api/recruits/' + recruitPostId,
+        {
+          headers:
+            { Authorization: `Bearer ${getCookie("accessToken")}` }
+        })
+      .then((response) => {
+        dispatch(deletePost(response.data));
+        alert('삭제가 완료되었습니다.')
+        window.location.href = "/recruit"
+      })
+      .catch((error) => {
+        alert('게시글을 삭제할 권한이 없습니다.')
+      });
+  };
+};
 
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   // console.log(action)
-    switch (action.type) {
-      case "post/LOAD": {
-        // console.log(action.post_list.data);
-        return { list: action.post_list.data };
-      }
-
-      case "post/DETAIL": {
-        return { Card: action.data};
-      }
-     
-      case "post/UPDATE": {
-        // console.log(action);
-        const new_post_list = state.list.filter((l, idx) => {
-          return parseInt(action.post_index) !== idx;
-        });
-        const new_list = [...new_post_list, action.post];
-        return { list: new_list };
-      }
-      case "post/DELETE": {
-        const new_post_list = state.list.filter((l, idx) => {
-          return parseInt(action.post_index) !== idx;
-        });
-        return { list: new_post_list };
-      }
-
-      default:
-        return state;
+  switch (action.type) {
+    case "post/LOAD": {
+      // console.log(action.post_list.data);
+      return { list: action.post_list.data };
     }
+
+    case "post/DETAIL": {
+      // console.log(action);
+      return { list: action.post_list };
+    }
+
+    case "post/UPDATE": {
+      console.log(action);
+      const new_post_list = state.list.filter((l, idx) => {
+        return parseInt(action.post_index) !== idx;
+      });
+      const new_list = [...new_post_list, action.post];
+      return { list: new_list };
+    }
+    case "post/DELETE": {
+      const empty_list = [];
+      return { list: empty_list };
+    }
+
+    default:
+      return state;
   }
+}

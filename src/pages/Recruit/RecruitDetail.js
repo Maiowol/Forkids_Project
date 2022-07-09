@@ -10,15 +10,13 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Comment from '../../components/elements/Comment';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    loadPostDB,
+    detailPostDB,
     deletePostDB
 } from '../../redux/modules/post';
 import { MdOutlinePlace } from "react-icons/md";
-import {detailPostDB} from '../../redux/modules/post'
 import Grid from '../../components/elements/Grid';
 
 const socket = io.connect("http://13.125.241.180")  // 1 . 소켓 서버 연결
-
 
 
 const RecruitDetail = () => {
@@ -26,13 +24,11 @@ const RecruitDetail = () => {
     console.log(nickname)
     const [modalIsOpen, setModalIsOpen] = useState(false);  // 모달창 열고 닫는 State 값
     const [on, setOn] = useState(false)     // 상세페이지의 모집중/모집완료 토글버튼 State 값
+
     // const [roomId, setRoomId] = useState()  //  서버로 부터 받은 roomId state로 저장
     const [state, setState] = React.useState("")
     let { recruitPostId } = useParams();
     const [RroomId,setRroomId] = React.useState()
-
-
-
 
 
     React.useEffect(() => {
@@ -56,6 +52,7 @@ const RecruitDetail = () => {
     const dispatch = useDispatch();
 
 
+    const detail = useSelector(state => state.post.list);
     const post = useSelector(state => state);
     console.log(post);
 
@@ -63,9 +60,13 @@ const RecruitDetail = () => {
         dispatch(detailPostDB(recruitPostId));
     }, [])
 
+    const deletePosting = () => {
+        dispatch(deletePostDB(recruitPostId));
+    };
 
-    // 1:1 문의하기 버튼 눌렀을때 채팅방 생성 + 채팅방 입장하기
+   // 1:1 문의하기 버튼 눌렀을때 채팅방 생성 + 채팅방 입장하기
     const GoChat = () => {
+
         axios.post('http://13.125.241.180/api/chats/rooms/' + recruitPostId ,null,{
         headers: { Authorization: `Bearer ${getCookie("accessToken")}`}
         })
@@ -80,124 +81,99 @@ const RecruitDetail = () => {
         })
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    const deletePosting = () => {
-        dispatch(deletePostDB(post.id, post.recruits));
-    };
-
-
-    // =======화면 뷰 코드========
-
+    
     return (
         <>
             <Header />
-            <Grid maxWidth="1440px" height="100%" margin="0 auto" padding="0 12px">       
+            <Grid maxWidth="1440px" height="100%"
+                margin="0 auto" padding="0 12px">
                 <Detail>
-                        <>
+                    <>
                         <div className='container'>
-                        <div className='card-left'>
-                            <div className='toggle'>
-                                <input className='inputbox' type="checkbox" id="chk1" />
-                                <label htmlFor="chk1"
-                                    onClick={inputChange}>
-                                </label>
-                                <p> {!on ? "모집중" : "모집완료"} </p>
-                            </div>
-                                    <div>
-                                <strong> 제목 </strong>
-                                <span>
-                                    {state.title}
-                                </span>
-                            </div>
-                            <div>
-                                <strong> 날짜 </strong>
-                                <span>
-                                {state.date}
-                                </span>
-                            </div>
-                            <div>
-                                <strong> 시간 </strong>
-                                <span>
-                                {state.time}
-                                </span>
-                            </div>
-                            <div> <strong> 위치 </strong>
-                                <span>
-                                    {state.place}
-                                </span>
-                            </div>
-                            <div>
-                                <strong> 연령 </strong>
-                                <span>
-                                    {state.age}
-                                </span>
-                            </div>
-                            
-                        </div>
-
-                        <div className='card-right'>
-                            <div className='card-top'>
-                                <h3> 블루베리 농장 </h3>
-                                <p><MdOutlinePlace /> www.gmarket.com/kidsphone</p>
-                            </div>
-                            <div className='profile'>
-                                <div className='Detail_profile'>
-                                    <img src={dog} alt="프로필" />
+                            <div className='card-left'>
+                                <div className='toggle'>
+                                    <input className='inputbox' 
+                                    type="checkbox" id="chk1" />
+                                    <label htmlFor="chk1"
+                                        onClick={inputChange}>
+                                    </label>
+                                    <p> {!on ? "모집중" : "모집완료"} </p>
                                 </div>
-                                <div className="Detail_username">
-                                    <div className="username">
-                                        안양길동맘
+                                <div>
+                                    <strong> 제목 </strong>
+                                    <span>
+                                        {detail.title}
+                                    </span>
+                                </div>
+                                <div>
+                                    <strong> 날짜 </strong>
+                                    <span>
+                                        {detail.date}
+                                    </span>
+                                </div>
+                                <div>
+                                    <strong> 시간 </strong>
+                                    <span>
+                                        {detail.time}
+                                    </span>
+                                </div>
+                                <div> <strong> 위치 </strong>
+                                    <span>
+                                        {detail.place}
+                                    </span>
+                                </div>
+                                <div>
+                                    <strong> 연령 </strong>
+                                    <span>
+                                        {detail.age}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div className='card-right'>
+                                <div className='card-top'>
+                                    <h3> 블루베리 농장 </h3>
+                                    <p><MdOutlinePlace /> www.gmarket.com/kidsphone</p>
+                                </div>
+                                <div className='profile'>
+                                    <div className='detail_profile'>
+                                        <img src={dog} alt="프로필" />
+                                    </div>
+                                    <div className="detail_username">
+                                        <div className="username">
+                                            {detail.nickname}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className='content'>
-                               
+                                <div className='content'>
+
+                                </div>
+                                <Btn>
+                                    <button
+                                        className='btn'
+                                        onClick={() => { navigate(`/editone`) }}
+                                    >
+                                        수정하기</button>
+                                    <button
+                                        className='btn'
+                                    onClick={deletePosting}
+                                    >
+                                        삭제하기</button>
+                                </Btn>
                             </div>
-                            <Btn>
-                                <button
-                                    className='btn'
-                                    onClick={() => { navigate(`/editone`) }}
-                                >
-                                    수정하기</button>
-                                <button
-                                    className='btn'
-                                    // onClick={() => 
-                                    //     { navigate(`/signup`) }}
-                                    onClick={GoChat}
-                                >
-                                    삭제하기</button>
-                            </Btn>
                         </div>
-                    </div>
-                        </>
-
-
+                    </>
                     <Comment />
                 </Detail>
             </Grid>
-{/* 1:1 채팅창에 roomId 와 모달 open & close를 props로 넘겨주기 위함 */}
-<OneToOneChat
+            <OneToOneChat
 open={modalIsOpen}  // 모달창 열기
 onClose={()=>setModalIsOpen(false)} // 모달창 닫기
 socket={socket}
 /> 
-</>
+        </>
     )
 }
 
@@ -298,15 +274,16 @@ label span {display:none;}
     margin-top: 20px;
 }
 
-.Detail_profile > img {
+.detail_profile > img {
     width:55px;
     height:55px;
     border-radius:50%;
     margin-left: 10px;
 }
 
-.Detail_profile{
+.detail_profile{
     border-radius:50%;
+
     /* display:flex; */
     align-items:center;
     display:block;

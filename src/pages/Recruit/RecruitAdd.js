@@ -12,10 +12,11 @@ import { useDispatch } from 'react-redux';
 import { createPostDB } from '../../redux/modules/post';
 import Grid from '../../components/elements/Grid';
 import Footer from '../../components/main/Footer';
+import RecruitEdit from './RecruitEdit';
 
 const socket = io.connect("http://13.125.241.180")
 
-const AddOne = () => {
+const RecruitAdd = () => {
   const [on, setOn] = useState(false)
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -26,6 +27,19 @@ const AddOne = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const addPost = () => {
+    const post_data = {
+      title,
+      content,
+      date,
+      time,
+      place,
+      age
+    }
+    dispatch(createPostDB(post_data));
+    console.log(post_data);
+  }
 
   // 모집중 , 모집완료 상태 변경하기 
   const inputChange = () => {
@@ -48,20 +62,6 @@ const AddOne = () => {
       })
   }
 
-
-  const addPost = () => {
-    const post_data = {
-      title,
-      content,
-      date,
-      time,
-      place,
-      age
-    }
-    dispatch(createPostDB(post_data));
-    console.log(post_data);
-  }
-
   return (
     <>
       <Header />
@@ -77,11 +77,13 @@ const AddOne = () => {
               </label>
               <p> {!on ? "모집중" : "모집완료"}</p>
             </div>
-            <div style={{ marginBottom: "5px" }}>
+            <div className='input__section'>
+            <div style={{ marginBottom: "25px",}}>
               <strong>제목</strong>
               <input
                 onChange={e =>
                   setTitle(e.target.value)}
+                  style={{ width:"450px"}}
                 type="text"
               />
             </div>
@@ -99,6 +101,7 @@ const AddOne = () => {
                 locale={ko}
                 dateFormat="yyyy년 MM월 dd일"
               />
+              </div>
             </div>
             <div>
               <strong>시간</strong>
@@ -185,7 +188,7 @@ label {
 }
 
 .add_input > div {
-    margin:50px 0px 0px 10px;
+    margin:40px 0px 0px 10px;
     object-fit: cover;
 
 }
@@ -197,9 +200,25 @@ label {
     width: 450px;
     padding: 10px;
     margin-left: 30px;
-
     outline: none;
+    height: 70px;
 }
+
+ .input__section {
+      width: 600px;
+    }
+
+    .input__section > div > input {
+      border: 1px solid #E4E4E4;
+      border-radius: 10px;
+      display: inline-block;
+      width: 500px;
+      padding: 10px;
+      margin-left: 30px;
+      margin-bottom: 20px;
+      outline: none;
+      height: 70px;
+    }
 
 .box{
   margin-top: 8%;
@@ -306,9 +325,10 @@ const Input = styled.input`
 border: 1px solid #E4E4E4;
 border-radius: 10px;
 width: 450px;
+height: 70px;
 padding: 10px;
 display: flex;
-margin-bottom: 10px;
+margin-bottom: 4px;
 `;
 
 const Btn = styled.div`
@@ -332,5 +352,4 @@ margin-left: 170px;
 }
 `;
 
-export default AddOne
-
+export default RecruitAdd

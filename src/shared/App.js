@@ -23,53 +23,50 @@ import ReviewAdd from '../pages/Review/ReviewAdd';
 import RecruitEdit from '../pages/Recruit/RecruitEdit';
 import PlaceEdit from '../pages/Place/PlaceEdit';
 import ReviewEdit from '../pages/Review/ReviewEdit'
-import ProfileInsert from '../pages/MyPage/ProfileInsert'
 
 //마이 페이지
 import ProfileManager from "../pages/MyPage/ProfileManager";
+import ProfileInsert from '../pages/MyPage/ProfileInsert';
 import BookMark from "../pages/MyPage/BookMark";
 
 import WelcomeModal from '../modal/WelcomeModal';
 
-
 function App() {
   return (
     <>
-    <Routes>
-      <Route  path="/" element={<Main />} />
-      <Route  path="/login" element={< LogIn />} />
-      <Route  path="/signup" element={< SignUp />} />  
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={< LogIn />} />
+        <Route path="/signup" element={< SignUp />} />
 
-{/* 모집 게시글 */}
-      <Route  path="/recruit" element={< Recruit />} /> 
-      <Route  path="/recruitadd" element={< RecruitAdd />} />
-      {/* <Route  path="/detailone/:recruitPostId" element={< DetailOne />} /> */}
-      <Route  path="/recruitdetail/:recruitPostId" element={< RecruitDetail />} />
-      <Route  path="/recruitdetail" element={< RecruitDetail />} />
-      <Route  path="/editone" element={< RecruitEdit />} />
-{/* 장소 추천 */}
-      <Route  path="/place" element={< Place />} /> 
-      <Route  path="/placeadd" element={< PlaceAdd />} />
-      <Route  path="/placedetail" element={< PlaceDetail />} />
-
-
-{/* 육아 물품 리뷰 */}
-      <Route  path="/review" element={< Review />} /> 
-      <Route  path="/reviewadd" element={< ReviewAdd />} />
-      <Route  path="/reviewdetail" element={< ReviewDetail />} />
+        {/* 모집 게시글 */}
+        <Route path="/recruit" element={< Recruit />} />
+        <Route path="/recruitadd" element={< RecruitAdd />} />
+        <Route  path="/recruitdetail/:recruitPostId" element={< RecruitDetail />} />
+        {/* <Route path="/recruitdetail" element={< RecruitDetail />} /> */}
+        <Route path="/recruit/:recruitPostId" element={< RecruitEdit />} />
+        {/* 장소 추천 */}
+        <Route path="/place" element={< Place />} />
+        <Route path="/placeadd" element={< PlaceAdd />} />
+        <Route path="/placedetail" element={< PlaceDetail />} />
 
 
-      {/* <Route  path="/mypage/:roomId" element={< MyPage />} /> */}
-      {/* <Route  path="/mypage" element={< MyPage />} /> */}
-      <Route  path="/manager" element={< ProfileManager />} />
-      <Route  path="/bookmark" element={< BookMark />} />
-      <Route  path="/ProfileInsert" element={< ProfileInsert />} />
-      
+        {/* 육아 물품 리뷰 */}
+        <Route path="/review" element={< Review />} />
+        <Route path="/reviewadd" element={< ReviewAdd />} />
+        <Route path="/reviewdetail" element={< ReviewDetail />} />
+
+
+        {/* <Route  path="/mypage/:roomId" element={< MyPage />} /> */}
+        {/* <Route  path="/mypage" element={< MyPage />} /> */}
+        <Route path="/manager" element={< ProfileManager />} />
+        <Route path="/bookmark" element={< BookMark />} />
+        <Route path="/profileinsert" element={< ProfileInsert />} />
 
         {/* 이쪽 모달은 추후에 삭제 예정 */}
-      <Route  path="/welcome" element={< WelcomeModal />} />
+        <Route path="/welcome" element={< WelcomeModal />} />
 
-    </Routes>
+      </Routes>
     </>
   );
 }
