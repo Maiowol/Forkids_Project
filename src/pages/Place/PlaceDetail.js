@@ -38,7 +38,7 @@ const PlaceDetail = () => {
             <div className='location'><p><GrLocation></GrLocation>서울특별시 성수동 어쩌구 1004번지</p></div>
 
             <div className='info'>
-              <div className='profile'>ㅎㅇ</div>
+              <div className='profile'></div>
               <p className='nickname'>5세맘육아왕</p>
             </div>
           </div>
@@ -155,7 +155,6 @@ const Container = styled.div`
 }
 
 .profile{
-  border:1px solid black;
   width:70px;
   height:70px;
   border-radius: 50%;

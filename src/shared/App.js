@@ -28,7 +28,6 @@ import ReviewEdit from '../pages/Review/ReviewEdit'
 import ProfileManager from "../pages/MyPage/ProfileManager";
 import ProfileInsert from '../pages/MyPage/ProfileInsert';
 import BookMark from "../pages/MyPage/BookMark";
-
 import WelcomeModal from '../modal/WelcomeModal';
 
 function App() {
