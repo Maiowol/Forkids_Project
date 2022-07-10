@@ -2,37 +2,84 @@ import React from 'react'
 import styled from 'styled-components'
 import Header from '../../components/main/Header'
 import { useNavigate } from "react-router-dom";
-
+import {GetMyPageAxios} from '../../redux/modules/Data'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { useDispatch,useSelector } from 'react-redux';
+import { getCookie } from '../../shared/Cookie'
+import axios from 'axios';
+import {insertAlert} from '../../alertList'
 const ProfileInsert = () => {
-    const navigate = useNavigate();
+
+  // 수정 Alert 창
+const test = () => Swal.fire({
+    title: '수정성공',
+    text: '성공적으로 수정이 완료 되었습니다',
+    icon: 'success',
+    confirmButtonText: '확인'
+  }).then(result =>{
+    if(result.isConfirmed){
+      navigate('/manager')
+    }
+  })
+
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const insert = React.useRef('')
+  const MyPage = useSelector((state)=>state.Data.state)
+  console.log(MyPage)
+
+  React.useEffect(()=>{
+    dispatch(GetMyPageAxios())
+  },[])
+
+
+  const InsertMyPage = () =>{
+    axios.put('http://13.125.241.180/api/mypage/update',
+    { myComment: insert.current.value,profileUrl:'' },
+    { headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
+    .then((res)=>{
+      console.log(res) 
+      test()
+       })
+    .catch((err)=>console.log(err))
+  }
+
+
+
+
+  if (! MyPage ) {
+    return <div></div>
+  }
   return (
+
     <>
     <Header/>
     <Profile>
       <div className='ProfileContainer'>
       <div className='title'>프로필수정</div>
       <div className='ProfileInfo'>
-        <div className='ProfileImg'><img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhYnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="사진"/>
+        <div className='ProfileImg'><img src={MyPage.mypageGet.profileUrl} alt="사진"/>
         <input type="file"/>
         </div>
         <div className='TwoBox'>
           <div>
             <span> 닉네임 </span>
-            <div className='inputBox'></div>
+            <div className='inputBox'>{MyPage.mypageGet.nickname}</div>
           </div>
           <div>
             <span> 이메일 </span>
-            <div className='inputBox'></div>
+            <div className='inputBox'>{MyPage.mypageGet.email}</div>
           </div>
 
           <div>
             <span> 소개란 </span>
-            <div><input type="text" className='inputBigBox' placeholder='나를 소개해주세요 !'/></div>
+            <div><input type="text" className='inputBigBox' placeholder='나를 소개해주세요 !' ref={insert}/></div>
           </div>
 
           <div className='btn'>
             <button onClick={()=>{navigate('/manager')}}> 취소</button>
-            <button> 수정 완료</button>
+            <button onClick={InsertMyPage}> 수정 완료</button>
           </div>
 
 
@@ -44,6 +91,16 @@ const ProfileInsert = () => {
 
     </>
   )
+
+
+
+
+
+
+
+
+
+  
 }
 
 
@@ -92,6 +149,11 @@ height:92vh;
   height:40px;
   background: #F5F5F5;
   margin-bottom: 15px;
+  padding: 7px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 span{

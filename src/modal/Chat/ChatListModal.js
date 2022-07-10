@@ -25,7 +25,8 @@ const ChatListModal = ({open,onClose}) => {
     const [realroom,setrealroom] = React.useState()
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [BeforeChatting,setBeforeChatting] = useState()
-  
+    const Last = NowRoom[NowRoom.length-1]
+
     React.useEffect(()=>{
         axios.get('http://13.125.241.180/api/chats/rooms',{ headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
         .then((res)=>{
@@ -33,13 +34,17 @@ const ChatListModal = ({open,onClose}) => {
         }).catch((err)=>{
             console.log(err)
         })
-    },[])
+    },[socket])
+
 
 
 
 
 
     if(!open) return null
+    // if (! Last ) {
+    //     return <div></div>
+    // }
   return (
     <Modal isOpen={true} className="ChatList animate__animated animate__backInUp">
     <div className='One'>
@@ -65,6 +70,7 @@ const ChatListModal = ({open,onClose}) => {
                     console.log(res.data.chatMessageList)
                     setNowRoom(res.data.chatMessageList)
                     setrealroom(data.roomId)
+
                 })
              }}>
                 <div className='ChatImg'><div className='ChatImgOne'></div></div>
@@ -73,7 +79,7 @@ const ChatListModal = ({open,onClose}) => {
                    {MyNickname === data.postNickname ? <div className='ChatName'> {data.nickname} </div>:
                    <div className='ChatName'> {data.postNickname} </div>}
                     
-                    <div className='ChatContent'>준비중</div>
+                    <div className='ChatContent'></div>
                     <div className='ChatDate'>{data.createdAt}</div>
                 </div>
                 <div className='ChatBell'><span>1</span></div>

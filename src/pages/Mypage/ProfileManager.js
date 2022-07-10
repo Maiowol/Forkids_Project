@@ -1,9 +1,31 @@
+import axios from 'axios'
 import React from 'react'
 import styled from 'styled-components'
 import Header from '../../components/main/Header'
+import { getCookie } from "../../shared/Cookie";
+import { useDispatch,useSelector } from 'react-redux';
+import {GetMyPageAxios} from '../../redux/modules/Data'
 
 
 const ProfileManager = () => {
+  const [User,setUser] = React.useState([])   // 마이페이지 정보 담겨있는 State
+  const dispatch = useDispatch()
+
+
+  // 마이페이지 정보 불러오기 
+  React.useEffect(()=>{
+    dispatch(GetMyPageAxios())
+  },[])
+
+  
+  const MyPage = useSelector((state)=>state.Data.state)
+
+  
+  
+  // 마이페이지 화면 뷰 
+  if (! MyPage ) {
+    return <div></div>
+  }
   return (
     <>
     <Header/>
@@ -11,33 +33,29 @@ const ProfileManager = () => {
       <div className='ProfileContainer'>
       <div className='title'>프로필관리</div>
       <div className='ProfileInfo'>
-        <div className='ProfileImg'><img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhYnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="사진"/></div>
+        <div className='ProfileImg'><img src={MyPage.mypageGet.profileUrl} alt="사진"/></div>
         <div className='TwoBox'>
           <div>
             <span> 닉네임 </span>
-            <div className='inputBox'> 3살 길동이</div>
+            <div className='inputBox'>{MyPage.mypageGet.nickname}</div>
           </div>
           <div>
             <span> 이메일 </span>
-            <div className='inputBox'>gildong@test.com</div>
+            <div className='inputBox'>{MyPage.mypageGet.email}</div>
           </div>
 
           <div>
             <span> 소개란 </span>
-            <div className='inputBigBox'> 튜브타고 물놀이하는거 완전 좋아~♬</div>
+            <div className='inputBigBox'>{MyPage.mypageGet.myComment}</div>
           </div>
 
           <div className='btn'>
             <button><a href='/ProfileInsert'>프로필 수정</a></button>
           </div>
-
-
         </div>
       </div>
       </div>
-
     </Profile>
-
     </>
   )
 }

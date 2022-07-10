@@ -31,17 +31,6 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     const sendMessage = async() =>  {
         // if (currentMessage !== "") {
           const messageData = {
@@ -54,7 +43,6 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
               new Date(Date.now()).getMinutes()+ '분',
           };
           await socket.emit("send_message", messageData);
-          // setNowChat((list) => [...list, messageData]);
           console.log(messageData)
 
         // }
@@ -107,8 +95,8 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
             </div>
             </div>
             <div className='RoomContent'>
-                <div className='RoomName'>{data.senderNick}</div>
-                <div className='ChatRoomInput'>{data.message}</div>
+                <div className={nickname === data.senderNick ? 'RoomName' :'RoomNameX'}>{data.senderNick}</div>
+                <div className={nickname === data.senderNick ? 'ChatRoomInput' :'ChatRoomInputX'}>{data.message}</div>
             </div>
             <div className='RoomTime'>{data.time}</div>
             </div>
