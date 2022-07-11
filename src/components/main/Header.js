@@ -298,7 +298,6 @@ a {
     width:40px;
     height: 40px;
     cursor: pointer;
-
   }
 
   .header__menulist {
@@ -313,7 +312,6 @@ a {
     font-size:35px;
     cursor: pointer;
     transform: scaleX(-1);
-
   }
 
   .MyPage{
@@ -329,9 +327,9 @@ a {
 
   .header__menulist > li:hover{
     transform: scale(1.30);
-    color:#6B4E16;
-    
+    color:#6B4E16; 
   }
+
 
   .header__left {
     display: flex;

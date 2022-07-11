@@ -90,11 +90,11 @@ export const updatePostDB = ( recruitPostId, newPost) => {
           .then((res) => {
               console.log(res.data.post);
               dispatch(updatePost(recruitPostId, res.data.post));
-              alert("수정이 완료되었습니다.");
+              alert(res.data.message);
               window.location.href = "/recruit"
           })
           .catch((error) => {
-              alert("게시글 수정 에러!");
+              console.log(error)
           });
   };
 };

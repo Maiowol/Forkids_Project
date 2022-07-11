@@ -8,10 +8,8 @@ import ChatRoom from './ChatRoom'
 import 'animate.css';
 import { getCookie } from '../../shared/Cookie'
 import { useDispatch , useSelector} from "react-redux"
-import {GetChatListAxios} from '../../redux/modules/Data'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Socket } from 'socket.io-client';
 import io from "socket.io-client";
 
 const socket = io.connect("http://13.125.241.180")
@@ -26,6 +24,7 @@ const ChatListModal = ({open,onClose}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [last,setlast] = useState()
 
+    console.log(last)
 
 
 

@@ -208,7 +208,7 @@ strong{
 textarea {
     padding:20px;
     margin-top: 73px;
-    height 500px;
+    height: 500px;
     width: 610px;
     border:1px solid #E4E4E4;
     border-radius:10px;
