@@ -25,9 +25,9 @@ import PlaceEdit from '../pages/Place/PlaceEdit';
 import ReviewEdit from '../pages/Review/ReviewEdit'
 
 //마이 페이지
-import ProfileManager from "../pages/MyPage/ProfileManager";
-import ProfileInsert from '../pages/MyPage/ProfileInsert';
-import BookMark from "../pages/MyPage/BookMark";
+import ProfileManager from "../pages/Mypage/ProfileManager";
+import ProfileInsert from '../pages/Mypage/ProfileInsert';
+import BookMark from "../pages/Mypage/BookMark";
 import WelcomeModal from '../modal/WelcomeModal';
 
 function App() {

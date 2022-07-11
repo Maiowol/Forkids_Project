@@ -3,48 +3,73 @@ import styled from 'styled-components'
 import Header from '../../components/main/Header'
 import { useNavigate } from "react-router-dom";
 import {GetMyPageAxios} from '../../redux/modules/Data'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { useDispatch,useSelector } from 'react-redux';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {collection,getDocs,addDoc, getDoc} from "firebase/firestore";
+import { db,storage } from '../../shared/firebase'
 import { getCookie } from '../../shared/Cookie'
 import axios from 'axios';
-import {insertAlert} from '../../alertList'
+import {setCookie } from '../../shared/Cookie'
+
+
+
 const ProfileInsert = () => {
   React.useEffect(()=>{
     dispatch(GetMyPageAxios())
   },[])
 
+  
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const insert = React.useRef('')
+  const fileInput = React.useRef('');
   const MyPage = useSelector((state)=>state.Data.state)
+  const [imageSrc, setImageSrc] = React.useState("");
 
-  // 수정버튼 Axios 통신 
-  const InsertMyPage = () =>{
-    axios.put('http://13.125.241.180/api/mypage/update',
-    { myComment: insert.current.value,profileUrl:'' },
-    { headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
-    .then((res)=>{
-      console.log(res) 
-      test()
-       })
-    .catch((err)=>console.log(err))
+// 이미지 미리보기
+const encodeFileToBase64 = (fileBlob) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(fileBlob);
+  return new Promise((resolve) => {
+    reader.onload = () => {
+      setImageSrc(reader.result);
+      resolve();
+    };
+  });
+};
+
+const fileName = (e) => {
+  encodeFileToBase64(e.target.files[0]);
+}
+
+
+
+const imageFileFB = async () => {
+  // fileInput.current.files 파일 접근할 때
+  const upload_file = await uploadBytes(
+    ref(storage, `images/${fileInput.current.files[0].name}`),
+    fileInput.current.files[0]
+  );
+  console.log(upload_file); // ref 값을 가져옴
+
+  const file_url = await getDownloadURL(upload_file.ref);
+  console.log(file_url);
+  fileInput.current = { url: file_url };
+  
+
+  await axios.put('http://13.125.241.180/api/mypage/update',
+  { myComment: insert.current.value,profileUrl:fileInput.current?.url },
+  { headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
+  .then((res)=>{
+    console.log(res) 
+    navigate('/manager')
+    // setCookie('img',file_url)
+    localStorage.setItem('img',file_url)
+     })
+  .catch((err)=>console.log(err))
   }
-
-
-  // 수정 Alert 창
-  const test = () => Swal.fire({
-    title: '수정성공',
-    text: '성공적으로 수정이 완료 되었습니다',
-    icon: 'success',
-    confirmButtonText: '확인'
-  }).then(result =>{
-    if(result.isConfirmed){
-      navigate('/manager')
-    }
-  })
-
-
 
 
 
@@ -60,9 +85,17 @@ const ProfileInsert = () => {
       <div className='ProfileContainer'>
       <div className='title'>프로필수정</div>
       <div className='ProfileInfo'>
-        <div className='ProfileImg'><img src={MyPage.mypageGet.profileUrl} alt="사진"/>
-        <input type="file"/>
+        <div className='ProfileImg'>
+        <div className='ProfileImgTwo'><img className="img" src={imageSrc === "" ? MyPage.mypageGet.profileUrl : imageSrc} alt="사진" /></div>
+        <div> <input
+              type="file"
+              id="input-file"
+              accept="img/*"
+              ref={fileInput}
+              onChange={fileName}
+            /></div>
         </div>
+
         <div className='TwoBox'>
           <div>
             <span> 닉네임 </span>
@@ -80,7 +113,7 @@ const ProfileInsert = () => {
 
           <div className='btn'>
             <button onClick={()=>{navigate('/manager')}}> 취소</button>
-            <button onClick={InsertMyPage}> 수정 완료</button>
+            <button onClick={imageFileFB}> 수정 완료</button>
           </div>
 
 

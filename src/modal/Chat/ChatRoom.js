@@ -13,18 +13,20 @@ import { data } from 'autoprefixer';
 
 
 
-const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) => {
+const ChatRoom = ({open,onClose,NowRoom,socket,realroom}) => {
     const input_Ref = React.useRef()
     const nickname = getCookie('nickname')
     const [NowChat, setNowChat] = React.useState([]);
     const [realtime, setRealtime] = React.useState([]);
     const [room, setRoom] = React.useState();
 
+    console.log(NowRoom)
+
     React.useEffect(() => {
 
       socket.off('receive_message').on('receive_message',(data)=>{
       setNowChat((list) => [...list, data])
-          console.log(data )
+          console.log(NowChat)
      })
    },[]);
 
@@ -50,8 +52,9 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
 
 
       const OutRoom = () =>{
-        socket.leave(realroom)
+        socket.emit("back",realroom)
         onClose()
+        setNowChat([])
       }
 
 
@@ -86,7 +89,7 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
                   <div className={nickname === data.senderNick ? 'RoomName' :'RoomNameX'}>{data.senderNick}</div>
                   <div className={nickname === data.senderNick ? 'ChatRoomInput' :'ChatRoomInputX'}>{data.message}</div>
               </div>
-              <div className='RoomTime'>{data.createdAt}</div>
+              <div className='RoomTime'>{data.time}</div>
               </div>
             )
         })}
