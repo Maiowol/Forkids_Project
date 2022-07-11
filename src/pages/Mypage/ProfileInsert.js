@@ -9,9 +9,31 @@ import { getCookie } from '../../shared/Cookie'
 import axios from 'axios';
 import {insertAlert} from '../../alertList'
 const ProfileInsert = () => {
+  React.useEffect(()=>{
+    dispatch(GetMyPageAxios())
+  },[])
+
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const insert = React.useRef('')
+  const MyPage = useSelector((state)=>state.Data.state)
+
+  // 수정버튼 Axios 통신 
+  const InsertMyPage = () =>{
+    axios.put('http://13.125.241.180/api/mypage/update',
+    { myComment: insert.current.value,profileUrl:'' },
+    { headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
+    .then((res)=>{
+      console.log(res) 
+      test()
+       })
+    .catch((err)=>console.log(err))
+  }
+
 
   // 수정 Alert 창
-const test = () => Swal.fire({
+  const test = () => Swal.fire({
     title: '수정성공',
     text: '성공적으로 수정이 완료 되었습니다',
     icon: 'success',
@@ -23,27 +45,6 @@ const test = () => Swal.fire({
   })
 
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const insert = React.useRef('')
-  const MyPage = useSelector((state)=>state.Data.state)
-  console.log(MyPage)
-
-  React.useEffect(()=>{
-    dispatch(GetMyPageAxios())
-  },[])
-
-
-  const InsertMyPage = () =>{
-    axios.put('http://13.125.241.180/api/mypage/update',
-    { myComment: insert.current.value,profileUrl:'' },
-    { headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
-    .then((res)=>{
-      console.log(res) 
-      test()
-       })
-    .catch((err)=>console.log(err))
-  }
 
 
 

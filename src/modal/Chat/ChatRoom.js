@@ -49,6 +49,12 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
       };
 
 
+      const OutRoom = () =>{
+        socket.leave(realroom)
+        onClose()
+      }
+
+
 
     if(!open) return null
   return (
@@ -59,7 +65,7 @@ const ChatRoom = ({open,onClose,roomId,NowRoom,BeforeChatting,socket,realroom}) 
           <div className='you'><div className='who'>상대</div><div className='circlePosition'><div className='circle2'></div></div></div>
         </div>
         <div className='RoomDate'> 2022년 06월 30일 목요일</div>
-    <button onClick={onClose}><BiLogOut className='icon'></BiLogOut></button>
+    <button onClick={OutRoom}><BiLogOut className='icon' ></BiLogOut></button>
     </div>
 
 
