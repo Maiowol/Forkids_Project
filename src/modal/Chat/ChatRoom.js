@@ -19,7 +19,7 @@ const ChatRoom = ({open,onClose,NowRoom,socket,realroom}) => {
     const [NowChat, setNowChat] = React.useState([]);
     const [realtime, setRealtime] = React.useState([]);
     const [room, setRoom] = React.useState();
-
+    const imgurl = localStorage.getItem('img')
     console.log(NowRoom)
 
     React.useEffect(() => {
@@ -36,6 +36,7 @@ const ChatRoom = ({open,onClose,NowRoom,socket,realroom}) => {
     const sendMessage = async() =>  {
         // if (currentMessage !== "") {
           const messageData = {
+            profileUrl : imgurl,
             roomId: realroom,
             senderNick: nickname,
             message: input_Ref.current.value,

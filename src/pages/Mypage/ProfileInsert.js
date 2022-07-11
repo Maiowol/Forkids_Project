@@ -65,7 +65,6 @@ const imageFileFB = async () => {
   .then((res)=>{
     console.log(res) 
     navigate('/manager')
-    // setCookie('img',file_url)
     localStorage.setItem('img',file_url)
      })
   .catch((err)=>console.log(err))

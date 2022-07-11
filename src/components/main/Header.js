@@ -21,8 +21,7 @@ const Header = () => {
   const UserCheck = getCookie('accessToken')
   const nickname = getCookie('nickname')
   const dispatch = useDispatch();
-
-
+  const Profile = localStorage.getItem('img')
 
   const Login = () =>{
     navigate('/Login')
@@ -39,14 +38,6 @@ const Header = () => {
 
   const messageBtn = () =>{
     setModalIsOpen(true)
-    // dispatch(GetChatListAxios()); 
-    
-    // axios.get('http://13.125.241.180/api/chats/rooms',{ headers : { Authorization: `Bearer ${getCookie("accessToken")}`}})
-    // .then((res)=>{
-    //     console.log(res)
-    // }).catch((err)=>{
-    //     console.log(err)s
-    // })
   }
 
 
@@ -152,7 +143,7 @@ const Header = () => {
       <ul className="header__right"> 
         <li className="bell"><BsChatDotsFill onClick={messageBtn}></BsChatDotsFill></li>
         <li className="profile">
-          <img src={profile} alt="프로필"/>
+          <img src={Profile} alt="프로필"/>
         </li>
 
         <ChatListModal open = {modalIsOpen} onClose={()=>setModalIsOpen(false)}/>
@@ -371,9 +362,9 @@ a {
 
   }
 
-  .profile > a> img {
-    width:35px;
-    height: 35px;
+  .profile > img {
+    width:50px;
+    height: 50px;
   }
 
 
