@@ -1,103 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap");
 
-
-body{
-  font-family: 'Noto Sans KR', sans-serif;
-  margin:0px;
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  margin: 0px;
 }
 
 /* 부트 스트랩 캐러셀 높이 스타일 */
-.d-block{
+.d-block {
   height: 409px;
 }
 
-
 /* 마이페이지 메뉴바 CSS */
-.Menu{
-  width:25%;
-  height:91vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+.Menu {
+  width: 25%;
+  height: 91vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.Menu_item > div > span{
-  cursor:pointer;
+.Menu_item > div > span {
+  cursor: pointer;
 }
 
-.Menu_item > div > span:hover{
-  color:#6B4E16;
+.Menu_item > div > span:hover {
+  color: #6b4e16;
 }
 
-.Menu_item{
+.Menu_item {
   max-width: 80%;
   width: 53%;
   height: 233px;
-  margin-top:70px;
-  border: 1px solid #A8A8A8;
+  margin-top: 70px;
+  border: 1px solid #a8a8a8;
   border-radius: 30px;
   position: relative;
   bottom: 150px;
 }
 
- h4 {
+h4 {
   position: relative;
   bottom: 150px;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 26px;
   line-height: 38px;
 }
 
-
-.profile_item{
-width:100%;
-padding-top:20px;
-height: 33%;
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 29px;
-color: #A8A8A8;
-text-align: center;
+.profile_item {
+  width: 100%;
+  padding-top: 20px;
+  height: 33%;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  color: #a8a8a8;
+  text-align: center;
 }
 
-
-.bookmark_item{
-padding-top:20px;
-width:100%;
-height: 33%;
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 700;
-text-align: center;
-font-size: 20px;
-border-top:1px solid #A8A8A8;
-border-bottom:1px solid #A8A8A8;
-line-height: 29px;
-color: #A8A8A8;
+.bookmark_item {
+  padding-top: 20px;
+  width: 100%;
+  height: 33%;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  text-align: center;
+  font-size: 20px;
+  border-top: 1px solid #a8a8a8;
+  border-bottom: 1px solid #a8a8a8;
+  line-height: 29px;
+  color: #a8a8a8;
 }
 
-
-.chat_item{
-width:100%;
-padding-top:20px;
-height: 33%;
-text-align: center;
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 29px;
-color: #A8A8A8;
+.chat_item {
+  width: 100%;
+  padding-top: 20px;
+  height: 33%;
+  text-align: center;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  color: #a8a8a8;
 }
 
-
-.ChatList{
-  background-color:#fff;
+.ChatList {
+  background-color: #fff;
   height: 92vh;
   width: 40%;
   margin: 30px auto;
@@ -105,8 +99,8 @@ color: #A8A8A8;
   border-radius: 30px;
 }
 
-.One{
-  padding:20px;
+.One {
+  padding: 20px;
   text-align: right;
   display: flex;
   justify-content: space-between;
@@ -114,32 +108,32 @@ color: #A8A8A8;
 }
 
 .One > button {
-  width:70px;
+  width: 70px;
   height: 70px;
-  background-color: #E4E4E4;
+  background-color: #e4e4e4;
   border: none;
-  color: #3C3C3C;
+  color: #3c3c3c;
   font-weight: 700;
   font-size: 35px;
   border-radius: 10px;
 }
 
-.One > button:hover{
-  transform: scale(1.10);
+.One > button:hover {
+  transform: scale(1.1);
 }
 
-.ChatListContainer{
-  border: 2px solid #D9D9D9;
+.ChatListContainer {
+  border: 2px solid #d9d9d9;
   border-radius: 10px;
-  width:90%;
-  height:85%;
+  width: 90%;
+  height: 85%;
   margin: auto;
 }
 
-.List{
+.List {
   width: 90%;
   height: 80px;
-  border: 1px solid #E4E4E4;
+  border: 1px solid #e4e4e4;
   border-radius: 10px;
   opacity: 0.8;
   margin: auto;
@@ -147,71 +141,75 @@ color: #A8A8A8;
   display: flex;
 }
 
-.ChatImg{
-  width:15%;
+.ChatImg {
+  width: 15%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.ChatImgOne{
+.ChatImgOne {
   width: 70px;
   height: 70px;
-  border: 1px solid #000000;
   border-radius: 50%;
 }
 
-.ChatTitle{
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 26px;
-line-height: 31px;
-color: #000000;
+.ChatImgOne > img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
 }
 
-.ChatLogo{
-  width:70px;
+.ChatTitle {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 31px;
+  color: #000000;
+}
+
+.ChatLogo {
+  width: 70px;
   height: 70px;
 }
 
 .ChatLogo > img {
-  width:70px;
+  width: 70px;
   height: 70px;
 }
 
-.ChatInfo{
-  width:75%;
+.ChatInfo {
+  width: 75%;
 }
 
-.ChatBell{
-  width:10%;
+.ChatBell {
+  width: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.ChatBell > span{
-  width:40px;
+.ChatBell > span {
+  width: 40px;
   height: 40px;
   border-radius: 50%;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #F4B03E;
-  color: #FFFFFF;
-  font-family: 'Noto Sans KR';
+  background-color: #f4b03e;
+  color: #ffffff;
+  font-family: "Noto Sans KR";
   font-weight: 700;
   font-size: 15px;
   line-height: 17px;
   border: none;
 }
 
-.ChatName{
+.ChatName {
   height: 40%;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -219,9 +217,9 @@ color: #000000;
   margin-left: 10px;
 }
 
-.ChatContent{
+.ChatContent {
   height: 35%;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -229,19 +227,19 @@ color: #000000;
   margin-left: 10px;
 }
 
-.ChatDate{
+.ChatDate {
   height: 25%;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 17px;
-  color: #3C3C3C;
+  color: #3c3c3c;
   float: right;
   margin-right: 10px;
 }
 
-.message-container{
+.message-container {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
@@ -252,7 +250,7 @@ color: #000000;
   display: none;
 }
 
-.message-containerTwo{
+.message-containerTwo {
   width: 100%;
   height: 75%;
   overflow-y: scroll;
@@ -263,67 +261,56 @@ color: #000000;
   display: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.icon{
+.icon {
   font-size: 45px;
   position: relative;
   bottom: 5px;
   right: 5px;
 }
 
-.RoomOne{
-  padding:20px;
+.RoomOne {
+  padding: 20px;
   text-align: right;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.RoomOne > button{
-  width:70px;
+.RoomOne > button {
+  width: 70px;
   height: 70px;
-  background-color: #E4E4E4;
+  background-color: #e4e4e4;
   border: none;
-  color: #3C3C3C;
+  color: #3c3c3c;
   font-weight: 700;
   font-size: 35px;
   border-radius: 10px;
 }
 
-.RoomOne > button:hover{
-  transform: scale(1.10);
+.RoomOne > button:hover {
+  transform: scale(1.1);
 }
 
-.RoomDate{
-  font-family: 'Noto Sans KR';
+.RoomDate {
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 23px;
-  color: #A8A8A8;
+  color: #a8a8a8;
 }
 
-.RoomFake{
-  width:70px;
+.RoomFake {
+  width: 70px;
   height: 70px;
 }
 
-.RoomChatList{
+.RoomChatList {
   height: 100%;
 }
 
-.RoomSend{
-  height:8%;
+.RoomSend {
+  height: 8%;
   margin-top: 15px;
   border-radius: 30px;
   display: flex;
@@ -331,21 +318,21 @@ color: #000000;
   align-items: center;
 }
 
-.RoomInput{
-  width:80%;
+.RoomInput {
+  width: 80%;
   padding: 15px;
   border-radius: 30px;
-  height:80%;
-  border: 1px solid #A8A8A8;
+  height: 80%;
+  border: 1px solid #a8a8a8;
   position: relative;
   left: 30px;
 }
 
-.RoomSend > button{
+.RoomSend > button {
   border: none;
   background-color: transparent;
-  color: #6B4E16;
-  font-family: 'Noto Sans KR';
+  color: #6b4e16;
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -354,7 +341,7 @@ color: #000000;
   right: 60px;
 }
 
-.RoomChat{
+.RoomChat {
   width: 85%;
   height: 100px;
   margin-left: 20px;
@@ -362,66 +349,53 @@ color: #000000;
   display: flex;
 }
 
-.RoomChatX{
+.RoomChatX {
   width: 85%;
   height: 100px;
   margin-left: 70px;
   display: flex;
 }
 
-
-
-
-
-
-
-
-.RoomImg{
-  width:15%;
+.RoomImg {
+  width: 15%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.RoomContent{
-  width:70%;
+.RoomContent {
+  width: 70%;
 }
 
-.RoomTime{
-  width:15%;
+.RoomTime {
+  width: 15%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 23px;
-  color: #A8A8A8;
+  color: #a8a8a8;
   padding-left: 15px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.RoomProfile{
-  width:70px;
+.RoomProfile {
+  width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 1px solid black;
 }
 
-.RoomName{
-  font-family: 'Noto Sans KR';
+.RoomProfile > img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.RoomName {
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -432,8 +406,8 @@ color: #000000;
   align-items: center;
 }
 
-.RoomNameX{
-  font-family: 'Noto Sans KR';
+.RoomNameX {
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -446,19 +420,14 @@ color: #000000;
   justify-content: flex-start;
 }
 
-
-
-
-
-
 .ChatRoomInputX {
-  width:100%;
+  width: 100%;
   height: 60px;
   border-radius: 20px;
-  padding:20px;
-  border:none;
+  padding: 20px;
+  border: none;
   background-color: #64b5f6;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -467,14 +436,14 @@ color: #000000;
 }
 
 .ChatRoomInput {
-  width:100%;
+  width: 100%;
   height: 60px;
-  border:none;
+  border: none;
   border-radius: 20px;
   font-size: 20px;
-  padding:20px;
+  padding: 20px;
   background-color: #81c784;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -482,8 +451,8 @@ color: #000000;
   color: #000000;
 }
 
-.RoomFake{
-  width:100px;
+.RoomFake {
+  width: 100px;
   display: flex;
 }
 
@@ -492,12 +461,12 @@ color: #000000;
   text-align: center;
 }
 
-.you{
+.you {
   width: 50%;
   text-align: center;
 }
 
-.circle2{
+.circle2 {
   width: 30px;
   height: 30px;
   border: 1px solid #64b5f6;
@@ -505,7 +474,7 @@ color: #000000;
   background-color: #64b5f6;
 }
 
-.circle{
+.circle {
   width: 30px;
   height: 30px;
   border: 1px solid #81c784;
@@ -513,9 +482,9 @@ color: #000000;
   background-color: #81c784;
 }
 
-.who{
+.who {
   height: 40%;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -523,7 +492,7 @@ color: #000000;
   color: #000000;
 }
 
-.circlePosition{
+.circlePosition {
   height: 60%;
   display: flex;
   align-items: center;

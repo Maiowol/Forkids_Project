@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components';
-import Carousel from 'react-bootstrap/Carousel';
-import '../../shared/App.css';
+import React from "react";
+import styled from "styled-components";
+import Carousel from "react-bootstrap/Carousel";
+import "../../shared/App.css";
 
 const Swiper = () => {
   return (
@@ -20,7 +20,6 @@ const Swiper = () => {
             src="https://images.unsplash.com/photo-1607211851821-8be3cd6146f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
             alt="Second slide"
           />
-
         </Carousel.Item>
         <Carousel.Item>
           <img
@@ -30,22 +29,19 @@ const Swiper = () => {
           />
         </Carousel.Item>
       </Carousel>
-
     </Item>
-  )
-}
+  );
+};
 
 const Item = styled.div`
-z-index: -1;
-position: relative;
+  z-index: -1;
+  position: relative;
 
-img {
-  width: 100%;
-  height: 550px;
-  object-fit: cover;
-}
-
-
+  img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+  }
 `;
 
-export default Swiper
+export default Swiper;
