@@ -13,6 +13,7 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
   const [NowChat, setNowChat] = React.useState([]);
   const [currentMessage, setCurrentMessage] = React.useState("");
   const Img_Url = localStorage.getItem("img");
+  const [info, setinfo] = React.useState();
 
   console.log(ChatList);
 
@@ -43,8 +44,10 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
-        receiverNick: realuser === nickname ? testname : realuser,
+        receiverNick:
+          info.receiverNick === nickname ? info.senderNick : info.receiverNick,
         profileUrl: Img_Url,
+        profileUrlTwo: info.profileUrlTwo,
         roomId: realroom,
         senderNick: nickname, // 보내는 사람
         message: currentMessage,
@@ -65,6 +68,15 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
     onClose();
     setNowChat([]);
   };
+
+  React.useEffect(() => {
+    socket.on("test", (data) => {
+      console.log(data);
+      setinfo(data);
+    });
+  }, [socket]);
+
+  console.log(info);
 
   if (!open) return null;
   return (

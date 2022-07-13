@@ -19,6 +19,8 @@ const ChatListModal = ({ open, onClose }) => {
   const [realroom, setrealroom] = React.useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  console.log(ChatList);
+
   React.useEffect(() => {
     axios
       .get("http://13.125.241.180/api/chats/rooms", {
@@ -60,7 +62,13 @@ const ChatListModal = ({ open, onClose }) => {
                   key={idx}
                   onClick={() => {
                     setModalIsOpen(true);
-                    socket.emit("join_room", data.roomId);
+                    const Joindata = {
+                      roomId: data.roomId,
+                      senderNick: data.nickname,
+                      receiverNick: data.postNickname,
+                      profileUrlTwo: data.profileUrl,
+                    };
+                    socket.emit("join_room", Joindata);
                     axios
                       .get(
                         "http://13.125.241.180/api/chats/messages/" +
