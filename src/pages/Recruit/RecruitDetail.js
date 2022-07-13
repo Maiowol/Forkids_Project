@@ -28,6 +28,7 @@ const RecruitDetail = () => {
   let { recruitPostId } = useParams();
   const [RroomId, setRroomId] = React.useState();
 
+  console.log(state);
   React.useEffect(() => {
     axios
       .get("http://dlckdals04.shop/api/recruits/" + recruitPostId)

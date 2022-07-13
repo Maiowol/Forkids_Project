@@ -26,7 +26,6 @@ const ChatListModal = ({ open, onClose }) => {
       })
       .then((res) => {
         console.log(res);
-
         setChatList(res.data.chatRoomList);
       })
       .catch((err) => {
@@ -108,6 +107,7 @@ const ChatListModal = ({ open, onClose }) => {
         onClose={() => setModalIsOpen(false)}
         NowRoom={NowRoom}
         socket={socket}
+        ChatList={ChatList}
         realroom={realroom}
       />
     </Modal>

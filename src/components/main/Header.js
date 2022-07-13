@@ -12,12 +12,18 @@ import profile from "../../images/profile.png";
 import { useNavigate } from "react-router-dom";
 import { removeCookie, getCookie } from "../../shared/Cookie";
 import { GetMyPageAxios } from "../../redux/modules/Data";
-
+import chat from "../../images/chat.png";
+import io from "socket.io-client";
+import { toast } from "react-toastify";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+const socket = io.connect("http://13.125.241.180");
 const Header = () => {
   // 모바일 처리시 메뉴 -> 버튼  처리 방식을  state :  true /  false로 관리
   const [isToggled, setIsToggled] = useState(false);
   const [userToggled, setUserToggled] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [notify, setNotify] = useState([]);
   const navigate = useNavigate();
   const UserCheck = getCookie("accessToken");
   const nickname = getCookie("nickname");
@@ -37,6 +43,7 @@ const Header = () => {
 
   const messageBtn = () => {
     setModalIsOpen(true);
+    setNotify([]);
   };
 
   const MyProfile = () => {
@@ -44,6 +51,28 @@ const Header = () => {
     dispatch(GetMyPageAxios(nickname));
   };
 
+  React.useEffect(() => {
+    socket.off("notify").on("notify", (data) => {
+      console.log(data);
+      if (nickname === data.senderNick) {
+        return null;
+      } else if (nickname !== data.receiverNick) {
+        return null;
+      } else {
+        toast.success(`${data.senderNick}님이 메시지를 보냈습니다`, {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          limit: 3,
+        });
+        setNotify((list) => [...list, data]);
+      }
+    });
+  }, []);
+
+  console.log(notify.length);
+  const bell = notify.length;
   return (
     <>
       {/* 로그인할때의 헤더 ============================================================================== */}
@@ -194,7 +223,16 @@ const Header = () => {
           {/* User 메뉴 리스트 */}
           <ul className="header__right">
             <li className="bell">
-              <BsChatDotsFill onClick={messageBtn}></BsChatDotsFill>
+              <img
+                src={chat}
+                alt="사진"
+                onClick={messageBtn}
+                className="chaticon"
+              />
+              <p>
+                알림 테스트:
+                <NotificationBadge count={bell} effect={Effect.SCALE} />
+              </p>
             </li>
             <li className="profile">
               <img src={Profile} alt="프로필" />
@@ -366,7 +404,6 @@ const Headers = styled.div`
   .bell {
     font-size: 35px;
     cursor: pointer;
-    transform: scaleX(-1);
   }
 
   .MyPage {
@@ -448,6 +485,10 @@ const Headers = styled.div`
 
   .icon {
     font-size: 35px;
+  }
+
+  .chaticon {
+    transform: scaleX(-1);
   }
 
   @media screen and (max-width: 1075px) {
