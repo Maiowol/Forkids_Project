@@ -11,6 +11,7 @@ import logo from "../../images/logo.png";
 import profile from "../../images/profile.png";
 import { useNavigate } from "react-router-dom";
 import { removeCookie, getCookie } from "../../shared/Cookie";
+import { GetMyPageAxios } from "../../redux/modules/Data";
 
 const Header = () => {
   // 모바일 처리시 메뉴 -> 버튼  처리 방식을  state :  true /  false로 관리
@@ -36,6 +37,11 @@ const Header = () => {
 
   const messageBtn = () => {
     setModalIsOpen(true);
+  };
+
+  const MyProfile = () => {
+    navigate("/manager/" + nickname);
+    dispatch(GetMyPageAxios(nickname));
   };
 
   return (
@@ -202,7 +208,6 @@ const Header = () => {
             <li className="accordion">
               <input type="checkbox" id="answer01" />
               <label htmlFor="answer01">
-                {" "}
                 {nickname}
                 <em>
                   <HiChevronDown></HiChevronDown>
@@ -210,14 +215,14 @@ const Header = () => {
               </label>
               <div className="menu">
                 <div className="menuOne">
-                  <a href="/manager">
+                  <div onClick={MyProfile}>
                     <p>프로필관리</p>
-                  </a>
+                  </div>
                 </div>
                 <div className="menuTwo">
-                  <a href="/bookmark">
+                  <div>
                     <p>북마크관리</p>
-                  </a>
+                  </div>
                 </div>
               </div>
             </li>
@@ -320,11 +325,11 @@ const Headers = styled.div`
     color: #a8a8a8;
   }
 
-  .menuOne > a > p:hover {
+  .menuOne > div > p:hover {
     color: #6b4e16;
   }
 
-  .menuTwo > a > p:hover {
+  .menuTwo > div > p:hover {
     color: #6b4e16;
   }
 

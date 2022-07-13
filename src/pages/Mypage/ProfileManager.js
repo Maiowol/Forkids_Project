@@ -7,13 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetMyPageAxios } from "../../redux/modules/Data";
 
 const ProfileManager = () => {
-  const [User, setUser] = React.useState([]); // 마이페이지 정보 담겨있는 State
-  const dispatch = useDispatch();
-
-  // 마이페이지 정보 불러오기
-  React.useEffect(() => {
-    dispatch(GetMyPageAxios());
-  }, []);
+  const nickname = getCookie("nickname");
 
   const MyPage = useSelector((state) => state.Data.state);
 
@@ -47,9 +41,11 @@ const ProfileManager = () => {
               </div>
 
               <div className="btn">
-                <button>
-                  <a href="/ProfileInsert">프로필 수정</a>
-                </button>
+                {nickname !== MyPage.mypageGet.nickname ? null : (
+                  <button>
+                    <a href="/ProfileInsert">프로필 수정</a>
+                  </button>
+                )}
               </div>
             </div>
           </div>

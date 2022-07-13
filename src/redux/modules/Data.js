@@ -7,6 +7,7 @@ const socket = io.connect("http://13.125.241.180");
 
 // Actions      --> 저장변수 = 프로젝트명 / 모듈 명 (리듀서 명) / 액션
 const GET = "MyPage/GET";
+const ProfileGET = "Profile/GET";
 
 // State 초기값
 let initialState = {};
@@ -16,11 +17,15 @@ export function GetMyPage(MyPage) {
   return { type: GET, MyPage };
 }
 
+export function GetProfile(Profile) {
+  return { type: ProfileGET, Profile };
+}
+
 // middleware --> 미들웨어 /
-export const GetMyPageAxios = () => {
+export const GetMyPageAxios = (nickname) => {
   return function (dispatch) {
     axios
-      .get("http://13.125.241.180/api/mypage", {
+      .get("http://dlckdals04.shop/api/mypage/profile/" + nickname, {
         headers: { Authorization: `Bearer ${getCookie("accessToken")}` },
       })
       .then((res) => {
@@ -32,11 +37,25 @@ export const GetMyPageAxios = () => {
   };
 };
 
+// export const GetProfileAxois = (nickname) => {
+//   return function (dispatch) {
+//     axios
+//       .get("http://dlckdals04.shop/api/mypage/profile/" + nickname)
+//       .then((res) => {
+//         dispatch(GetProfile(res.data));
+//         console.log(res);
+//       });
+//   };
+// };
+
 // Reducer
 export default function Data(state = initialState, action = {}) {
   switch (action.type) {
     case "MyPage/GET": {
       return { state: action.MyPage };
+    }
+    case "Profile/GET": {
+      return { Profile: action.Profile };
     }
     default:
       return state;
