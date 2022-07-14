@@ -27,7 +27,10 @@ import ReviewEdit from "../pages/Review/ReviewEdit";
 //마이 페이지
 import ProfileManager from "../pages/Mypage/ProfileManager";
 import ProfileInsert from "../pages/Mypage/ProfileInsert";
+
 import WelcomeModal from "../modal/WelcomeModal";
+// import KaKaoMap from '../pages/Place/KakaoMap';
+import KakaoLogIn from "../pages/User/KakaoLogIn";
 
 function App() {
   return (
@@ -45,7 +48,7 @@ function App() {
           element={<RecruitDetail />}
         />
         {/* <Route path="/recruitdetail" element={< RecruitDetail />} /> */}
-        <Route path="/recruit/:recruitPostId" element={<RecruitEdit />} />
+        <Route path="/recruitedit/:recruitPostId" element={<RecruitEdit />} />
         {/* 장소 추천 */}
         <Route path="/place" element={<Place />} />
         <Route path="/placeadd" element={<PlaceAdd />} />
@@ -63,6 +66,8 @@ function App() {
 
         {/* 이쪽 모달은 추후에 삭제 예정 */}
         <Route path="/welcome" element={<WelcomeModal />} />
+        <Route path="/api/users/kakao/callback" element={<KakaoLogIn />} />
+        {/* <Route path="/map" element={< KaKaoMap />} /> */}
       </Routes>
     </>
   );
