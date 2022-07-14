@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { HiChevronDown } from "react-icons/hi";
-import { BsChatDotsFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import ChatListModal from "../../modal/Chat/ChatListModal";
@@ -15,9 +14,9 @@ import { GetMyPageAxios } from "../../redux/modules/Data";
 import chat from "../../images/chat.png";
 import io from "socket.io-client";
 import { toast } from "react-toastify";
-import NotificationBadge from "react-notification-badge";
-import { Effect } from "react-notification-badge";
+import chatnew from "../../images/chatnew.png";
 const socket = io.connect("http://13.125.241.180");
+
 const Header = () => {
   // 모바일 처리시 메뉴 -> 버튼  처리 방식을  state :  true /  false로 관리
   const [isToggled, setIsToggled] = useState(false);
@@ -43,6 +42,7 @@ const Header = () => {
 
   const messageBtn = () => {
     setModalIsOpen(true);
+    localStorage.removeItem("count");
     setNotify([]);
   };
 
@@ -67,12 +67,14 @@ const Header = () => {
           limit: 3,
         });
         setNotify((list) => [...list, data]);
+        localStorage.setItem("count", data.message);
       }
     });
   }, []);
 
   console.log(notify.length);
-  const bell = notify.length;
+  const bell = localStorage.getItem("count");
+  console.log(bell);
   return (
     <>
       {/* 로그인할때의 헤더 ============================================================================== */}
@@ -223,16 +225,21 @@ const Header = () => {
           {/* User 메뉴 리스트 */}
           <ul className="header__right">
             <li className="bell">
-              <img
-                src={chat}
-                alt="사진"
-                onClick={messageBtn}
-                className="chaticon"
-              />
-              <p>
-                알림 테스트:
-                <NotificationBadge count={bell} effect={Effect.SCALE} />
-              </p>
+              {bell !== null ? (
+                <img
+                  src={chatnew}
+                  alt="사진"
+                  onClick={messageBtn}
+                  className="chaticon"
+                />
+              ) : (
+                <img
+                  src={chat}
+                  alt="사진"
+                  onClick={messageBtn}
+                  className="chaticon"
+                />
+              )}
             </li>
             <li className="profile">
               <img src={Profile} alt="프로필" />
@@ -453,6 +460,7 @@ const Headers = styled.div`
   .profile > img {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
   }
 
   .LogoOut {
@@ -485,10 +493,6 @@ const Headers = styled.div`
 
   .icon {
     font-size: 35px;
-  }
-
-  .chaticon {
-    transform: scaleX(-1);
   }
 
   @media screen and (max-width: 1075px) {

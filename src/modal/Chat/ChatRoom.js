@@ -15,25 +15,7 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
   const Img_Url = localStorage.getItem("img");
   const [info, setinfo] = React.useState();
 
-  console.log(ChatList);
-
-  const user = ChatList.map((data, idx) => {
-    return data.postNickname;
-  });
-
-  console.log(user);
-
-  const realuser = user.join();
-
-  console.log(realuser);
-
-  const testnick = ChatList.map((data, idx) => {
-    return data.nickname;
-  });
-
-  const testname = testnick.join();
-
-  console.log(testname);
+  console.log(NowChat);
 
   React.useEffect(() => {
     socket.off("receive_message").on("receive_message", (data) => {
@@ -83,7 +65,7 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
     <>
       <Modal isOpen={true} className="ChatList">
         <div className="RoomOne">
-          <div className="RoomFake">
+          {/* <div className="RoomFake">
             <div className="me">
               <div className="who">나</div>
               <div className="circlePosition">
@@ -96,7 +78,7 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
                 <div className="circle2"></div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="RoomDate"></div>
           <button onClick={OutRoom}>
             <BiLogOut className="icon"></BiLogOut>
@@ -107,7 +89,20 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
           <div className="RoomChatList animate__animated animate__zoomIn">
             {NowRoom &&
               NowRoom.map((data, idx) => {
-                return (
+                return nickname === data.senderNick ? (
+                  <div className="RoomChat" key={idx}>
+                    <div className="RoomTime">{data.time}</div>
+                    <div className="RoomContent">
+                      <div className="RoomNameX">{data.senderNick}</div>
+                      <div className="ChatRoomInputX">{data.message}</div>
+                    </div>
+                    <div className="RoomImg">
+                      <div className="RoomProfile">
+                        <img src={data.profileUrl} alt="사진" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
                   <div className="RoomChat" key={idx}>
                     <div className="RoomImg">
                       <div className="RoomProfile">
@@ -115,24 +110,8 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
                       </div>
                     </div>
                     <div className="RoomContent">
-                      <div
-                        className={
-                          nickname === data.senderNick
-                            ? "RoomName"
-                            : "RoomNameX"
-                        }
-                      >
-                        {data.senderNick}
-                      </div>
-                      <div
-                        className={
-                          nickname === data.senderNick
-                            ? "ChatRoomInput"
-                            : "ChatRoomInputX"
-                        }
-                      >
-                        {data.message}
-                      </div>
+                      <div className="RoomName">{data.senderNick}</div>
+                      <div className="ChatRoomInput">{data.message}</div>
                     </div>
                     <div className="RoomTime">{data.time}</div>
                   </div>
@@ -141,7 +120,20 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
 
             {NowChat &&
               NowChat.map((data, idx) => {
-                return (
+                return nickname === data.senderNick ? (
+                  <div className="RoomChat" key={idx}>
+                    <div className="RoomTime">{data.time}</div>
+                    <div className="RoomContent">
+                      <div className="RoomNameX">{data.senderNick}</div>
+                      <div className="ChatRoomInputX">{data.message}</div>
+                    </div>
+                    <div className="RoomImg">
+                      <div className="RoomProfile">
+                        <img src={data.profileUrl} alt="사진" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
                   <div className="RoomChat" key={idx}>
                     <div className="RoomImg">
                       <div className="RoomProfile">
@@ -149,24 +141,8 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom, ChatList }) => {
                       </div>
                     </div>
                     <div className="RoomContent">
-                      <div
-                        className={
-                          nickname === data.senderNick
-                            ? "RoomName"
-                            : "RoomNameX"
-                        }
-                      >
-                        {data.senderNick}
-                      </div>
-                      <div
-                        className={
-                          nickname === data.senderNick
-                            ? "ChatRoomInput"
-                            : "ChatRoomInputX"
-                        }
-                      >
-                        {data.message}
-                      </div>
+                      <div className="RoomName">{data.senderNick}</div>
+                      <div className="ChatRoomInput">{data.message}</div>
                     </div>
                     <div className="RoomTime">{data.time}</div>
                   </div>

@@ -61,7 +61,20 @@ const OneToOneChat = ({ open, onClose, socket }) => {
         <div className="RoomChatList animate__animated animate__zoomIn">
           {NowChat &&
             NowChat.map((data, idx) => {
-              return (
+              return nickname === data.senderNick ? (
+                <div className="RoomChat" key={idx}>
+                  <div className="RoomTime">{data.time}</div>
+                  <div className="RoomContent">
+                    <div className="RoomNameX">{data.senderNick}</div>
+                    <div className="ChatRoomInputX">{data.message}</div>
+                  </div>
+                  <div className="RoomImg">
+                    <div className="RoomProfile">
+                      <img src={data.profileUrl} alt="사진" />
+                    </div>
+                  </div>
+                </div>
+              ) : (
                 <div className="RoomChat" key={idx}>
                   <div className="RoomImg">
                     <div className="RoomProfile">
@@ -69,22 +82,8 @@ const OneToOneChat = ({ open, onClose, socket }) => {
                     </div>
                   </div>
                   <div className="RoomContent">
-                    <div
-                      className={
-                        nickname === data.senderNick ? "RoomName" : "RoomNameX"
-                      }
-                    >
-                      {data.senderNick}
-                    </div>
-                    <div
-                      className={
-                        nickname === data.senderNick
-                          ? "ChatRoomInput"
-                          : "ChatRoomInputX"
-                      }
-                    >
-                      {data.message}
-                    </div>
+                    <div className="RoomName">{data.senderNick}</div>
+                    <div className="ChatRoomInput">{data.message}</div>
                   </div>
                   <div className="RoomTime">{data.time}</div>
                 </div>

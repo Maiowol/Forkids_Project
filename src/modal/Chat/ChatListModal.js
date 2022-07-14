@@ -7,6 +7,7 @@ import ChatRoom from "./ChatRoom";
 import "animate.css";
 import { getCookie } from "../../shared/Cookie";
 import axios from "axios";
+import { BsTrash } from "react-icons/bs";
 import io from "socket.io-client";
 
 const socket = io.connect("http://13.125.241.180");
@@ -102,7 +103,9 @@ const ChatListModal = ({ open, onClose }) => {
                     <div className="ChatDate">{data.time}</div>
                   </div>
                   <div className="ChatBell">
-                    <span>1</span>
+                    <span>
+                      <BsTrash className="Trash"></BsTrash>
+                    </span>
                   </div>
                 </div>
               );

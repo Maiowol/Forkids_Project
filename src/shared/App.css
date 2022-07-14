@@ -141,6 +141,10 @@ h4 {
   display: flex;
 }
 
+.List:hover {
+  background-color: #e4e4e4;
+}
+
 .ChatImg {
   width: 15%;
   display: flex;
@@ -205,6 +209,14 @@ h4 {
   font-size: 15px;
   line-height: 17px;
   border: none;
+}
+
+.ChatBell > span:hover {
+  background-color: #ef9a9a;
+}
+
+.Trash {
+  font-size: 22px;
 }
 
 .ChatName {
@@ -344,8 +356,8 @@ h4 {
 .RoomChat {
   width: 85%;
   height: 100px;
-  margin-left: 20px;
   margin-bottom: 20px;
+  margin-left: 30px;
   display: flex;
 }
 
@@ -365,6 +377,12 @@ h4 {
 
 .RoomContent {
   width: 70%;
+  text-align: right;
+}
+
+.RoomContentX {
+  width: 70%;
+  text-align: left;
 }
 
 .RoomTime {
@@ -416,8 +434,7 @@ h4 {
   height: 40%;
   display: flex;
   align-items: center;
-  margin-right: 20px;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .ChatRoomInputX {
@@ -426,29 +443,30 @@ h4 {
   border-radius: 20px;
   padding: 20px;
   border: none;
-  background-color: #64b5f6;
+  background-color: #e4e4e4;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 23px;
   color: #000000;
+  text-align: right;
 }
 
 .ChatRoomInput {
   width: 100%;
   height: 60px;
-  border: none;
+  border: 1px solid #e4e4e4;
   border-radius: 20px;
   font-size: 20px;
   padding: 20px;
-  background-color: #81c784;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 23px;
   color: #000000;
+  text-align: left;
 }
 
 .RoomFake {
