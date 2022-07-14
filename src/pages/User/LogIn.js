@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import { RiKakaoTalkFill } from "react-icons/ri";
 
 import Header from "../../components/main/Header";
@@ -37,14 +37,17 @@ function LogIn() {
       })
       .then((response) => {
         console.log(response.data);
-        swal({
+        Swal.fire({
           text: `로그인 성공!`,
           icon: "success",
-          button: "확인",
+          confirmButtonText: "확인",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setCookie("accessToken", response.data.accessToken);
+            setCookie("nickname", response.data.nickname);
+            navigate("/");
+          }
         });
-        setCookie("accessToken", response.data.accessToken);
-        setCookie("nickname", response.data.nickname);
-        navigate("/");
       })
       .catch((error) => {
         alert("로그인을 다시 해주세요");
