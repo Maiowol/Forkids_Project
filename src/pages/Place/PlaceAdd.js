@@ -23,34 +23,54 @@ import { createPostDB } from '../../redux/modules/post';
 function PlaceAdd() {
 
   const [title, setTitle] = useState('');
+  const [region, setRegion] = useState('');
   const [content, setContent] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState('');
-  const [place, setPlace] = useState('');
-  const [age, setAge] = useState('');
-  const [imageSrc, setImageSrc] = useState('')
+  const [imageSrc, setImageSrc] = useState([]);
   const image_ref = useState(null)
+  
 
   const navigate = useNavigate();
 
-  // 이미지 미리보기
-  const encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        resolve();
-      };
-    });
+  const colors = {
+    orange: "#FFBA5A",
+    grey: "#a9a9a9"
+  };
+
+  const [currentValue, setCurrentValue] = useState(0);
+  const [hoverValue, setHoverValue] = useState(undefined);
+  const stars = Array(5).fill(0)
+
+  const handleClick = value => {
+    setCurrentValue(value)
   }
 
-  // const handleForm = (e) => {
-  //   setPost({
-  //     ...post,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  const handleMouseOver = newHoverValue => {
+    setHoverValue(newHoverValue)
+  };
+
+  const handleMouseLeave = () => {
+    setHoverValue(undefined)
+  }
+
+  const handleImageChange = (e) => {
+		// console.log(e.target.files[])
+		if (e.target.files) {
+			const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+			// console.log("filesArray: ", filesArray);
+
+			setImageSrc((prevImages) => prevImages.concat(filesArray));
+			Array.from(e.target.files).map(
+				(file) => URL.revokeObjectURL(file) // avoid memory leak
+			);
+		}
+	};
+
+	const renderPhotos = (source) => {
+		console.log('source: ', source);
+		return source.map((photo) => {
+			return <img src={photo} alt="" key={photo} />;
+		});
+	};
 
   return (
     <>
@@ -64,24 +84,21 @@ function PlaceAdd() {
                 대표이미지
               </div>
             </div>
-            <input type='file' 
+            <input type='file'
               ref={image_ref}
-                onChange={(e) => {
-                  encodeFileToBase64(e.target.files[0]);
-                }}
-                accept='image/jpg,image/png,image/jpeg,image/gif'
-                id='profile_img_upload' />
+              onChange={handleImageChange}
+              accept='image/jpg,image/png,image/jpeg,image/gif'
+              id='profile_img_upload'
+              style={{display:'none'}} />
             <div className='imageBox'>
-              
-              {/* <label
+              <label
                for='profile_img_upload'>
               <AiOutlineFileImage />
-              </label> */}
-                <div className='img'></div>
-                <div className='img'></div>
-                <div className='img'></div>
-                <div className='img'></div>
-                <div className='img'></div>
+              </label>
+              <div className='img'>
+              {renderPhotos(imageSrc)}
+              </div>
+              
             </div>
             <div className='mainBox'>
               <div className='card-left'>
@@ -93,9 +110,25 @@ function PlaceAdd() {
                   <strong>위치</strong>
                   <input type="text" />
                 </div>
-                <div className='position'>
-                  <strong> 별점</strong>
-                  <span> ⭐⭐⭐⭐⭐</span>
+
+                <div className='star'>
+                  <strong>별점</strong>
+                  {stars.map((_, index) => {
+                    return (
+                      <FaStar
+                        key={index}
+                        size={24}
+                        onClick={() => handleClick(index + 1)}
+                        onMouseOver={() => handleMouseOver(index + 1)}
+                        onMouseLeave={handleMouseLeave}
+                        color={(hoverValue || currentValue) > index ? colors.orange : colors.grey}
+                        style={{
+                          marginRight: 10,
+                          cursor: "pointer"
+                        }}
+                      />
+                    )
+                  })}
                   <span>4.0점</span>
                 </div>
               </div>
@@ -145,22 +178,39 @@ const Place = styled.div`
 }
 
 .imageBox{
-  width:90%;
-  margin:auto;
-  height: 30%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin-bottom: 30px;
+  min-height: 210px;
+  max-height: auto;
+  width: 100%;
+  background-color: lightgray;
+  margin-top:1rem ;
+   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: left; 
 }
 
-.img{
+.imageBox > label {
+  margin-left: 20px;
+}
+
+// .img{
+//   width:200px;
+//   height:220px;
+//   border: 1px solid #E4E4E4;
+//   border-radius: 10px;
+//   margin: 20px 0px 20px 40px;
+//   overflow: hidden;
+// }
+
+img{
+  // width: 100%;
+  // height: 100%;
+  // object-fit: cover;
   width:200px;
   height:220px;
   border: 1px solid #E4E4E4;
   border-radius: 10px;
-  margin-top: 30px;
-  margin-left: 40px;
+  margin: 20px 0px 20px 40px;
 }
 
 .images{
@@ -206,8 +256,13 @@ textarea {
     margin: 40px 0px 30px 30px;
 }
 
-.position > span{
-    margin-right: 30px;
+.star {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.star > strong {
+  margin-right: 15px;
 }
 `
 

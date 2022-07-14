@@ -4,26 +4,28 @@ import styled from 'styled-components';
 import { Reviewdata } from '../../shared/reviewdata';
 import { MdOutlinePlace } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import dog from '../../images/dog.jpg'
+
 
 function RCard() {
     const navigate = useNavigate();
     return (
         <Container>
-            {Reviewdata.map((item,index) => (
-                <div className='card' 
-                key={index}
-                     onClick={() => {
-                        navigate('/reviewdetail' 
-                        // + item.placePostId
+            {Reviewdata.map((item, index) => (
+                <div className='card'
+                    key={index}
+                    onClick={() => {
+                        navigate('/reviewdetail'
+                            // + item.placePostId
                         )
                     }}>
-                
+
                     {/* 카드 위쪽 '타이틀' */}
                     <div className='card-top'>
                         <h3>{item.title}</h3>
                         <p>{item.productType}</p>
                     </div>
-                    <a><MdOutlinePlace/> {item.url}</a>
+                    <a><MdOutlinePlace /> {item.url}</a>
                     {/* 카드 중간 '이미지'*/}
                     <div className='card-body'>
                         <div className='image'>
@@ -31,10 +33,14 @@ function RCard() {
                         </div>
                         {/* 카드 아래쪽 '아이디 및 내용물' */}
                         <div className='profile_box'>
-                            <div className='profile' />
+                            <div className='detail_profile'>
+                                <img src={dog} alt="프로필" />
+                            </div>
                             <strong>{item.nickname}</strong>
                         </div>
-                        <p>{item.content}</p>
+                        <div className='content'>
+                            <p>{item.content}</p>
+                        </div>
                     </div>
                 </div>
             ))}
@@ -44,27 +50,24 @@ function RCard() {
 
 const Container = styled.div`
 display: grid;
-grid-template-columns: repeat(auto-fit,500px);
+grid-template-columns: repeat(auto-fit, 400px);
 gap: 3.5em;
 justify-content: center;
 align-items: center;
-// background-color: lightgray;
 
 
 .card {
 background: white;
 border-radius: 30px;
 border: 1px solid lightgray;
-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.09);
 cursor: pointer;
 overflow: hidden;
-height: 668px;
+height: 550px;
 }
 
 .card-top {
     display: flex;
     margin: 30px 0px 0px 30px;
-    width: 100%;
 }
 
 .card-top p {
@@ -79,8 +82,8 @@ a {
 }
 
 .card-body {
-    width: 460px;
-    margin-left: 19px;
+    width: 340px;
+    margin-left: 29px;
 }
 
 .image{
@@ -90,7 +93,7 @@ a {
 
 .card-body img {
     width: 100%;
-    height: 300px;
+    height: 270px;
     object-fit: cover;
 }
 
@@ -99,12 +102,20 @@ a {
     margin-top: 15px;
 }
 
-.profile{
-    width: 50px;
-    height:50px;
+  .detail_profile > img {
+    width:45px;
+    height:45px;
     border-radius:50%;
-    border:1px solid black;  
-  }
+    margin-left: 10px;
+}
+
+.detail_profile{
+    border-radius:50%;
+    /* display:flex; */
+    align-items:center;
+    display:block;
+    justify-content:center;
+}
   
   strong { 
     font-family: 'Noto Sans KR';
@@ -116,6 +127,13 @@ a {
     margin-top: 10px;
     margin-left: 5px;
   }
+
+  .content { 
+    width: 330px;
+    height: 80px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
 `;
 
 export default RCard

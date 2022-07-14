@@ -4,6 +4,7 @@ import styled from 'styled-components';
 //  elements & components
 import Grid from '../../components/elements/Grid';
 import Header from '../../components/main/Header';
+import Footer from '../../components/main/Footer';
 import LCard from '../../components/cards/LCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ function Place() {
           </div>
           <LCard />
       </Container>
+      <Footer/>
     </div>
   )
 }

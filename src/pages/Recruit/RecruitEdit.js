@@ -9,9 +9,9 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/esm/locale';
 
-import { useDispatch } from 'react-redux';
-import { createPostDB } from '../../redux/modules/post';
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePostDB } from '../../redux/modules/post';
+import { useNavigate, useParams } from 'react-router-dom'
 import { getCookie } from "../../shared/Cookie";
 
 import Grid from '../../components/elements/Grid';
@@ -20,8 +20,10 @@ import Footer from '../../components/main/Footer';
 
 function RecruitEdit() {
   const navigate = useNavigate();
-  const [on, setOn] = useState(false)
+  const dispatch = useDispatch();
+  let { recruitPostId } = useParams();
 
+  const [status, setStatus] = useState(false)
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState(new Date());
@@ -29,9 +31,23 @@ function RecruitEdit() {
   const [place, setPlace] = useState('');
   const [age, setAge] = useState('');
 
+
+  const upload = () => {
+    const newPost = {
+      title,
+      content,
+      date,
+      time,
+      place,
+      age
+    }
+    dispatch(updatePostDB(recruitPostId, newPost));
+    console.log(recruitPostId, newPost)
+  }
+
   // 모집중 , 모집완료 상태 변경하기 
   const inputChange = () => {
-    setOn(!on);
+    setStatus(!status);
   };
 
   return (
@@ -47,7 +63,7 @@ function RecruitEdit() {
               onClick={inputChange}>
                 <span>선택</span>
               </label>
-              <p> {!on ? "모집중" : "모집완료"}</p>
+              <p> {!status ? "모집중" : "모집완료"}</p>
             </div>
             <div className='input__section'>
             <div style={{ marginBottom: "25px",}}>
@@ -112,7 +128,7 @@ function RecruitEdit() {
               취소 </button>
               <button 
               className='btn'
-                
+                onClick={upload}
                 > 
                 등록하기</button>
             </Btn>

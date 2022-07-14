@@ -34,18 +34,19 @@ export function deletePost() {
 }
 
 // middleware
-export const createPostDB = async (post_data) => {
+export const createPostDB = (post_data) => {
   const post = post_data;
   return function (dispatch) {
     axios.post(`http://dlckdals04.shop/api/recruits`, post,
       { headers: { Authorization: `Bearer ${getCookie("accessToken")}` } })
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         dispatch(createPost(response.data))
         window.alert('게시물 작성을 성공했습니다.')
+        console.log('게시물 성공')
         window.location.href = "/recruit"
       }).catch((error) => {
-        // console.log(error.message);
+        console.log(error.message);
         window.alert('게시물 작성이 실패했습니다.')
       })
   };
@@ -88,8 +89,8 @@ export const updatePostDB = ( recruitPostId, newPost) => {
         { Authorization: `Bearer ${getCookie("accessToken")}` }
     })
           .then((res) => {
-              console.log(res.data.post);
-              dispatch(updatePost(recruitPostId, res.data.post));
+              console.log(res);
+              dispatch(updatePost(recruitPostId, res));
               alert(res.data.message);
               window.location.href = "/recruit"
           })
@@ -99,7 +100,7 @@ export const updatePostDB = ( recruitPostId, newPost) => {
   };
 };
 
-export const deletePostDB = (recruitPostId) => {
+export const deletePostDB = (recruitPostId, navigate) => {
   return function (dispatch) {
     axios
       .delete('http://dlckdals04.shop/api/recruits/' + recruitPostId,
@@ -110,7 +111,7 @@ export const deletePostDB = (recruitPostId) => {
       .then((response) => {
         dispatch(deletePost(response.data));
         alert('삭제가 완료되었습니다.')
-        window.location.href = "/recruit"
+        navigate('/recruit')
       })
       .catch((error) => {
         alert('게시글을 삭제할 권한이 없습니다.')
@@ -118,11 +119,16 @@ export const deletePostDB = (recruitPostId) => {
   };
 };
 
-
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   // console.log(action)
   switch (action.type) {
+    // case "post/CREATE": {
+    //   console.log(action);
+    //   const new_post_list = [...state.list, action.post];
+    //   return { list: new_post_list };
+    // }
+
     case "post/LOAD": {
       // console.log(action.post_list.data);
       return { list: action.post_list.data };
@@ -133,14 +139,15 @@ export default function reducer(state = initialState, action = {}) {
       return { list: action.post_list };
     }
 
-    case "post/UPDATE": {
-      console.log(action);
-      const new_post_list = state.list.filter((l, idx) => {
-        return parseInt(action.post_index) !== idx;
-      });
-      const new_list = [...new_post_list, action.post];
-      return { list: new_list };
-    }
+    // case "post/UPDATE": {
+    //   console.log(action.post_list);
+    //   const new_post_list = state.list.filter((l, idx) => {
+    //     return parseInt(action.post_index) !== idx;
+    //   });
+    //   const new_list = [...new_post_list, action.post];
+    //   return { list: new_list };
+    // }
+
     case "post/DELETE": {
       const empty_list = [];
       return { list: empty_list };

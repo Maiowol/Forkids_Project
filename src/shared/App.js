@@ -27,7 +27,6 @@ import ReviewEdit from "../pages/Review/ReviewEdit";
 //마이 페이지
 import ProfileManager from "../pages/Mypage/ProfileManager";
 import ProfileInsert from "../pages/Mypage/ProfileInsert";
-import BookMark from "../pages/Mypage/BookMark";
 import WelcomeModal from "../modal/WelcomeModal";
 
 function App() {
@@ -60,7 +59,6 @@ function App() {
         {/* <Route  path="/mypage/:roomId" element={< MyPage />} /> */}
         {/* <Route  path="/mypage" element={< MyPage />} /> */}
         <Route path="/manager/:nickname" element={<ProfileManager />} />
-        <Route path="/bookmark" element={<BookMark />} />
         <Route path="/profileinsert" element={<ProfileInsert />} />
 
         {/* 이쪽 모달은 추후에 삭제 예정 */}

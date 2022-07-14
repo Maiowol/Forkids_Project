@@ -4,11 +4,12 @@ import styled from 'styled-components';
 //  elements & components
 import Grid from '../../components/elements/Grid';
 import Header from '../../components/main/Header';
+import Footer from '../../components/main/Footer';
 import RCard from '../../components/cards/RCard';
 
 import { useNavigate } from 'react-router-dom';
 
-function Place() {
+function Review() {
   const navigate = useNavigate();
   return (
     <div>
@@ -24,6 +25,7 @@ function Place() {
           </div>
           <RCard />
       </Container>
+      <Footer/>
     </div>
   )
 }
@@ -66,4 +68,4 @@ border: 1px solid transparent;
  `;
 
 
-export default Place;
+export default Review;
