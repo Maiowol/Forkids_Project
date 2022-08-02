@@ -6,14 +6,12 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GetMyPageAxios } from "../../redux/modules/Data";
-import search from '../../images/search.png'
+import search from "../../images/search.png";
 
 const Header = () => {
-
   // Hook 선언
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   // 로컬 스토리지에 있는 토큰,닉네임,프로필Url
   const UserCheck = localStorage.getItem("accessToken");
@@ -26,13 +24,13 @@ const Header = () => {
       text: `로그아웃이 완료되었습니다.`,
       icon: "success",
       confirmButtonText: "확인",
-      confirmButtonColor: '#ffb300'
+      confirmButtonColor: "#ffb300",
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("profileUrl");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("nickname");
-        navigate('/')
+        navigate("/");
       }
     });
   };
@@ -45,16 +43,15 @@ const Header = () => {
 
   const Bookmark = () => {
     navigate("/MyBookmark");
-  }
+  };
 
   return (
     <>
-      {/* 로그인 할 때의 헤더 ============================================================================== */}
+      {/* 로그인 할 때의 헤더 */}
 
       {!UserCheck ? (
         <Headers>
-          <a className="logo_container"
-            href="/">
+          <a className="logo_container" href="/">
             <div className="logo_img">
               <img src={logo} alt="로고" />
             </div>
@@ -64,8 +61,9 @@ const Header = () => {
           {/* 메뉴 리스트 */}
           <ul className="header__menulist">
             <a href="/recruit">체험 모집</a>
-            <a href="/place"
-              className="list">장소 추천</a>
+            <a href="/place" className="list">
+              장소 추천
+            </a>
             <a href="/review">육아템 리뷰</a>
           </ul>
 
@@ -81,14 +79,11 @@ const Header = () => {
             </li>
           </ul>
         </Headers>
-
       ) : (
-        
         // 로그인 했을 때의 헤더 ==============================================================================
 
         <Headers>
-          <a className="logo_container"
-            href="/">
+          <a className="logo_container" href="/">
             <div className="logo_img">
               <img src={logo} alt="로고" />
             </div>
@@ -98,8 +93,9 @@ const Header = () => {
           {/* 메뉴 리스트 */}
           <ul className="header__menulist">
             <a href="/recruit">체험 모집</a>
-            <a href="/place"
-              className="list">장소 추천</a>
+            <a href="/place" className="list">
+              장소 추천
+            </a>
             <a href="/review">육아템 리뷰</a>
           </ul>
 
@@ -117,10 +113,10 @@ const Header = () => {
               <input type="checkbox" id="answer01" />
               <label htmlFor="answer01">
                 <div className="nickname">
-                   <p>{nickname}</p>
-                <em>
-                  <HiChevronDown className="DownDrop"></HiChevronDown>
-                </em>
+                  <p>{nickname}</p>
+                  <em>
+                    <HiChevronDown className="DownDrop"></HiChevronDown>
+                  </em>
                 </div>
               </label>
               <div className="menu animate__animated animate__fadeInUp">
@@ -159,8 +155,6 @@ const Headers = styled.div`
   color: #3c3c3c;
   filter: drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
 
- 
-  
   input[id*="answer"] {
     display: none;
   }
@@ -168,7 +162,7 @@ const Headers = styled.div`
   input[id*="answer"] + label {
     display: block;
     cursor: pointer;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 16px;
@@ -176,7 +170,7 @@ const Headers = styled.div`
     margin-left: 4px;
   }
 
-  .searchicon{
+  .searchicon {
     margin-right: 30px;
   }
 
@@ -222,15 +216,14 @@ const Headers = styled.div`
     }
   }
 
-  .DownDrop{
-    color: #A8A8A8;
+  .DownDrop {
+    color: #a8a8a8;
     width: 30px;
     height: 30px;
     margin-left: 2px;
-
   }
 
-  .DownDrop:hover{
+  .DownDrop:hover {
     color: black;
   }
 
@@ -267,8 +260,8 @@ const Headers = styled.div`
 
   a {
     text-decoration: none;
-    color: #A58646;
-    font-family: 'Nanum Gothic'
+    color: #a58646;
+    font-family: "Nanum Gothic";
   }
 
   a:hover {
@@ -276,10 +269,10 @@ const Headers = styled.div`
     font-weight: bold;
   }
 
-.list {
-  margin-left: 60px;
-  margin-right: 60px;
-}
+  .list {
+    margin-left: 60px;
+    margin-right: 60px;
+  }
 
   .menuOne > div > p:hover {
     color: #6b4e16;
@@ -287,14 +280,14 @@ const Headers = styled.div`
 
   .menuOne > div > p {
     cursor: pointer;
-    color: #A8A8A8;
+    color: #a8a8a8;
     font-style: normal;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700px;
     font-size: 16px;
     line-height: 18px;
     margin-top: 12px;
-    margin-bottom: -1px
+    margin-bottom: -1px;
   }
 
   .menuTwo > div > p:hover {
@@ -303,8 +296,8 @@ const Headers = styled.div`
 
   .menuTwo > div > p {
     cursor: pointer;
-    color: #A8A8A8;
-    font-family: 'Nanum Gothic', sans-serif;
+    color: #a8a8a8;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 18px;
@@ -315,7 +308,7 @@ const Headers = styled.div`
     font-size: 20px;
     font-weight: 700;
     color: #f4b03e;
-    font-family: 'NanumGothic', sans-serif;
+    font-family: "NanumGothic", sans-serif;
     font-weight: 700;
   }
   .logo_container {
@@ -327,7 +320,7 @@ const Headers = styled.div`
   .logo_img {
     width: 40px;
     height: 40px;
-    margin:18px;
+    margin: 18px;
     display: flex;
     align-items: center;
   }
@@ -337,7 +330,7 @@ const Headers = styled.div`
     height: 50px;
     cursor: pointer;
   }
-  .bell > a >  img {
+  .bell > a > img {
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -353,7 +346,7 @@ const Headers = styled.div`
     margin-top: 19px;
   }
 
-  .li_color{
+  .li_color {
     font-size: 100px;
   }
 
@@ -361,7 +354,7 @@ const Headers = styled.div`
     font-size: 35px;
     cursor: pointer;
   }
-  .bell > a{
+  .bell > a {
     display: flex;
     align-items: center;
   }
@@ -370,7 +363,7 @@ const Headers = styled.div`
     display: none;
     font-size: 20px;
   }
- 
+
   .header__left {
     display: flex;
   }
@@ -405,7 +398,7 @@ const Headers = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid #E4E4E4;
+    border: 1px solid #e4e4e4;
   }
 
   .LogoOut > a {
@@ -417,14 +410,13 @@ const Headers = styled.div`
     cursor: pointer;
     margin-right: 62px;
     margin-left: 32px;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     margin-top: 4px;
   }
 
-
   .LogoOutTwo {
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 18px;
@@ -436,7 +428,7 @@ const Headers = styled.div`
   }
 
   .Login > a {
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 16px;
@@ -531,7 +523,7 @@ const Headers = styled.div`
       display: none;
     }
 
-    .searchicon{
+    .searchicon {
       display: none;
     }
   }

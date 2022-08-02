@@ -20,11 +20,13 @@ function SearchInput() {
           onKeyPress={(event) => searchBtn(event)}
         />
       </div>
-      <Btn 
-      onClick={() => {
-        navigate(`/api/search`);
-      }}
-      >확인</Btn>
+      <Btn
+        onClick={() => {
+          navigate(`/api/search`);
+        }}
+      >
+        확인
+      </Btn>
     </SearchBox>
   );
 }
@@ -34,7 +36,7 @@ const SearchBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   img {
     width: 30px;
     height: 30px;

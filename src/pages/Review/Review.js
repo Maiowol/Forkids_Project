@@ -1,15 +1,14 @@
 //육아템 리뷰
 import React from "react";
 import styled from "styled-components";
-import ChatIcon from '../../components/main/ChatIcon'
+import ChatIcon from "../../components/main/ChatIcon";
 
 //  elements & components
 import Header from "../../components/main/Header";
 import Footer from "../../components/main/Footer";
 import RCard from "../../components/cards/RCard";
-import bottle from '../../images/bottle.png';
+import bottle from "../../images/bottle.png";
 import { useNavigate } from "react-router-dom";
-
 
 function Review() {
   const token = localStorage.getItem("accessToken");
@@ -24,7 +23,7 @@ function Review() {
             <SubTitle>유용한 육아 아이템들을 소개하고 추천해요!</SubTitle>
           </div>
           <div className="image">
-             <img src={bottle}/>
+            <img src={bottle} />
           </div>
           <span className="spanstyle">내가 써본 육아템, 알려주고 싶다면?</span>
           <div className="button">
@@ -32,14 +31,16 @@ function Review() {
               <Btn
                 onClick={() => {
                   navigate(`/login`);
-                }}>
-                  후기 작성하기
+                }}
+              >
+                후기 작성하기
               </Btn>
             ) : (
               <Btn
                 onClick={() => {
                   navigate(`/reviewadd`);
-                }}>
+                }}
+              >
                 후기 작성하기
               </Btn>
             )}
@@ -49,7 +50,7 @@ function Review() {
           <RCard />
         </div>
       </Container>
-      <ChatIcon/>
+      <ChatIcon />
     </div>
   );
 }
@@ -72,7 +73,7 @@ const Container = styled.div`
   }
 
   .card_box {
-    background: #FAFAFA;
+    background: #fafafa;
   }
 
   .button {
@@ -104,7 +105,7 @@ const Title = styled.p`
   font-weight: 750;
   margin-bottom: 0px;
   color: #6b4e16;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 800;
 `;
 
@@ -115,7 +116,7 @@ const SubTitle = styled.p`
   color: #3c3c3c;
   margin-bottom: 20px;
   padding-top: 15px;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 700;
 `;
 

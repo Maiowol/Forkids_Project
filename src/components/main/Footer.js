@@ -5,14 +5,17 @@ import "../../shared/App.css";
 import Figma from "../../images/Figma.png";
 
 const Footer = () => {
-
   return (
     <FooterContainer>
       <div className="one_container">
         <div className="one">
           <div className="one_box">
             <div className="icon_box">
-              <a href="https://github.com/Maiowol/Forkids_Project" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/Maiowol/Forkids_Project"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaGithub></FaGithub>
               </a>
             </div>
@@ -26,7 +29,11 @@ const Footer = () => {
         <div className="two">
           <div className="two_box">
             <div className="icon_box">
-              <a href="https://github.com/changmin97/forkidsProject" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/changmin97/forkidsProject"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaGithub></FaGithub>
               </a>
             </div>
@@ -40,7 +47,11 @@ const Footer = () => {
         <div className="three">
           <div className="three_box">
             <div className="icon_box">
-              <a href="https://www.figma.com/file/6oxe17NH1VuhHdZxdj9X9N/항해99" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.figma.com/file/6oxe17NH1VuhHdZxdj9X9N/항해99"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <img src={Figma} alt="이미지" />
               </a>
             </div>
@@ -68,7 +79,7 @@ const FooterContainer = styled.footer`
   position: relative;
   transform: translateY(0%);
 
-  font-family: 'NanumGothic';
+  font-family: "NanumGothic";
 
   .one_container {
     height: 80%;
@@ -128,7 +139,6 @@ const FooterContainer = styled.footer`
     font-size: 16px;
     font-weight: 700;
     margin-left: 40px;
-
   }
 
   .two_box {

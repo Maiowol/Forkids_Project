@@ -9,7 +9,7 @@ import Footer from "../../components/main/Footer";
 const SignUp = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [emailcode, setEmailCode] = useState('');
+  const [emailcode, setEmailCode] = useState("");
 
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
@@ -105,23 +105,24 @@ const SignUp = () => {
     }
 
     if (isEmail) {
-      await axios.post(`${url}/api/users/signup/emailCheck`, {
-        email
-      }
-      ).then((res) => {
-        console.log(res)
-        if (res.data.result) {
-          checkOverlapEmail(true);
-          setOverlapEmailMessage("사용 가능한 이메일입니다.");
-        }
-      })
+      await axios
+        .post(`${url}/api/users/signup/emailCheck`, {
+          email,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.result) {
+            checkOverlapEmail(true);
+            setOverlapEmailMessage("사용 가능한 이메일입니다.");
+          }
+        })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           checkOverlapEmail(false);
           setIsEmail(false);
           setEmailMessage("사용 중인 이메일입니다.");
         });
-    };
+    }
   };
 
   //닉네임 중복 확인
@@ -132,61 +133,72 @@ const SignUp = () => {
     }
 
     if (isNickname) {
-      await axios.post(`${url}/api/users/signup/nicknameCheck`, {
-        nickname
-      }
-      ).then((res) => {
-        if (res.data.result) {
-          checkOverlapNickName(true);
-          setOverlapNicknameMessage("사용 가능한 닉네임입니다.");
-        }
-      })
+      await axios
+        .post(`${url}/api/users/signup/nicknameCheck`, {
+          nickname,
+        })
+        .then((res) => {
+          if (res.data.result) {
+            checkOverlapNickName(true);
+            setOverlapNicknameMessage("사용 가능한 닉네임입니다.");
+          }
+        })
         .catch((err) => {
           checkOverlapNickName(false);
           setIsNickname(false);
           setNicknameMessage("사용 중인 닉네임입니다.");
         });
-    };
+    }
   };
 
   // 이메일 인증코드 받기
   const register = (e) => {
     e.preventDefault();
-    if (email && nickname && password && passwordCheck.length > 0 &&
-      OverLapEmail === true && OverLapNickName === true) {
-      setDisable(true)
-      setModalIsOpen(true)
+    if (
+      email &&
+      nickname &&
+      password &&
+      passwordCheck.length > 0 &&
+      OverLapEmail === true &&
+      OverLapNickName === true
+    ) {
+      setDisable(true);
+      setModalIsOpen(true);
       axios
         .post(`${url}/api/users/signup/authMail`, {
-          email
+          email,
         })
         .then((response) => {
           console.log(response);
-          setEmailCode(response.data.authCode)
+          setEmailCode(response.data.authCode);
         })
         .catch((error) => {
           // console.log(error);
           console.log(error.response.data.Message);
         });
     } else {
-      return null
+      return null;
     }
-  }
+  };
 
   const data = {
     email,
     nickname,
     password,
-    passwordCheck
-  }
-
+    passwordCheck,
+  };
 
   return (
     <>
       <Header />
       <BackGround>
         <Grid height="100vh" overflowY="hidden">
-          <Grid maxWidth="1440px" height="100%" margin="0 auto" padding="0 12px">
+          <Grid
+            maxWidth="1440px"
+            height="100%"
+            margin="0 auto"
+            padding="0 12px"
+          >
             <Container>
               <Grid height="700px">
                 <Grid maxWidth="550px" margin="0 auto">
@@ -197,9 +209,7 @@ const SignUp = () => {
                     <div>
                       <Box>
                         {/* 이메일 */}
-                        <label className="form-label">
-                          이메일
-                        </label>
+                        <label className="form-label">이메일</label>
                         <div className="formbox">
                           <input
                             onChange={onChangeEmail}
@@ -208,13 +218,8 @@ const SignUp = () => {
                             placeholder="이메일을 입력하세요"
                           ></input>
                           <div className="check_btn">
-                            <button
-                              onClick={Checkemail}
-                            >
-                              중복 확인
-                            </button>
+                            <button onClick={Checkemail}>중복 확인</button>
                           </div>
-
                         </div>
                         <div className="message_div">
                           {OverLapEmail ? (
@@ -242,9 +247,7 @@ const SignUp = () => {
                         </div>
 
                         {/* 닉네임 */}
-                        <label className="form-label">
-                          닉네임
-                        </label>
+                        <label className="form-label">닉네임</label>
                         <div className="formbox">
                           <input
                             onChange={onChangeNickname}
@@ -253,13 +256,8 @@ const SignUp = () => {
                             placeholder="닉네임을 입력하세요"
                           ></input>
                           <div className="check_btn">
-                            <button
-                              onClick={Checknikname}
-                            >
-                              중복 확인
-                            </button>
+                            <button onClick={Checknikname}>중복 확인</button>
                           </div>
-
                         </div>
                         <div className="message">
                           {OverLapNickName ? (
@@ -289,9 +287,7 @@ const SignUp = () => {
                         </div>
 
                         {/* 비밀번호 */}
-                        <label className="form-label">
-                          비밀번호
-                        </label>
+                        <label className="form-label">비밀번호</label>
                         <input
                           onChange={onChangePassword}
                           type="password"
@@ -312,9 +308,7 @@ const SignUp = () => {
                         </div>
 
                         {/* 비밀번호 확인 */}
-                        <label className="form-label">
-                          비밀번호 체크
-                        </label>
+                        <label className="form-label">비밀번호 체크</label>
                         <input
                           onChange={onChangePasswordConfirm}
                           type="password"
@@ -326,7 +320,9 @@ const SignUp = () => {
                             <span
                               className="print_message"
                               style={{
-                                color: isPasswordConfirm ? "#5493f1" : "#ff2626",
+                                color: isPasswordConfirm
+                                  ? "#5493f1"
+                                  : "#ff2626",
                               }}
                             >
                               {passwordConfirmMessage}
@@ -335,20 +331,16 @@ const SignUp = () => {
                         </div>
                       </Box>
                       <Grid height="auto">
-                        
-                          <LoginBtn
-                            disabled={disable}
-                            onClick={register}
-                          >
-                            가입 완료</LoginBtn>
-                          {/* 이메일 인증코드, 데이터 등 EmailAlert으로 넘김 */}
-                          <EmailAlert
-                            emailcode={emailcode}
-                            data={data}
-                            open={modalIsOpen}
-                            onClose={() =>
-                              setModalIsOpen(false)}
-                          />
+                        <LoginBtn disabled={disable} onClick={register}>
+                          가입 완료
+                        </LoginBtn>
+                        {/* 이메일 인증코드, 데이터 등 EmailAlert으로 넘김 */}
+                        <EmailAlert
+                          emailcode={emailcode}
+                          data={data}
+                          open={modalIsOpen}
+                          onClose={() => setModalIsOpen(false)}
+                        />
                       </Grid>
                     </div>
                   </div>
@@ -358,39 +350,38 @@ const SignUp = () => {
           </Grid>
         </Grid>
       </BackGround>
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
-
 const BackGround = styled.div`
-background: #FAFAFA;
-padding-bottom: 100px;
+  background: #fafafa;
+  padding-bottom: 100px;
 `;
 
 const Container = styled.div`
-font-family: "Nanum Gothic";
-width: 620px;
-height: 800px;
-padding-bottom: 30px;
+  font-family: "Nanum Gothic";
+  width: 620px;
+  height: 800px;
+  padding-bottom: 30px;
 
-background: white;
+  background: white;
 
-margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
-margin-top: 80px;
-margin-bottom: 32px;
-display: flex;
-flex-direction: column;
+  margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
+  margin-top: 80px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
 
-border: 1px solid lightgray;
-border-radius: 10px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
 
   .form-label {
     margin-top: 10px;
     font-weight: bold;
-    color: #3C3C3C;
-    font-family: 'Nanum Gothic', sans-serif;
+    color: #3c3c3c;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
   }
 
@@ -404,7 +395,7 @@ border-radius: 10px;
     background-color: transparent;
     background-image: none;
     box-sizing: ${(props) => props.boxSizing};
-    border: 1px solid #A8A8A8;
+    border: 1px solid #a8a8a8;
     border-radius: 10px;
     -webkit-transition: border-color ease-in-out 0.15s;
     transition: border-color ease-in-out 0.15s;
@@ -413,14 +404,14 @@ border-radius: 10px;
     margin-bottom: 10px;
 
     &:focus {
-      border: 1px solid #F4B03E;
+      border: 1px solid #f4b03e;
       outline: none;
     }
 
     ::placeholder {
       font-size: 15px;
-      color: #A8A8A8;
-    } 
+      color: #a8a8a8;
+    }
   }
 
   .Box {
@@ -432,7 +423,7 @@ border-radius: 10px;
 const Title = styled.h1`
   font-size: 28px;
   font-weight: bold;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 700;
 `;
 
@@ -444,7 +435,7 @@ const LoginBtn = styled.button`
   background-color: #3c3c3c;
   text-align: center;
   border-radius: 10px;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 700;
 
   justify-content: center;
@@ -463,32 +454,28 @@ const LoginBtn = styled.button`
 
 const Box = styled.div`
   margin: 40px 0px 0px 100px;
-  
+
   .formbox {
     display: flex;
   }
-
 
   .check_btn {
     margin-left: 10px;
     margin-top: 3px;
     width: 100px;
     height: 35px;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
-  
 
     button {
-    border-radius: 10px; 
-    font-weight: 600;
-    background: #FAFAFA;
-    color: #3C3C3C;
-    border: 1px solid #A8A8A8;
-    padding: 6px 12px 6px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      background: #fafafa;
+      color: #3c3c3c;
+      border: 1px solid #a8a8a8;
+      padding: 6px 12px 6px 12px;
     }
-    
   }
-
 `;
 
 export default SignUp;
