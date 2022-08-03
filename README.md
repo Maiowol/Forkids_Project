@@ -66,6 +66,8 @@
 <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">  ![image](https://user-images.githubusercontent.com/87432361/182510977-9bd5d8c2-49c5-4a73-affa-a2e6eae08001.png)
  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">  
  
+ <br/>
+ 
  ## 📓 라이브러리
  
  
@@ -93,6 +95,8 @@
 |  react-device-detect | 모바일 감지 | 2.2.2  |
 </div>
 </details>
+ 
+ <br/>
 
 ## 🎨 와이어 프레임 
 ⭐ [Figma](https://www.figma.com/file/6oxe17NH1VuhHdZxdj9X9N/%ED%95%AD%ED%95%B499_v1?node-id=0%3A1)  
