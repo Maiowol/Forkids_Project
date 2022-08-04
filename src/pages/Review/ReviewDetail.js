@@ -4,7 +4,7 @@ import { GrLocation } from "react-icons/gr";
 import Swal from "sweetalert2";
 import Header from '../../components/main/Header'
 import ReviewComment from '../../components/pages/ReviewComment'
-import {useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../../components/main/Footer';
 import ChatIcon from '../../components/main/ChatIcon'
@@ -15,18 +15,18 @@ import { GetMyPageAxios } from "../../redux/modules/Data";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
 const ReviewDetail = () => {
-const nickname = localStorage.getItem("nickname");
-const {reviewPostId} = useParams();
-const [detail, setDetail] = React.useState()
-const navigate = useNavigate()
-const dispatch = useDispatch();
-const [num,setnum] = React.useState(0)
-const token = localStorage.getItem('accessToken')
-const url = process.env.REACT_APP_URL;
- 
+  const nickname = localStorage.getItem("nickname");
+  const { reviewPostId } = useParams();
+  const [detail, setDetail] = React.useState()
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const [num, setnum] = React.useState(0)
+  const token = localStorage.getItem('accessToken')
+  const url = process.env.REACT_APP_URL;
+
   React.useEffect(() => {
     axios
-      .get(`${url}/api/reviews/` + reviewPostId,token ?{
+      .get(`${url}/api/reviews/` + reviewPostId, token ? {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -36,16 +36,16 @@ const url = process.env.REACT_APP_URL;
       });
   }, []);
 
-  const refetch = () =>{
+  const refetch = () => {
     axios
-    .get(`${url}/api/reviews/` + reviewPostId,token ?{
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    } : null)
-    .then((res) => {
-      setDetail(res.data.reviewDetails);
-    });
+      .get(`${url}/api/reviews/` + reviewPostId, token ? {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      } : null)
+      .then((res) => {
+        setDetail(res.data.reviewDetails);
+      });
   }
 
 
@@ -63,30 +63,30 @@ const url = process.env.REACT_APP_URL;
       confirmButtonColor: '#d33',
       cancelButtonColor: '#ffb300',
       confirmButtonText: '삭제',
-      cancelButtonText:'취소'
+      cancelButtonText: '취소'
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-        .delete(`${url}/api/reviews/` + reviewPostId,
-          { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } })
-        .then((response) => {
-          Swal.fire({
-            text: `게시글 삭제가 완료되었습니다!`,
-            icon: "success",
-            confirmButtonText: "확인", 
-            confirmButtonColor: '#ffb300'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate('/review')
-            }
+          .delete(`${url}/api/reviews/` + reviewPostId,
+            { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } })
+          .then((response) => {
+            Swal.fire({
+              text: `게시글 삭제가 완료되었습니다!`,
+              icon: "success",
+              confirmButtonText: "확인",
+              confirmButtonColor: '#ffb300'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                navigate('/review')
+              }
+            });
+
+          })
+          .catch((error) => {
+            alert("게시글을 삭제할 권한이 없습니다.");
           });
-          
-        })
-        .catch((error) => {
-          alert("게시글을 삭제할 권한이 없습니다.");
-        });
       }
-    })   
+    })
   };
 
   if (!detail) {
@@ -97,281 +97,216 @@ const url = process.env.REACT_APP_URL;
     <>
       <Header />
       <Container>
-      <div style={{width:"1000px",
-        margin: "0 auto" }}>
-        <Title>
-          <div className="subject">
-            육아템 리뷰
+        <div style={{
+          width: "1000px",
+          margin: "0 auto"
+        }}>
+          <Title>
+            <div className="subject">
+              육아템 리뷰
             </div>
-          <div className="page">
-            <p>상세 보기</p>
-          </div>
-        </Title>
-        <Box>
-          <div className="Box">
-            <div className="imgBox">
+            <div className="page">
+              <p>상세 보기</p>
+            </div>
+          </Title>
+          <Box>
+            <div className="Box">
+              <div className="imgBox">
 
 
 
 
-              <div className="Bigimg">
-                <img src={detail.imageUrl[num]} alt="사진" />
+                <div className="Bigimg">
+                  <img src={detail.imageUrl[num]} alt="사진" />
+                </div>
+                <div className="imgSmall">
+                  {detail.imageUrl.map((item, idx) => {
+                    return (
+                      <div key={idx}>
+                        <img src={item} alt="사진"
+                          onClick={() => {
+                            setnum(idx)
+                          }} />
+                      </div>
+                    );
+                  })}
+                </div>
+
+
+
+
+
+
+
+
               </div>
-              <div className="imgSmall">
-                {detail.imageUrl.map((item, idx) => {
-                  return (
-                    <div key={idx}>
-                      <img src={item} alt="사진" 
-                      onClick={()=>{
-                        setnum(idx)
-                      }} />
+              <ContentBox>
+                {/* 카드 오른쪽 위 */}
+                <div className="box_top">
+                  <div className="title">
+                    <div className='title_box'>
+                      <span className='onespan'>
+                        <span>{detail.title}</span>
+                        <span className={detail.nickname === nickname ? 'none' : 's'}>
+                          {detail.bookmarkStatus === true ? (
+                            <BsFillBookmarkFill
+                              className={token ? "iconbook2" : "none"}
+                              onClick={() => {
+                                axios
+                                  .put(
+                                    `${url}/api/reviews/bookmark/` +
+                                    detail.reviewPostId,
+                                    null,
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${localStorage.getItem(
+                                          "accessToken"
+                                        )}`,
+                                      },
+                                    }
+                                  )
+                                  .then((res) => {
+                                    // console.log(res.data)
+                                    refetch()
+                                  });
+                              }}
+                            />
+                          ) : (
+                            <BsBookmark
+                              className={token ? "iconbook" : "none"}
+                              onClick={() => {
+                                axios
+                                  .put(
+                                    `${url}/api/reviews/bookmark/` +
+                                    detail.reviewPostId,
+                                    null,
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${localStorage.getItem(
+                                          "accessToken"
+                                        )}`,
+                                      },
+                                    }
+                                  )
+                                  .then((res) => {
+                                    // console.log(res.data)
+                                    refetch()
+                                  });
+                              }}
+                            />
+                          )}
+                        </span>
+                      </span>
+                      <p>{detail.productType}</p>
                     </div>
-                  );
-                })}
-              </div>
+                    {nickname === detail.nickname ? (
+                      <Btn>
+                        <button className="btn"
+                          style={{ marginRight: "-8px" }}
+                          onClick={() => { navigate('/ReviewEdit/' + reviewPostId) }}
+                        >
+                          <img src={revise} alt="사진" />
+                        </button>
+                        <button className="btn"
+                          onClick={deletePlace}
+                        >
+                          <img src={img_delete} />
+                        </button>
 
 
-
-
-
-
-
-              
-            </div>
-            <ContentBox>
-              {/* 카드 오른쪽 위 */}
-              <div className="box_top">
-                <div className="title">
-                  <div className='title_box'>
-                  <span className='onespan'>
-                    <span>{detail.title}</span>
-                    <span className={detail.nickname === nickname ? 'none' : 's'}>
-                    {detail.bookmarkStatus === true ? (
-                      <BsFillBookmarkFill
-                        className={token ? "iconbook2" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/reviews/bookmark/` +
-                              detail.reviewPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
+                        {detail.bookmarkStatus === true ? (
+                          <BsFillBookmarkFill
+                            className={token ? "iconbook3" : "none"}
+                            onClick={() => {
+                              axios
+                                .put(
+                                  `${url}/api/reviews/bookmark/` +
+                                  detail.reviewPostId,
+                                  null,
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${localStorage.getItem(
+                                        "accessToken"
+                                      )}`,
+                                    },
+                                  }
+                                )
+                                .then((res) => {
+                                  // console.log(res.data)
+                                  refetch()
+                                });
+                            }}
+                          />
+                        ) : (
+                          <BsBookmark
+                            className={token ? "iconbook4" : "none"}
+                            onClick={() => {
+                              axios
+                                .put(
+                                  `${url}/api/reviews/bookmark/` +
+                                  detail.reviewPostId,
+                                  null,
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${localStorage.getItem(
+                                        "accessToken"
+                                      )}`,
+                                    },
+                                  }
+                                )
+                                .then((res) => {
+                                  // console.log(res.data)
+                                  refetch()
+                                });
+                            }}
+                          />
+                        )}
+                      </Btn>
                     ) : (
-                      <BsBookmark
-                        className={token ? "iconbook" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/reviews/bookmark/` +
-                              detail.reviewPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
+                      <></>
                     )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    </span>
-                  </span>
-                  <p>{detail.productType}</p>
                   </div>
-                  {nickname === detail.nickname ? (
-                <Btn>
-                  <button className="btn"
-                  style={{ marginRight: "-8px" }}
-                  onClick={()=>{navigate('/ReviewEdit/' + reviewPostId)}}
-                  >
-                  <img src={revise} alt="사진" />
-                  </button>
-                  <button className="btn"
-                  onClick={deletePlace}
-                  >
-                <img src={img_delete} />
-                  </button>
+                  {/* 카드 오른쪽 중간 */}
+                  <div className="location">
+                    <p>
+                      <GrLocation
+                        style={{
+                          margin: "0px 3px 3px 4px"
+                        }} />
+                      {detail.url}
+                    </p>
+                  </div>
+                  <div className="info">
+                    <Image>
+                      <div className="ProfileImg">
+                        <img src={detail.profileUrl} alt="사진"
+                          onClick={() => {
+                            navigate("/manager/" + detail.nickname);
+                            dispatch(GetMyPageAxios(detail.nickname));
+                          }}
 
-
-                  {detail.bookmarkStatus === true ? (
-                      <BsFillBookmarkFill
-                        className={token ? "iconbook3" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/reviews/bookmark/` +
-                              detail.reviewPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    ) : (
-                      <BsBookmark
-                        className={token ? "iconbook4" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/reviews/bookmark/` +
-                              detail.reviewPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </Btn>
-              ) : (
-                <></>
-              )}
-                </div>
-                {/* 카드 오른쪽 중간 */}
-                <div className="location">
-                  <p>
-                  <GrLocation
-                      style={{
-                        margin: "0px 3px 3px 4px"
-                      }} />
-                    {detail.url}
-                  </p>
-                </div>
-                <div className="info">
-                  <Image>
-                    <div className="ProfileImg">
-                      <img src={detail.profileUrl} alt="사진"
+                        />
+                      </div>
+                    </Image>
+                    <p className="nickname"
                       onClick={() => {
                         navigate("/manager/" + detail.nickname);
                         dispatch(GetMyPageAxios(detail.nickname));
                       }}
 
-                      />
-                    </div>
-                  </Image>
-                  <p className="nickname"
-                  onClick={() => {
-                    navigate("/manager/" + detail.nickname);
-                    dispatch(GetMyPageAxios(detail.nickname));
-                  }}
-                  
-                  >{detail.nickname}</p>
+                    >{detail.nickname}</p>
+                  </div>
                 </div>
-              </div>
-              {/* 카드 내용 */}
-              <div className="box">
-                <div className="content">
-                  <p>{detail.content}</p>
+                {/* 카드 내용 */}
+                <div className="box">
+                  <div className="content">
+                    <p>{detail.content}</p>
+                  </div>
                 </div>
-              </div>
-            </ContentBox>
-          </div>
-        </Box>
-        <ReviewComment />
+              </ContentBox>
+            </div>
+          </Box>
+          <ReviewComment />
         </div>
       </Container>
       <ChatIcon />

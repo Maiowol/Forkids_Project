@@ -2,14 +2,11 @@
 import React from "react";
 import styled from "styled-components";
 import ChatIcon from '../../components/main/ChatIcon'
-
-//  elements & components
 import Header from "../../components/main/Header";
-import Footer from "../../components/main/Footer";
 import RCard from "../../components/cards/RCard";
 import bottle from '../../images/bottle.png';
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 function Review() {
   const token = localStorage.getItem("accessToken");
@@ -24,24 +21,22 @@ function Review() {
             <SubTitle>유용한 육아 아이템들을 소개하고 추천해요!</SubTitle>
           </div>
           <div className="image">
-             <img src={bottle}/>
+            <img src={bottle} />
           </div>
           <span className="spanstyle">내가 써본 육아템, 알려주고 싶다면?</span>
           <div className="button">
             {!token ? (
-              <Btn
-                onClick={() => {
-                  navigate(`/login`);
-                }}>
+              <Link to="/login">
+                <Btn>
                   후기 작성하기
-              </Btn>
+                </Btn>
+              </Link>
             ) : (
-              <Btn
-                onClick={() => {
-                  navigate(`/reviewadd`);
-                }}>
-                후기 작성하기
-              </Btn>
+              <Link to="/reviewadd">
+                <Btn>
+                  후기 작성하기
+                </Btn>
+              </Link>
             )}
           </div>
         </TitleBox>
@@ -49,7 +44,7 @@ function Review() {
           <RCard />
         </div>
       </Container>
-      <ChatIcon/>
+      <ChatIcon />
     </div>
   );
 }

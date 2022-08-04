@@ -10,8 +10,8 @@ import plus from "../../images/plus.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ChatIcon from '../../components/main/ChatIcon';
-import img_delete from '../../images/delete (1).png';
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 function PlaceAdd() {
   const [title, setTitle] = useState("");
@@ -32,7 +32,7 @@ function PlaceAdd() {
 
     let files = e.target.profile_files.files;
     let formData = new FormData();
-    console.log(files)
+    // console.log(files)
 
     // 다중 이미지 처리
     for (let i = 0; i < files.length; i++) {
@@ -40,7 +40,7 @@ function PlaceAdd() {
     }
 
     for (const [key, value] of formData.entries()) {
-      
+
     }
 
     // 제목,내용,장소,별점 데이터 => 폼데이터 변환
@@ -62,27 +62,21 @@ function PlaceAdd() {
           Swal.fire({
             text: `게시글 작성이 완료되었습니다.`,
             icon: "success",
-            confirmButtonText: "확인", 
+            confirmButtonText: "확인",
             confirmButtonColor: '#ffb300'
           }).then((result) => {
             if (result.isConfirmed) {
               navigate("/place")
             };
-            })
+          })
         })
         .catch((err) => {
-          // Swal.fire({
-          //   text: `게시글 작성을 실패했습니다.`,
-          //   icon: "error",
-          //   confirmButtonText: "확인", 
-          //   confirmButtonColor: '#ffb300'
-          // })
         });
     } else {
       Swal.fire({
         text: `사진은 3장 이하만 가능합니다.`,
         icon: "error",
-        confirmButtonText: "확인", 
+        confirmButtonText: "확인",
       })
     }
   };
@@ -145,47 +139,49 @@ function PlaceAdd() {
     <>
       <Header />
       <Container>
-        <div style={{width:"1170px",
-        margin: "0 auto" }}>
-        <Title>
-          <div className="subject">장소 추천</div>
-          <div className="page">
-            <p>작성하기</p>
-          </div>
-        </Title>
-        <Place>
+        <div style={{
+          width: "1170px",
+          margin: "0 auto"
+        }}>
+          <Title>
+            <div className="subject">장소 추천</div>
+            <div className="page">
+              <p>작성하기</p>
+            </div>
+          </Title>
+          <Place>
 
-          {/* 카드 위쪽: 이미지 */}
-          <div className="place">
+            {/* 카드 위쪽: 이미지 */}
+            <div className="place">
 
-            <form onSubmit={(e) => onSubmit(e)}>
-              <input
-                id="input-file"
-                type="file"
-                name="profile_files"
-                multiple="multiple"
-                style={{ display: "none" }}
-                onChange={handleImageChange}
-              />
+              <form onSubmit={(e) => onSubmit(e)}>
+                <input
+                  id="input-file"
+                  type="file"
+                  name="profile_files"
+                  multiple="multiple"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
 
-              <div className="imageBox">
-                <div className="plus_btn">
-                  <label for="input-file">
-                    <img src={plus} alt="추가" className="plusButton"/>
-                  </label>
-                  <p style={{
-                    color: "#3C3C3C"
-                  }}>
-                    사진 업로드
-                  </p>
-                  <p style={{
-                    color: "#6B4E16",
-                    marginTop: "-13px",
-                  }}>
-                    &nbsp;(최대 3장)
-                  </p>
-                </div>
-                
+                <div className="imageBox">
+                  <div className="plus_btn">
+                    <label for="input-file">
+                      <img src={plus} alt="추가" className="plusButton" />
+                    </label>
+                    <p style={{
+                      color: "#3C3C3C"
+                    }}>
+                      사진 업로드
+                    </p>
+                    <p style={{
+                      color: "#6B4E16",
+                      marginTop: "-13px",
+                    }}>
+                      &nbsp;(최대 3장)
+                    </p>
+                  </div>
+
                   {/* 이미지 미리보기 */}
                   {imageSrc.map((image, id) => (
                     <div className="img_box_size" key={id}>
@@ -200,121 +196,119 @@ function PlaceAdd() {
                       </div>
                     </div>
                   ))}
-              </div>
-
-              {/* 카드 왼쪽: 제목, 주소, 장소, 별점 */}
-              <div className="mainBox">
-                <div className="card-left">
-                  <div className="position">
-                    <strong>제목</strong>
-                    <input
-                      type="text"
-                      onChange={(e) =>
-                        setTitle(e.target.value)}
-                      placeholder="제목을 입력하세요"
-                    />
-                  </div>
-
-                  <MapSearch>
-                    <strong>주소</strong>
-                    <SearchInput
-                      id="address"
-                      type="text"
-                      placeholder="주소를 입력하세요"
-                      value={region}
-                    />
-                    <span className="address_btn">
-                      <span
-                        onClick={openModal}
-                      >
-                        주소 검색
-                      </span>
-                      <Modal
-                        open={modalOpen}
-                        close={closeModal}
-                        header="주소 검색"
-                        addressData={RegionsData}
-                      />
-                    </span>
-                  </MapSearch>
-
-                  <div className="position">
-                    <strong>장소</strong>
-                    <input
-                      type="text"
-                      placeholder="장소명을 입력하세요 (예시)뽀로로파크"
-                      onChange={(e) =>
-                        setLocation(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="star">
-                    <strong>별점</strong>
-                    {stars.map((star, index) => {
-                      const ratingValue = index + 1;
-                      return (
-                        <label>
-                          <input
-                            type="radio"
-                            name="rating"
-                            style={{ display: "none" }}
-                            value={ratingValue}
-                            onClick={() => setRating(ratingValue)}
-                          />
-                          <FaStar
-                            key={index}
-                            size={28}
-                            onClick={() => handleClick(index + 1)}
-                            onMouseOver={() => handleMouseOver(index + 1)}
-                            onMouseLeave={handleMouseLeave}
-                            color={
-                              (hoverValue || currentValue) > index
-                                ? colors.yellow
-                                : colors.grey
-                            }
-                            style={{
-                              marginRight: 10,
-                              cursor: "pointer",
-                              transition: "color 200ms",
-                            }}
-                          />
-                        </label>
-                      );
-                    })}
-                    <p onChange={(e) => 
-                      setRating(e.target.value)}>
-                      {rating}점
-                    </p>
-                  </div>
                 </div>
 
-                {/* 카드 오른쪽: textarea, buttons */}
-                <div className="card-right">
-                  <textarea onChange={(e) =>
-                    setContent(e.target.value)} 
-                    placeholder="장소와 관련한 주요 사항을 상세하게 설명해주세요.&#13;&#10;
+                {/* 카드 왼쪽: 제목, 주소, 장소, 별점 */}
+                <div className="mainBox">
+                  <div className="card-left">
+                    <div className="position">
+                      <strong>제목</strong>
+                      <input
+                        type="text"
+                        onChange={(e) =>
+                          setTitle(e.target.value)}
+                        placeholder="제목을 입력하세요"
+                      />
+                    </div>
+
+                    <MapSearch>
+                      <strong>주소</strong>
+                      <SearchInput
+                        id="address"
+                        type="text"
+                        placeholder="주소를 입력하세요"
+                        value={region}
+                      />
+                      <span className="address_btn">
+                        <span
+                          onClick={openModal}
+                        >
+                          주소 검색
+                        </span>
+                        <Modal
+                          open={modalOpen}
+                          close={closeModal}
+                          header="주소 검색"
+                          addressData={RegionsData}
+                        />
+                      </span>
+                    </MapSearch>
+
+                    <div className="position">
+                      <strong>장소</strong>
+                      <input
+                        type="text"
+                        placeholder="장소명을 입력하세요 (예시)뽀로로파크"
+                        onChange={(e) =>
+                          setLocation(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="star">
+                      <strong>별점</strong>
+                      {stars.map((star, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                          <label>
+                            <input
+                              type="radio"
+                              name="rating"
+                              style={{ display: "none" }}
+                              value={ratingValue}
+                              onClick={() => setRating(ratingValue)}
+                            />
+                            <FaStar
+                              key={index}
+                              size={28}
+                              onClick={() => handleClick(index + 1)}
+                              onMouseOver={() => handleMouseOver(index + 1)}
+                              onMouseLeave={handleMouseLeave}
+                              color={
+                                (hoverValue || currentValue) > index
+                                  ? colors.yellow
+                                  : colors.grey
+                              }
+                              style={{
+                                marginRight: 10,
+                                cursor: "pointer",
+                                transition: "color 200ms",
+                              }}
+                            />
+                          </label>
+                        );
+                      })}
+                      <p onChange={(e) =>
+                        setRating(e.target.value)}>
+                        {rating}점
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 카드 오른쪽: textarea, buttons */}
+                  <div className="card-right">
+                    <textarea onChange={(e) =>
+                      setContent(e.target.value)}
+                      placeholder="장소와 관련한 주요 사항을 상세하게 설명해주세요.&#13;&#10;
                     예) 주차장 유무 및 금액대, 아기의자, 아기밥, 키즈존, 금액대, 수유실, 놀이방, 아이 전용 화장실 등
                     "
                     />
+                  </div>
                 </div>
-              </div>
-              <Btn>
-                <button
-                  className="btn"
-                  onClick={() => {
-                    navigate(`/place`);
-                  }}
-                >
-                  취소{" "}
-                </button>
-                <button className="btn" type="submit">
-                  등록하기
-                </button>
-              </Btn>
-
-            </form>
-          </div>
-        </Place>
+                <Btn>
+                  <Link to="/place">
+                    <button
+                      className="btn"
+                    >
+                      취소{" "}
+                    </button>
+                  </Link>
+                  <button className="btn" type="submit">
+                    등록하기
+                  </button>
+                </Btn>
+              </form>
+            </div>
+          </Place>
         </div>
       </Container>
       <ChatIcon />

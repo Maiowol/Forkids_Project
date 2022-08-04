@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import search from "../../images/search.png";
+import { Link } from "react-router-dom";
 
 function SearchInput() {
-  const navigate = useNavigate();
   const searchBtn = () => {
     console.log("key press");
   };
@@ -20,11 +19,9 @@ function SearchInput() {
           onKeyPress={(event) => searchBtn(event)}
         />
       </div>
-      <Btn 
-      onClick={() => {
-        navigate(`/api/search`);
-      }}
-      >확인</Btn>
+      <Link to="/api/search">
+        <Btn>확인</Btn>
+      </Link>
     </SearchBox>
   );
 }

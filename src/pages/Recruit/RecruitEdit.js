@@ -13,7 +13,7 @@ import ChatIcon from '../../components/main/ChatIcon'
 import moment from 'moment';
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { Link } from "react-router-dom";
 
 function RecruitEdit() {
   const navigate = useNavigate();
@@ -30,8 +30,6 @@ function RecruitEdit() {
   const datemoment = moment(date).format("YYYY-MM-DD")
   const timemoment = moment(time).format("HH:mm")
   const url = process.env.REACT_APP_URL;
-
-
 
 
   const detail = useSelector((state) => state.post.list);
@@ -71,7 +69,7 @@ function RecruitEdit() {
             };
             })
         }).catch((error) => {
-          console.log(error)
+          // console.log(error)
           Swal.fire({
             text: `게시글 수정을 실패했습니다.`,
             icon: "error",
@@ -85,10 +83,6 @@ function RecruitEdit() {
   const inputChange = () => {
     setStatus(!status);
   };
-
-
-
-
 
   return (
     <>
@@ -187,11 +181,11 @@ function RecruitEdit() {
                     defaultValue={detail.content}
                   />
                   <Btn>
-                    <a href="/recruit">
-                    <button className="cancel">
+                    <Link to="/recruit">
+                      <button className="cancel">
                       취소
-                    </button>
-                    </a>
+                    </button> 
+                    </Link>
                     <button className="btn" onClick={upload}>
                       등록하기
                     </button>

@@ -10,6 +10,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ChatIcon from '../../components/main/ChatIcon';
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 function PlaceEdit() {
   const navigate = useNavigate();
@@ -316,14 +317,14 @@ function PlaceEdit() {
                 </div>
               </div>
               <Btn>
-                <button
+                <Link to="/place">
+                  <button
                   className="btn"
-                  onClick={() => {
-                    navigate(`/place`);
-                  }}
+                  
                 >
                   취소{" "}
                 </button>
+                </Link>
                 <button className="btn" 
                 // type="submit"
                 onClick={editPost}

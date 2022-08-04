@@ -22,39 +22,35 @@ const PlaceDetail = () => {
   const nickname = localStorage.getItem("nickname");
   const [detail, setDetail] = useState("");
   const { placePostId } = useParams();
-  const [num,setnum] = React.useState(0)
+  const [num, setnum] = React.useState(0)
   const token = localStorage.getItem('accessToken')
   const url = process.env.REACT_APP_URL;
 
   React.useEffect(() => {
     axios
-      .get(`${url}/api/places/` + placePostId,token ?{
+      .get(`${url}/api/places/` + placePostId, token ? {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       } : null)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDetail(res.data.placeDetails);
       });
   }, []);
 
-  const refetch = () =>{
+  const refetch = () => {
     axios
-    .get(`${url}/api/places/` + placePostId,token ?{
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    } : null)
-    .then((res) => {
-      console.log(res.data);
-      setDetail(res.data.placeDetails);
-    });
+      .get(`${url}/api/places/` + placePostId, token ? {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      } : null)
+      .then((res) => {
+        // console.log(res.data);
+        setDetail(res.data.placeDetails);
+      });
   }
-
-
-
-
 
   const deletePlace = (e) => {
     Swal.fire({
@@ -115,28 +111,28 @@ const PlaceDetail = () => {
           <Box>
             <div className="Box">
               <div className="imgBox">
-              <div className="Bigimg">
-                <img src={detail.imageUrl[num]} alt="사진" />
-              </div>
-              <div className="imgSmall">
-                {detail.imageUrl.map((item, idx) => {
-                  return (
-                    <div key={idx}>
-                      <img src={item} alt="사진" 
-                      onClick={()=>{
-                        setnum(idx)
-                      }} />
-                    </div>
-                  );
-                })}
-              </div>
+                <div className="Bigimg">
+                  <img src={detail.imageUrl[num]} alt="사진" />
+                </div>
+                <div className="imgSmall">
+                  {detail.imageUrl.map((item, idx) => {
+                    return (
+                      <div key={idx}>
+                        <img src={item} alt="사진"
+                          onClick={() => {
+                            setnum(idx)
+                          }} />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
               <ContentBox>
                 {/* 카드 오른쪽 위 */}
                 <div className="box_top">
                   <div className="title">
                     <span>
-                    <h2>{detail.title}</h2>
+                      <h2>{detail.title}</h2>
 
                       <div className="star_icon">
                         <FaStar
@@ -148,90 +144,57 @@ const PlaceDetail = () => {
                           className="yellow_star"
                         />
                         <p>{detail.star}점</p>
-                        
+
                         <span className={nickname !== detail.nickname ? "bookmarkpos" : "none"}>
-                        {detail.bookmarkStatus === true ? (
-                      <BsFillBookmarkFill
-                      className={token ? "iconbook2" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/places/bookmark/` +
-                              detail.placePostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    ) : (
-                      <BsBookmark
-                        className={token ? "iconbook" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/places/bookmark/` +
-                              detail.placePostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                          {detail.bookmarkStatus === true ? (
+                            <BsFillBookmarkFill
+                              className={token ? "iconbook2" : "none"}
+                              onClick={() => {
+                                axios
+                                  .put(
+                                    `${url}/api/places/bookmark/` +
+                                    detail.placePostId,
+                                    null,
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${localStorage.getItem(
+                                          "accessToken"
+                                        )}`,
+                                      },
+                                    }
+                                  )
+                                  .then((res) => {
+                                    // console.log(res.data)
+                                    refetch()
+                                  });
+                              }}
+                            />
+                          ) : (
+                            <BsBookmark
+                              className={token ? "iconbook" : "none"}
+                              onClick={() => {
+                                axios
+                                  .put(
+                                    `${url}/api/places/bookmark/` +
+                                    detail.placePostId,
+                                    null,
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${localStorage.getItem(
+                                          "accessToken"
+                                        )}`,
+                                      },
+                                    }
+                                  )
+                                  .then((res) => {
+                                    // console.log(res.data)
+                                    refetch()
+                                  });
+                              }}
+                            />
+                          )}
                         </span>
-                        </div>
-
+                      </div>
                     </span>
 
                     {nickname === detail.nickname ? (
@@ -243,92 +206,61 @@ const PlaceDetail = () => {
                               detail.placePostId);
                           }}
                         >
-                          <img src={revise} alt="사진"/>
+                          <img src={revise} alt="사진" />
                         </button>
                         <button className="btn"
                           onClick={deletePlace}
                         >
-                          <img src={img_delete} alt="사진"/>
+                          <img src={img_delete} alt="사진" />
                         </button>
 
                         {detail.bookmarkStatus === true ? (
-                      <BsFillBookmarkFill
-                        className={token ? "iconbook2" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/places/bookmark/` +
-                              detail.placePostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    ) : (
-                      <BsBookmark
-                        className={token ? "iconbook" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/places/bookmark/` +
-                              detail.placePostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                          <BsFillBookmarkFill
+                            className={token ? "iconbook2" : "none"}
+                            onClick={() => {
+                              axios
+                                .put(
+                                  `${url}/api/places/bookmark/` +
+                                  detail.placePostId,
+                                  null,
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${localStorage.getItem(
+                                        "accessToken"
+                                      )}`,
+                                    },
+                                  }
+                                )
+                                .then((res) => {
+                                  // console.log(res.data)
+                                  refetch()
+                                });
+                            }}
+                          />
+                        ) : (
+                          <BsBookmark
+                            className={token ? "iconbook" : "none"}
+                            onClick={() => {
+                              axios
+                                .put(
+                                  `${url}/api/places/bookmark/` +
+                                  detail.placePostId,
+                                  null,
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${localStorage.getItem(
+                                        "accessToken"
+                                      )}`,
+                                    },
+                                  }
+                                )
+                                .then((res) => {
+                                  // console.log(res.data)
+                                  refetch()
+                                });
+                            }}
+                          />
+                        )}
                       </Btn>
                     ) : (
                       <></>
@@ -337,28 +269,28 @@ const PlaceDetail = () => {
                   {/* 카드 오른쪽 중간 */}
                   <div className="location">
                     <p>
-                    <GrLocation
-                      style={{
-                        margin: "0px 3px 3px 4px"
-                      }} />
+                      <GrLocation
+                        style={{
+                          margin: "0px 3px 3px 4px"
+                        }} />
                       {detail.region}
                     </p>
                   </div>
                   <div className="info">
                     <Image>
                       <div className="ProfileImg">
-                        <img src={detail.profileUrl} alt="사진" 
-                         onClick={() => {
-                          navigate("/manager/" + detail.nickname);
-                          dispatch(GetMyPageAxios(detail.nickname));
-                        }}/>
+                        <img src={detail.profileUrl} alt="사진"
+                          onClick={() => {
+                            navigate("/manager/" + detail.nickname);
+                            dispatch(GetMyPageAxios(detail.nickname));
+                          }} />
                       </div>
                     </Image>
                     <p className="nickname"
-                    onClick={() => {
-                      navigate("/manager/" + detail.nickname);
-                      dispatch(GetMyPageAxios(detail.nickname));
-                    }}
+                      onClick={() => {
+                        navigate("/manager/" + detail.nickname);
+                        dispatch(GetMyPageAxios(detail.nickname));
+                      }}
                     >{detail.nickname}</p>
                   </div>
                 </div>
@@ -423,8 +355,6 @@ border-radius: 10px;
   .Box {
     display: flex;
   }
-
-
 
   .imgBox {
     width: 440px;

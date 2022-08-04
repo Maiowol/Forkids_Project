@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ChatIcon from '../../components/main/ChatIcon';
+import { Link } from "react-router-dom";
 
 function ReviewEdit() {
   const navigate = useNavigate();
@@ -29,45 +30,36 @@ function ReviewEdit() {
   }, []);
 
 
-
-
-
-
-
-
-
   // 수정버튼
   const editPost = () => {
 
     const data = {
-      title : title.length === 0 ? detail.title : title,
+      title: title.length === 0 ? detail.title : title,
       content: content.length === 0 ? detail.content : content,
       url: region.length === 0 ? detail.region : region,
       productType: location.length === 0 ? detail.location : location,
     }
 
-
-  
-      axios
-        .put(`${url}/api/reviews/` + reviewPostId, data, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
-        .then((res) => {
-          Swal.fire({
-            text: '게시글 수정에 완료되었습니다',
-            icon: 'success',
-            confirmButtonText: "확인", 
-            confirmButtonColor: '#ffb300'
-          }).then((result =>{
-            if(result.isConfirmed){
-              navigate('/review')
-            }
-          }))
-        }).catch((error) => {
+    axios
+      .put(`${url}/api/reviews/` + reviewPostId, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        Swal.fire({
+          text: '게시글 수정에 완료되었습니다',
+          icon: 'success',
+          confirmButtonText: "확인",
+          confirmButtonColor: '#ffb300'
+        }).then((result => {
+          if (result.isConfirmed) {
+            navigate('/review')
+          }
+        }))
+      }).catch((error) => {
         //   console.log(error);
-        });
+      });
   };
 
 
@@ -76,12 +68,13 @@ function ReviewEdit() {
   }
 
 
-
   return (
     <>
       <Header />
-      <div style={{width:"1170px",
-        margin: "0 auto" }}>
+      <div style={{
+        width: "1170px",
+        margin: "0 auto"
+      }}>
         <Title>
           <div className="subject">육아템 리뷰</div>
           <div className="page">
@@ -91,91 +84,91 @@ function ReviewEdit() {
         <Place>
           {/* 카드 위쪽: 이미지 */}
           <div className="place">
-              <input
-                id="input-file"
-                type="file"
-                name="profile_files"
-                multiple="multiple"
-                style={{ display: "none" }}
-              />
+            <input
+              id="input-file"
+              type="file"
+              name="profile_files"
+              multiple="multiple"
+              style={{ display: "none" }}
+            />
 
-              <div className="imageBox">
-                <div className="plus_btn">
+            <div className="imageBox">
+              <div className="plus_btn">
 
-                </div>
-                
-                  {/* 이미지 미리보기 */}
-                  {detail.imageUrl.map((image, id) => (
-                    <div className="img_box_size" key={id}>
-                      <img src={image} alt={`${image}-${id}`} />
-                      <div className="img_btn">
-                      </div>
-                    </div>
-                  ))}
               </div>
 
-              {/* 카드 왼쪽: 제목, 주소, 장소, 별점 */}
-              <div className="mainBox">
-                <div className="card-left">
-                  <div className="position">
-                    <strong>제목</strong>
-                    <input
-                      type="text"
-                      onChange={(e) =>
-                        setTitle(e.target.value)}
-                        defaultValue={detail.title}
-                    />
-                  </div>
-
-                  <MapSearch>
-                    <strong>주소</strong>
-                    <SearchInput
-                      id="address"
-                      type="text"
-                      onChange={(e) =>
-                        setRegion(e.target.value)}
-                        defaultValue={detail.url}
-                    />
-                  </MapSearch>
-
-                  <div className="position">
-                    <strong>종류</strong>
-                    <input
-                      type="text"
-                      onChange={(e) =>
-                        setLocation(e.target.value)}
-                        defaultValue={detail.productType}
-                    />
+              {/* 이미지 미리보기 */}
+              {detail.imageUrl.map((image, id) => (
+                <div className="img_box_size" key={id}>
+                  <img src={image} alt={`${image}-${id}`} />
+                  <div className="img_btn">
                   </div>
                 </div>
+              ))}
+            </div>
 
-                {/* 카드 오른쪽: textarea, buttons */}
-                <div className="card-right">
-                  <textarea onChange={(e) =>
-                    setContent(e.target.value)}
-                    defaultValue={detail.content}
-                    />
+            {/* 카드 왼쪽: 제목, 주소, 장소, 별점 */}
+            <div className="mainBox">
+              <div className="card-left">
+                <div className="position">
+                  <strong>제목</strong>
+                  <input
+                    type="text"
+                    onChange={(e) =>
+                      setTitle(e.target.value)}
+                    defaultValue={detail.title}
+                  />
+                </div>
+
+                <MapSearch>
+                  <strong>주소</strong>
+                  <SearchInput
+                    id="address"
+                    type="text"
+                    onChange={(e) =>
+                      setRegion(e.target.value)}
+                    defaultValue={detail.url}
+                  />
+                </MapSearch>
+
+                <div className="position">
+                  <strong>종류</strong>
+                  <input
+                    type="text"
+                    onChange={(e) =>
+                      setLocation(e.target.value)}
+                    defaultValue={detail.productType}
+                  />
                 </div>
               </div>
-              <Btn>
+
+              {/* 카드 오른쪽: textarea, buttons */}
+              <div className="card-right">
+                <textarea onChange={(e) =>
+                  setContent(e.target.value)}
+                  defaultValue={detail.content}
+                />
+              </div>
+            </div>
+            <Btn>
+              <Link to="/review">
                 <button
                   className="btn"
-                  onClick={() => {
-                    navigate(`/review`);
-                  }}
                 >
                   취소
                 </button>
-                <button className="btn" 
+              </Link>
+
+              <button className="btn"
                 type="submit"
                 onClick={editPost}
-                >
-                  수정하기
-                </button>
-              </Btn>
+              >
+                수정하기
+              </button>
+            </Btn>
           </div>
         </Place>
-        </div>
+      </div>
       {/* </Container> */}
       <ChatIcon />
       <Footer />

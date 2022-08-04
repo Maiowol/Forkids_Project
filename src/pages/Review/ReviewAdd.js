@@ -9,17 +9,14 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ChatIcon from '../../components/main/ChatIcon';
-import img_delete from '../../images/delete (1).png';
+import { Link } from "react-router-dom";
 
 function ReviewAdd() {
   const [title, setTitle] = useState("");
-  const [region, setRegion] = useState("");
   const [content, setContent] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState([]);
   const [address, setAddress] = useState("");
-  const [currentValue, setCurrentValue] = useState(0);
-  const [hoverValue, setHoverValue] = useState(undefined);
   const navigate = useNavigate();
   const url = process.env.REACT_APP_URL;
 
@@ -30,9 +27,9 @@ function ReviewAdd() {
 
     let files = e.target.profile_files.files;
     let formData = new FormData();
-    console.log(files)
+    // console.log(files)
 
-    
+
     // 반복문 돌려서 다중 이미지 처리
     for (let i = 0; i < files.length; i++) {
       formData.append("imageUrl", files[i]);
@@ -56,20 +53,20 @@ function ReviewAdd() {
           Swal.fire({
             text: `게시글 작성이 완료되었습니다.`,
             icon: "success",
-            confirmButtonText: "확인", 
+            confirmButtonText: "확인",
             confirmButtonColor: '#ffb300'
           }).then((result) => {
             if (result.isConfirmed) {
               navigate("/Review");
             }
           });
-          
+
         })
         .catch((err) => {
           Swal.fire({
             text: `게시글을 작성해 주세요.`,
             icon: "error",
-            confirmButtonText: "확인", 
+            confirmButtonText: "확인",
             confirmButtonColor: '#ffb300'
           })
         });
@@ -77,7 +74,7 @@ function ReviewAdd() {
       Swal.fire({
         text: `사진은 3장 이하만 가능합니다.`,
         icon: "error",
-        confirmButtonText: "확인", 
+        confirmButtonText: "확인",
       })
     }
   };
@@ -105,45 +102,47 @@ function ReviewAdd() {
     <>
       <Header />
       <Container>
-        <div style={{width:"1170px",
-        margin: "0 auto" }}>
-        <Title>
-          <div className="subject">육아템 리뷰</div>
-          <div className="page">
-            <p>작성하기</p>
-          </div>
-        </Title>
-        <Place>
-          {/* 카드 위쪽: 이미지 */}
-          <div className="place">
-            <form onSubmit={(e) => onSubmit(e)}>
-              <input
-                id="input-file"
-                type="file"
-                name="profile_files"
-                multiple="multiple"
-                style={{ display: "none" }}
-                onChange={handleImageChange}
-              />
+        <div style={{
+          width: "1170px",
+          margin: "0 auto"
+        }}>
+          <Title>
+            <div className="subject">육아템 리뷰</div>
+            <div className="page">
+              <p>작성하기</p>
+            </div>
+          </Title>
+          <Place>
+            {/* 카드 위쪽: 이미지 */}
+            <div className="place">
+              <form onSubmit={(e) => onSubmit(e)}>
+                <input
+                  id="input-file"
+                  type="file"
+                  name="profile_files"
+                  multiple="multiple"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
 
-              <div className="imageBox">
-                <div className="plus_btn">
-                  <label htmlFor="input-file">
-                    <img src={plus} alt="추가" className="plusButton"/>
-                  </label>
-                  <p style={{
-                    color: "#3C3C3C"
-                  }}>
-                    사진 업로드
-                  </p>
-                  <p style={{
-                    color: "#6B4E16",
-                    marginTop: "-13px",
-                  }}>
-                    &nbsp;(최대 3장)
-                  </p>
-                </div>
-                
+                <div className="imageBox">
+                  <div className="plus_btn">
+                    <label htmlFor="input-file">
+                      <img src={plus} alt="추가" className="plusButton" />
+                    </label>
+                    <p style={{
+                      color: "#3C3C3C"
+                    }}>
+                      사진 업로드
+                    </p>
+                    <p style={{
+                      color: "#6B4E16",
+                      marginTop: "-13px",
+                    }}>
+                      &nbsp;(최대 3장)
+                    </p>
+                  </div>
+
                   {/* 이미지 미리보기 */}
                   {imageSrc.map((image, id) => (
                     <div className="img_box_size" key={id}>
@@ -158,70 +157,67 @@ function ReviewAdd() {
                       </div>
                     </div>
                   ))}
-            
-              </div>
 
-              {/* 카드 왼쪽: 제목, 주소, 종류 */}
-              <div className="mainBox">
-                <div className="card-left">
-                  <div className="position">
-                    <strong>제목</strong>
-                    <input
-                      type="text"
-                      onChange={(e) =>
-                        setTitle(e.target.value)}
-                      placeholder="제목을 입력하세요"
-                    />
-                  </div>
-
-                  <MapSearch>
-                    <strong>주소</strong>
-                    <SearchInput
-                      id="address"
-                      type="text"
-                      placeholder="구매처의 주소를 입력하세요"
-                      onChange={(e) => setAddress(e.target.value)}
-                    />
-                  </MapSearch>
-
-                  <div className="position">
-                    <strong>종류</strong>
-                    <input
-                      type="text"
-                      placeholder="상품 종류를 입력하세요 (예시) 전자제품"
-                      onChange={(e) =>
-                        setLocation(e.target.value)}
-                    />
-                  </div>
                 </div>
 
-                {/* 카드 오른쪽: textarea, buttons */}
-                <div className="card-right">
-                  <textarea onChange={(e) =>
-                    setContent(e.target.value)} 
-                    placeholder="상품과 관련한 주요 사항을 상세하게 설명해주세요.&#13;&#10;
+                {/* 카드 왼쪽: 제목, 주소, 종류 */}
+                <div className="mainBox">
+                  <div className="card-left">
+                    <div className="position">
+                      <strong>제목</strong>
+                      <input
+                        type="text"
+                        onChange={(e) =>
+                          setTitle(e.target.value)}
+                        placeholder="제목을 입력하세요"
+                      />
+                    </div>
+
+                    <MapSearch>
+                      <strong>주소</strong>
+                      <SearchInput
+                        id="address"
+                        type="text"
+                        placeholder="구매처의 주소를 입력하세요"
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </MapSearch>
+
+                    <div className="position">
+                      <strong>종류</strong>
+                      <input
+                        type="text"
+                        placeholder="상품 종류를 입력하세요 (예시) 전자제품"
+                        onChange={(e) =>
+                          setLocation(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 카드 오른쪽: textarea, buttons */}
+                  <div className="card-right">
+                    <textarea onChange={(e) =>
+                      setContent(e.target.value)}
+                      placeholder="상품과 관련한 주요 사항을 상세하게 설명해주세요.&#13;&#10;
                     예) 사용 연령대, 금액, 용도, 구매처(온/오프라인), 할인/행사 여부 등
                     "
                     />
+                  </div>
                 </div>
-              </div>
-              <Btn>
-                <button
-                  className="btn"
-                  onClick={() => {
-                    navigate(`/review`);
-                  }}
-                >
-                  취소{" "}
-                </button>
-                <button className="btn" type="submit">
-                  등록하기
-                </button>
-              </Btn>
-
-            </form>
-          </div>
-        </Place>
+                <Btn>
+                  <Link to="/review">
+                    <button
+                      className="btn">
+                      취소{" "}
+                    </button>
+                  </Link>
+                  <button className="btn" type="submit">
+                    등록하기
+                  </button>
+                </Btn>
+              </form>
+            </div>
+          </Place>
         </div>
       </Container>
       <ChatIcon />
