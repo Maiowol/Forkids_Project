@@ -81,7 +81,7 @@
 |  axios | 서버 & 클라이언트 데이터통신  |  0.27.2 |
 |  animate.css |  애니메이션 효과 | 4.1.1  |
 |  react-scroll-to-bottom | 채팅창 스크롤 자동하단  | 4.2.0  |
-|  react-redux |  편리한 상태 관리 | 8.0.2 |
+|  react-redux |  전역 상태 관리 | 8.0.2 |
 |  redux-thunk | 비동기 통신 미들웨어  | 2.4.1  |
 |  react-toastify |  토스트 알림 기능 |  8.2.0 |
 |  socket.io-client |  실시간 채팅 기능 | 4.5.1 |
