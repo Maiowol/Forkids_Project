@@ -8,6 +8,7 @@ import Footer from "../../components/main/Footer";
 import Grid from "../../components/elements/Grid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>;
 
 function LogIn() {
@@ -127,13 +128,11 @@ function LogIn() {
                         <Grid margin="42px 0 0 0" height="auto" align="center">
                           {/* <JoinLink>아이디 찾기 | &nbsp;</JoinLink>
                       <JoinLink>비밀번호 찾기 | &nbsp;</JoinLink> */}
-                          <JoinLink
-                            onClick={() => {
-                              navigate(`/signup`);
-                            }}
-                          >
-                            회원가입 &nbsp;
-                          </JoinLink>
+                          <Link to="/signup">
+                            <JoinLink>
+                              회원가입 &nbsp;
+                            </JoinLink>
+                          </Link>
                         </Grid>
                       </Grid>
                     </form>
