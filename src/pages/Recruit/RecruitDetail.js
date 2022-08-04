@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { detailPostDB, deletePostDB } from "../../redux/modules/post";
 import { GetMyPageAxios } from "../../redux/modules/Data";
 import Swal from "sweetalert2";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
 const url = process.env.REACT_APP_URL;
 
@@ -23,16 +24,22 @@ const socket = io.connect(`${url}`); // 1 . 소켓 서버 연결
 
 const RecruitDetail = () => {
   const nickname = localStorage.getItem("nickname");
+  const token = localStorage.getItem('accessToken')
   const [modalIsOpen, setModalIsOpen] = useState(false); // 모달창 열고 닫는 State 값
   const [on, setOn] = useState(false); // 상세 페이지의 모집 중/모집 완료 토글 버튼 State 값
   const [state, setState] = useState("");
   const { recruitPostId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [data,setdata] = useState()
 
   React.useEffect(() => {
     axios
-      .get(`${url}/api/recruits/` + recruitPostId)
+      .get(`${url}/api/recruits/` + recruitPostId,token ?{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      } : null)
       .then((response) => {
         console.log(response.data)
         setState(response.data.recruitDetails);
@@ -42,18 +49,44 @@ const RecruitDetail = () => {
       });
   }, []);
 
+
+
+
+  const refetch = () =>{
+    axios
+      .get(`${url}/api/recruits/` + recruitPostId,token ?{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      } : null)
+      .then((response) => {
+        console.log(response.data)
+        setState(response.data.recruitDetails);
+      })
+      .catch((response) => {
+        // console.log(response);
+      });
+  }
+
+  // React.useEffect(() => {
+  //   dispatch(detailPostDB(recruitPostId));
+  // }, []);
+
+
+
+
+
+
   // 모집중 , 모집완료 상태 변경하기
   const inputChange = () => {
     setOn(!on);
   };
 
-  const detail = useSelector((state) => state.post.list);
+  // const detail = useSelector((state) => state.post.list);
 
   // console.log(detail);
 
-  React.useEffect(() => {
-    dispatch(detailPostDB(recruitPostId));
-  }, []);
+
 
   // const deletePosting = () => {
   //   dispatch(deletePostDB(recruitPostId, navigate));
@@ -71,7 +104,9 @@ const RecruitDetail = () => {
           receiverNick: state.nickname,
           senderNick: nickname,
           profileUrlTwo: state.profileUrl,
+          title : state.title
         };
+        setdata(JoinData)
         socket.emit("join_room", JoinData);
         setModalIsOpen(true);
       })
@@ -79,6 +114,10 @@ const RecruitDetail = () => {
         alert(err.response.data.message);
       });
   };
+
+  console.log(data)
+
+
 
   const deletePosting = () => {
     Swal.fire({
@@ -140,36 +179,37 @@ const RecruitDetail = () => {
                   </div>
                   <div>
                     <strong> 제목 </strong>
-                    <span>{detail.title}</span>
+                    <span>{state.title}</span>
                   </div>
                   <div>
                     <strong> 날짜 </strong>
-                    <span>{detail.date}</span>
+                    <span>{state.date}</span>
                   </div>
                   <div>
                     <strong> 시간 </strong>
-                    <span>{detail.time}</span>
+                    <span>{state.time}</span>
                   </div>
                   <div>
                     <strong> 위치 </strong>
-                    <span>{detail.place}</span>
+                    <span>{state.place}</span>
                   </div>
                   <div>
                     <strong> 연령 </strong>
-                    <span>{detail.age}</span>
+                    <span>{state.age}</span>
                   </div>
                 </div>
 
                 {/* 카드 오른쪽: 작성자 프로필, 버튼, 내용 */}
                 <div className="card-right">
+
                   <div className="card-top">
-                    {nickname === detail.nickname ? (
+                    {nickname === state.nickname ? (
                       <>
                         <Btn>
                           <button className="btn"
                             style={{ marginRight: "-8px" }}
                             onClick={() => {
-                              navigate(`/recruitedit/` + detail.recruitPostId);
+                              navigate(`/recruitedit/` + state.recruitPostId);
                             }}>
                             <img src={revise} />
                           </button>
@@ -178,21 +218,69 @@ const RecruitDetail = () => {
                             onClick={deletePosting}>
                             <img src={img_delete} />
                           </button>
+
+                          {state.bookmarkStatus === true ? (
+                      <BsFillBookmarkFill
+                        className={token ? "iconbook2" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/recruits/bookmark/` +
+                              state.recruitPostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    ) : (
+                      <BsBookmark
+                        className={token ? "iconbook" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/recruits/bookmark/` +
+                              state.recruitPostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    )}
                         </Btn>
 
                         <div className="profile">
                           <div className="detail_profile">
                             <img
-                              src={detail.profileUrl}
+                              src={state.profileUrl}
                               alt="프로필"
                               onClick={() => {
-                                navigate("/manager/" + detail.nickname);
-                                dispatch(GetMyPageAxios(detail.nickname));
+                                navigate("/manager/" + state.nickname);
+                                dispatch(GetMyPageAxios(state.nickname));
                               }}
                             />
                           </div>
                           <div className="detail_username">
-                            <div className="username">{detail.nickname}</div>
+                            <div className="username">{state.nickname}</div>
                           </div>
                         </div>
                       </>
@@ -201,23 +289,96 @@ const RecruitDetail = () => {
                         <div className="profile">
                           <div className="detail_profile">
                             <img
-                              src={detail.profileUrl}
+                              src={state.profileUrl}
                               alt="프로필"
                               onClick={() => {
-                                navigate("/manager/" + detail.nickname);
-                                dispatch(GetMyPageAxios(detail.nickname));
+                                navigate("/manager/" + state.nickname);
+                                dispatch(GetMyPageAxios(state.nickname));
                               }}
                             />
                           </div>
                           <div className="detail_username">
-                            <div className="username">{detail.nickname}</div>
+                            <div className="username">{state.nickname}</div>
                           </div>
 
                           <BtnTwo>
-                            <button className="btn" onClick={GoChat}>
+                            <button className="btnchat" onClick={GoChat}>
                               <img src={chatlist} />
                               1:1 채팅
                             </button>
+                            
+                            {state.bookmarkStatus === true ? (
+                      <BsFillBookmarkFill
+                        className={token ? "iconbook2" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/recruits/bookmark/` +
+                              state.recruitPostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    ) : (
+                      <BsBookmark
+                        className={token ? "iconbook" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/recruits/bookmark/` +
+                              state.recruitPostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                           </BtnTwo>
 
                         </div>
@@ -226,7 +387,7 @@ const RecruitDetail = () => {
                     )}
                   </div>
                   <div className="content">
-                    {detail.content}
+                    {state.content}
                   </div>
                 </div>
               </div>
@@ -239,6 +400,7 @@ const RecruitDetail = () => {
         open={modalIsOpen} // 모달창 열기
         onClose={() => setModalIsOpen(false)} // 모달창 닫기
         socket={socket}
+        data={data}
       />
       <ChatIcon />
       <Footer />
@@ -281,6 +443,7 @@ const Detail = styled.div`
     display: flex;
     margin-left: 20px;
     height: 100px;
+
     justify-content: space-between;
   }
   
@@ -300,6 +463,27 @@ const Detail = styled.div`
     align-items: center;
     font-weight: 700;
   }
+
+
+
+  .iconbook{
+    width: 30px;
+    height:30px;
+    cursor: pointer;
+
+  }
+
+  .iconbook2{
+    width: 30px;
+    height:30px;
+    cursor: pointer;
+    color: #6b4e16;
+  }
+
+
+
+
+
 
   .toggle > div {
     width: 114px;
@@ -386,6 +570,9 @@ const Detail = styled.div`
     display: none;
   }
 
+  .none{
+    display: none;
+  }
   .card-right {
     width: 50%;
     margin-left: 30px;
@@ -468,6 +655,26 @@ const Btn = styled.div`
   display: flex;
   margin-left: 398px;
   margin-right: 100px;
+  width:500px;
+  position: relative;
+  right:50px;
+
+  .iconbook{
+    width: 30px;
+    height:30px;
+    position: relative;
+    top:7px;
+    cursor: pointer;
+  }
+
+  .iconbook2{
+    width: 30px;
+    height:30px;
+    position: relative;
+    top:7px;
+    cursor: pointer;
+    color: #6b4e16;
+  }
 
   .btn {
     height: 30px;
@@ -493,7 +700,7 @@ const BtnTwo = styled.div`
     margin-right: 6px;
   }
 
-  .btn {
+  .btnchat {
     width: 129px;
     height: 30px;
     border-radius: 30px;
@@ -503,7 +710,11 @@ const BtnTwo = styled.div`
     border: 1.5px solid #F4B03E;
     outline: 0;
     font-weight: bolder;
+    margin-right: 30px;
+    background-color: #fff;
   }
+
+
 `;
 
 export default RecruitDetail;

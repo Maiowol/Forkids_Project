@@ -31,13 +31,15 @@ function RecruitEdit() {
   const timemoment = moment(time).format("HH:mm")
   const url = process.env.REACT_APP_URL;
 
+
+
+
+  const detail = useSelector((state) => state.post.list);
   React.useEffect(() => {
     dispatch(detailPostDB(recruitPostId));
   }, []);
 
-  const detail = useSelector((state) => state.post.list);
 
-  
     const newPost = {
       title : title.length === 0 ? detail.title : title ,
       content : content.length === 0 ? detail.content : content ,

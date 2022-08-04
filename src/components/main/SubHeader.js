@@ -29,7 +29,6 @@ const Headers = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   a{
     text-decoration: none;
   }
@@ -37,25 +36,20 @@ const Headers = styled.div`
   .header {
       display: flex;
   }
-
   .text {
     margin: 8px 10px 0px 10px;
-
     span {
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 700;
     }
-
     .front {
         color: #FFFFFF;
     }
-
     .back {
         color: #6B4E16;
         margin-left: 2px;
     }
   }
-
   img {
       width: 33px;
       height: 33px;

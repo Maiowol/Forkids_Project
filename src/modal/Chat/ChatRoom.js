@@ -9,7 +9,7 @@ import axios from 'axios'
 
 
 toast.configure();
-const ChatRoom = ({ open, onClose, NowRoom, socket, realroom }) => {
+const ChatRoom = ({ open, onClose, NowRoom, socket, realroom,post }) => {
   const input_Ref = React.useRef();
   const nickname = localStorage.getItem("nickname");
   const [NowChat, setNowChat] = React.useState([]);
@@ -18,11 +18,10 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom }) => {
   const [info, setinfo] = React.useState();
   const url = process.env.REACT_APP_URL;
 
-  // console.log(info)
+
 
   React.useEffect(() => {
     socket.off("receive_message").on("receive_message", (data) => {
-      console.log(data)
       setNowChat((list) => [...list, data]);
     });
   }, [socket]);
@@ -42,6 +41,7 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom }) => {
           "시 " +
           +new Date(Date.now()).getMinutes() +
           "분",
+          postTitle: post,
       };
       await socket.emit("send_message", messageData);
       console.log(messageData)
@@ -76,13 +76,13 @@ const ChatRoom = ({ open, onClose, NowRoom, socket, realroom }) => {
       <Modal isOpen={true} className="ChatList">
           <div className="ChatListBoxTwo animate__animated animate__fadeIn">
           <img src = {back} alt="닫기" className="x" onClick={OutRoom}/>
-          {/* <span className="twoToOne"> {info.receiverNick}  님과 대화</span> */}
+          <span className="twoToOne"> {post}</span>
         </div>
 
         <ScrollToBottom className="message-containerTwo animate__animated animate__fadeIn" >
-        {NowRoom && NowRoom.map((data,idx)=>{
+        {NowRoom && NowRoom.map((data)=>{
           return  nickname === data.senderNick ? (
-            <div key={idx}>
+            <div key={data._id}>
             <div className="MyChat">
               <div className="MyTime">{data.time}</div>
               <div className="MyContent">

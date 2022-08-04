@@ -11,13 +11,15 @@ import { useNavigate } from "react-router-dom";
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>;
 
 function LogIn() {
+  
   const [email, setEmail] = useState("");
   const [password, setPw] = useState("");
   const navigate = useNavigate();
 
   const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-  const url = process.env.REACT_APP_URL;
+  const url = process.env.REACT_APP_URL
+
 
   //카카오톡 로그인
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;

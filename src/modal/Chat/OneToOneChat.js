@@ -5,13 +5,15 @@ import { BiLogOut } from "react-icons/bi";
 import ScrollToBottom from "react-scroll-to-bottom";
 import back from '../../images/back.png'
 
-const OneToOneChat = ({ open, onClose, socket }) => {
+const OneToOneChat = ({ open, onClose, socket ,data}) => {
   const [currentMessage, setCurrentMessage] = React.useState("");
   const input_Ref = React.useRef();
   const nickname = localStorage.getItem("nickname");
   const [NowChat, setNowChat] = React.useState([]);
   const [roomId, setRoomId] = React.useState();
   const Img_Url = localStorage.getItem("profileUrl");
+
+  console.log(data)
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -27,9 +29,11 @@ const OneToOneChat = ({ open, onClose, socket }) => {
           "시 " +
           +new Date(Date.now()).getMinutes() +
           "분",
+          postTitle : data.title,
       };
 
       await socket.emit("send_message", messageData);
+
       setCurrentMessage("");
     }
   };
@@ -51,7 +55,7 @@ const OneToOneChat = ({ open, onClose, socket }) => {
     <Modal isOpen={true} className="ChatList">
     <div className="ChatListBoxTwo animate__animated animate__fadeIn">
     <img src = {back} alt="닫기" className="x" onClick={onClose}/>
-    {/* <span className="twoToOne"> {info.receiverNick}  님과 대화</span> */}
+    <span className="twoToOne"> {data.title}</span>
   </div>
 
       <ScrollToBottom className="message-containerTwo animate__animated animate__fadeIn">

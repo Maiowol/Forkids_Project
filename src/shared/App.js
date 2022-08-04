@@ -33,7 +33,7 @@ import MyBookmark from '../pages/Mypage/MyBookmark'
 
 //검색 페이지
 import MainSearch from "../pages/Search/MainSearch";
-
+import HomePage from '../../src/shared/HomePage'
 import Cancel from '../components/alert/Cancel';
 import ConfirmAlert from "../components/alert/ConfirmAlert";
 import Alert from '../components/alert/Alert';
@@ -44,7 +44,7 @@ function App() {
     <>
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/api/users/kakao/callback" element={<KakaoLogIn />} />

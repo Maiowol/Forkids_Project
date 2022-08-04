@@ -6,7 +6,7 @@ function MobilePage() {
     return (
         <Page>
             <div>
-  <div className='image'>
+            <div className='image'>
                 <img src={character} alt="사진" />
             </div>
             <div>
@@ -23,8 +23,8 @@ function MobilePage() {
 
 const Page = styled.div`
 background-color: #F4B03E;
-max-width: 100%;
-height: 900px;
+max-width: 100vw;
+height: 100vh;
 display: flex;
 align-items: center;
 justify-content: center;

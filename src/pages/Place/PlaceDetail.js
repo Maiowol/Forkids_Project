@@ -14,6 +14,7 @@ import ChatIcon from '../../components/main/ChatIcon'
 import { GrLocation } from "react-icons/gr";
 import { useDispatch } from "react-redux";
 import { GetMyPageAxios } from "../../redux/modules/Data";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
 const PlaceDetail = () => {
   const navigate = useNavigate();
@@ -22,16 +23,38 @@ const PlaceDetail = () => {
   const [detail, setDetail] = useState("");
   const { placePostId } = useParams();
   const [num,setnum] = React.useState(0)
+  const token = localStorage.getItem('accessToken')
   const url = process.env.REACT_APP_URL;
 
   React.useEffect(() => {
     axios
-      .get(`${url}/api/places/` + placePostId)
+      .get(`${url}/api/places/` + placePostId,token ?{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      } : null)
       .then((res) => {
         console.log(res.data);
         setDetail(res.data.placeDetails);
       });
   }, []);
+
+  const refetch = () =>{
+    axios
+    .get(`${url}/api/places/` + placePostId,token ?{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    } : null)
+    .then((res) => {
+      console.log(res.data);
+      setDetail(res.data.placeDetails);
+    });
+  }
+
+
+
+
 
   const deletePlace = (e) => {
     Swal.fire({
@@ -114,6 +137,7 @@ const PlaceDetail = () => {
                   <div className="title">
                     <span>
                     <h2>{detail.title}</h2>
+
                       <div className="star_icon">
                         <FaStar
                           size={28}
@@ -123,7 +147,91 @@ const PlaceDetail = () => {
                           }}
                           className="yellow_star"
                         />
-                        <p>{detail.star}점</p></div>
+                        <p>{detail.star}점</p>
+                        
+                        <span className={nickname !== detail.nickname ? "bookmarkpos" : "none"}>
+                        {detail.bookmarkStatus === true ? (
+                      <BsFillBookmarkFill
+                      className={token ? "iconbook2" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/places/bookmark/` +
+                              detail.placePostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    ) : (
+                      <BsBookmark
+                        className={token ? "iconbook" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/places/bookmark/` +
+                              detail.placePostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </span>
+                        </div>
+
                     </span>
 
                     {nickname === detail.nickname ? (
@@ -142,6 +250,85 @@ const PlaceDetail = () => {
                         >
                           <img src={img_delete} alt="사진"/>
                         </button>
+
+                        {detail.bookmarkStatus === true ? (
+                      <BsFillBookmarkFill
+                        className={token ? "iconbook2" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/places/bookmark/` +
+                              detail.placePostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    ) : (
+                      <BsBookmark
+                        className={token ? "iconbook" : "none"}
+                        onClick={() => {
+                          axios
+                            .put(
+                              `${url}/api/places/bookmark/` +
+                              detail.placePostId,
+                              null,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "accessToken"
+                                  )}`,
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res.data)
+                              refetch()
+                            });
+                        }}
+                      />
+                    )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       </Btn>
                     ) : (
                       <></>
@@ -214,7 +401,9 @@ const Title = styled.div`
   p {
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 700;
+
   }
+
 `;
 
 const Box = styled.div`
@@ -234,6 +423,8 @@ border-radius: 10px;
   .Box {
     display: flex;
   }
+
+
 
   .imgBox {
     width: 440px;
@@ -268,11 +459,19 @@ border-radius: 10px;
     border-radius: 15px;
   }
 
+  .bookmarkpos{
+    margin-left: 20px;
+    font-size: 30px;
+  }
+
   .imgSmall > div > img {
     width: 100%;
     height: 100%;
     border-radius: 15px;
     cursor: pointer;
+  }
+  .none{
+    display: none;
   }
 `;
 
@@ -292,6 +491,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     padding-bottom: 50px;
+    z-index: 0;
   }
 `;
 
@@ -309,9 +509,10 @@ const ContentBox = styled.div`
     margin-top: 2px;
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 700;
-    width: 300px;
+    width: 500px;
     padding-bottom: 10px;
     }
+
 
     .star_icon {
       display: flex;
@@ -440,6 +641,25 @@ const ContentBox = styled.div`
     border: none;
     background-color: #c5e1a5;
   }
+
+  .iconbook{
+    width: 30px;
+    height:30px;
+    position: relative;
+    top:3px;
+    cursor: pointer;
+
+  }
+
+  .iconbook2{
+    width: 30px;
+    height:30px;
+    position: relative;
+    top:3px;
+    cursor: pointer;
+    color: #6b4e16;
+  }
+
 `;
 
 const Image = styled.div`
@@ -473,6 +693,8 @@ const Btn = styled.div`
   img {
     width: 28px;
   }
+
+  
 `;
 
 export default PlaceDetail;

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const url = process.env.REACT_APP_URL;
+const token = localStorage.getItem('accessToken')
 
 // Actions
 const CREATE = "post/CREATE";
@@ -74,11 +75,7 @@ export const loadPostDB = () => {
 export const detailPostDB = (recruitPostId) => {
   return function (dispatch) {
     axios
-      .get(`${url}/api/recruits/` + recruitPostId, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      .get(`${url}/api/recruits/` + recruitPostId)
       .then((response) => {
         dispatch(detailPost(response.data.recruitDetails));
       })

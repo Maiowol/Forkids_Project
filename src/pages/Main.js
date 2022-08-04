@@ -11,8 +11,8 @@ import MainScard from "../components/cards/MainScard";
 import ChatIcon from '../components/main/ChatIcon'
 import '../shared/App.css'
 import SubHeader from "../components/main/SubHeader";
-
 const Main = () => {
+
   return (
     <div className="MainBackGround">
       <Header />
@@ -38,7 +38,7 @@ const Main = () => {
               </a>
             </div>
           </div>
-          <MainScard />
+          <MainScard/>
           <hr className="hrz" />
 
           <div className="card_title">
@@ -76,7 +76,9 @@ const Main = () => {
         </Container>
       </Grid>
       <ChatIcon />
-      <Footer num={200} />
+      <Footer />
+
+
     </div>
   );
 };
@@ -86,7 +88,7 @@ const Container = styled.div`
   padding-left: 50px;
   padding-right: 50px;
   .card_title {
-    widht: 10px;
+    width: 10px;
     width: 960px;
   }
   .subtitle {
@@ -116,7 +118,6 @@ const Title = styled.p`
   align-items: flex-end;
   font-family: 'Nanum Gothic', sans-serif;
   font-weight: 800;
-  /* margin-top: 95px; */
   height: 137px;
   margin-left: 170px;
   margin-bottom: 0px;

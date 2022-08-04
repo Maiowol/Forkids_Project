@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ChatIcon from '../../components/main/ChatIcon';
+import img_delete from '../../images/delete (1).png';
 
 function ReviewAdd() {
   const [title, setTitle] = useState("");
@@ -30,6 +31,8 @@ function ReviewAdd() {
     let files = e.target.profile_files.files;
     let formData = new FormData();
     console.log(files)
+
+    
     // 반복문 돌려서 다중 이미지 처리
     for (let i = 0; i < files.length; i++) {
       formData.append("imageUrl", files[i]);
@@ -125,7 +128,7 @@ function ReviewAdd() {
 
               <div className="imageBox">
                 <div className="plus_btn">
-                  <label for="input-file">
+                  <label htmlFor="input-file">
                     <img src={plus} alt="추가" className="plusButton"/>
                   </label>
                   <p style={{
@@ -236,19 +239,16 @@ padding-bottom: 10px;
 
 const Title = styled.div`
   padding-top: 40px;
-
   .subject {
     color: #a8a8a8;
     margin-bottom: 2px;
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 700;
   }
-
   .page {
     font-size: 30px;
     font-weight: 700;
   }
-
   p {
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 700;
@@ -291,13 +291,11 @@ border-radius: 10px;
     align-items: center;
     justify-content: left;
     background: #FAFAFA;
-
     img {
       width: 37px;
       height: 37px;
       border: none;
     }
-
     p {
       font-family: 'Nanum Gothic', sans-serif;
       font-weight: 700;
@@ -351,7 +349,6 @@ border-radius: 10px;
      padding-left: 15px;
      color: #3C3C3C;
     }
-
     img {
       width: 16px;
       height: 17px;
@@ -381,7 +378,6 @@ border-radius: 10px;
     margin-top: 10px;
     padding-left: 15px;
     font-size: 16px;
-
     ::placeholder{
       color: lightgray;
     }
@@ -405,7 +401,6 @@ border-radius: 10px;
     resize: vertical; /* 상하만 가능 */
     margin-bottom: 20px;
     padding: 10px;
-
     ::placeholder{
       color: lightgray;
     }
@@ -423,7 +418,6 @@ border-radius: 10px;
       }
     }
   }
-
   .position > strong {
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 700;
