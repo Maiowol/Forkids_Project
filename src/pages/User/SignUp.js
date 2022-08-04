@@ -109,14 +109,14 @@ const SignUp = () => {
         email
       }
       ).then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.data.result) {
           checkOverlapEmail(true);
           setOverlapEmailMessage("사용 가능한 이메일입니다.");
         }
       })
         .catch((err) => {
-          console.log(err)
+          // console.log(err)
           checkOverlapEmail(false);
           setIsEmail(false);
           setEmailMessage("사용 중인 이메일입니다.");
@@ -161,12 +161,12 @@ const SignUp = () => {
           email
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           setEmailCode(response.data.authCode)
         })
         .catch((error) => {
           // console.log(error);
-          console.log(error.response.data.Message);
+          // console.log(error.response.data.Message);
         });
     } else {
       return null
