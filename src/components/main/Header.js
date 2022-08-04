@@ -44,9 +44,6 @@ const Header = () => {
     dispatch(GetMyPageAxios(nickname));
   };
 
-  const Bookmark = () => {
-    navigate("/MyBookmark");
-  }
 
   return (
     <>
@@ -75,7 +72,7 @@ const Header = () => {
             <li className="bell">
               <Link to="/api/search">
                 <img src={search} alt="검색" 
-                className="searchiconlogin" />
+                className="searchiconlogout" />
                 </Link>
             </li>
             <li className="Login">
@@ -133,9 +130,10 @@ const Header = () => {
                 </div>
                 <hr />
                 <div className="menuTwo">
-                  <div onClick={Bookmark}>
+                  <Link to="/MyBookmark"
+                  className="bookmark">
                     <p>북마크관리</p>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </li>
@@ -161,8 +159,6 @@ const Headers = styled.div`
   color: #3c3c3c;
   filter: drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
 
- 
-  
   input[id*="answer"] {
     display: none;
   }
@@ -299,11 +295,11 @@ const Headers = styled.div`
     margin-bottom: -1px
   }
 
-  .menuTwo > div > p:hover {
+  .bookmark > p:hover {
     color: #6b4e16;
   }
 
-  .menuTwo > div > p {
+  .bookmark {
     cursor: pointer;
     color: #A8A8A8;
     font-family: 'Nanum Gothic', sans-serif;
@@ -320,12 +316,14 @@ const Headers = styled.div`
     font-family: 'NanumGothic', sans-serif;
     font-weight: 700;
   }
+
   .logo_container {
     display: flex;
     align-items: center;
     margin-left: 18px;
     cursor: pointer;
   }
+
   .logo_img {
     width: 40px;
     height: 40px;
@@ -339,11 +337,21 @@ const Headers = styled.div`
     height: 50px;
     cursor: pointer;
   }
-  .bell > a >  img {
+
+  .searchiconlogout {
     width: 30px;
     height: 30px;
     cursor: pointer;
   }
+
+  .searchiconlogin {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 6px;
+  }
+
   .bell > img:hover {
     transform: scale(1.08);
   }
@@ -362,10 +370,6 @@ const Headers = styled.div`
   .bell {
     font-size: 35px;
     cursor: pointer;
-  }
-  .bell > a{
-    display: flex;
-    align-items: center;
   }
 
   .MyPage {
