@@ -53,7 +53,7 @@ const KakaoLogIn = () => {
                 text: `카카오톡 로그인에 성공했습니다`,
                 icon: "success",
                 confirmButtonText: "확인",
-                confirmButtonColor: '#ffb300'
+                confirmButtonColor: "#ffb300",
               }).then((result) => {
                 if (result.isConfirmed) {
                   localStorage.setItem("profileUrl", res.data.profileUrl);

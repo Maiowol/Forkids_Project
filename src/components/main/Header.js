@@ -10,11 +10,9 @@ import search from '../../images/search.png'
 import { Link } from "react-router-dom";
 
 const Header = () => {
-
   // Hook 선언
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   // 로컬 스토리지에 있는 토큰,닉네임,프로필Url
   const UserCheck = localStorage.getItem("accessToken");
@@ -27,13 +25,13 @@ const Header = () => {
       text: `로그아웃이 완료되었습니다.`,
       icon: "success",
       confirmButtonText: "확인",
-      confirmButtonColor: '#ffb300'
+      confirmButtonColor: "#ffb300",
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("profileUrl");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("nickname");
-        navigate('/')
+        navigate("/");
       }
     });
   };
@@ -47,11 +45,10 @@ const Header = () => {
 
   return (
     <>
-      {/* 로그인 할 때의 헤더 ============================================================================== */}
+      {/* 로그인 할 때의 헤더 */}
 
       {!UserCheck ? (
         <Headers>
-
           <Link to="/"
             className="logo_container"><div className="logo_img">
               <img src={logo} alt="로고" />
@@ -80,9 +77,7 @@ const Header = () => {
             </li>
           </ul>
         </Headers>
-
       ) : (
-
         // 로그인 했을 때의 헤더 ==============================================================================
 
         <Headers>
@@ -166,7 +161,7 @@ const Headers = styled.div`
   input[id*="answer"] + label {
     display: block;
     cursor: pointer;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 16px;
@@ -174,7 +169,7 @@ const Headers = styled.div`
     margin-left: 4px;
   }
 
-  .searchicon{
+  .searchicon {
     margin-right: 30px;
   }
 
@@ -220,15 +215,14 @@ const Headers = styled.div`
     }
   }
 
-  .DownDrop{
-    color: #A8A8A8;
+  .DownDrop {
+    color: #a8a8a8;
     width: 30px;
     height: 30px;
     margin-left: 2px;
-
   }
 
-  .DownDrop:hover{
+  .DownDrop:hover {
     color: black;
   }
 
@@ -265,8 +259,8 @@ const Headers = styled.div`
 
   a {
     text-decoration: none;
-    color: #A58646;
-    font-family: 'Nanum Gothic'
+    color: #a58646;
+    font-family: "Nanum Gothic";
   }
 
   a:hover {
@@ -274,10 +268,10 @@ const Headers = styled.div`
     font-weight: bold;
   }
 
-.list {
-  margin-left: 60px;
-  margin-right: 60px;
-}
+  .list {
+    margin-left: 60px;
+    margin-right: 60px;
+  }
 
   .menuOne > div > p:hover {
     color: #6b4e16;
@@ -285,14 +279,14 @@ const Headers = styled.div`
 
   .menuOne > div > p {
     cursor: pointer;
-    color: #A8A8A8;
+    color: #a8a8a8;
     font-style: normal;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700px;
     font-size: 16px;
     line-height: 18px;
     margin-top: 12px;
-    margin-bottom: -1px
+    margin-bottom: -1px;
   }
 
   .bookmark > p:hover {
@@ -301,8 +295,8 @@ const Headers = styled.div`
 
   .bookmark {
     cursor: pointer;
-    color: #A8A8A8;
-    font-family: 'Nanum Gothic', sans-serif;
+    color: #a8a8a8;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 18px;
@@ -313,7 +307,7 @@ const Headers = styled.div`
     font-size: 20px;
     font-weight: 700;
     color: #f4b03e;
-    font-family: 'NanumGothic', sans-serif;
+    font-family: "NanumGothic", sans-serif;
     font-weight: 700;
   }
 
@@ -327,7 +321,7 @@ const Headers = styled.div`
   .logo_img {
     width: 40px;
     height: 40px;
-    margin:18px;
+    margin: 18px;
     display: flex;
     align-items: center;
   }
@@ -363,7 +357,7 @@ const Headers = styled.div`
     margin-top: 19px;
   }
 
-  .li_color{
+  .li_color {
     font-size: 100px;
   }
 
@@ -376,7 +370,7 @@ const Headers = styled.div`
     display: none;
     font-size: 20px;
   }
- 
+
   .header__left {
     display: flex;
   }
@@ -411,7 +405,7 @@ const Headers = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid #E4E4E4;
+    border: 1px solid #e4e4e4;
   }
 
   .LogoOut > a {
@@ -423,14 +417,13 @@ const Headers = styled.div`
     cursor: pointer;
     margin-right: 62px;
     margin-left: 32px;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     margin-top: 4px;
   }
 
-
   .LogoOutTwo {
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 18px;
@@ -442,7 +435,7 @@ const Headers = styled.div`
   }
 
   .Login > a {
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 16px;
@@ -537,7 +530,7 @@ const Headers = styled.div`
       display: none;
     }
 
-    .searchicon{
+    .searchicon {
       display: none;
     }
   }

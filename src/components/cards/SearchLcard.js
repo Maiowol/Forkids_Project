@@ -1,106 +1,135 @@
 // 육아템 리뷰 카드
-import React,{useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
 
-function SearchLcard({searchdata}) {
+function SearchLcard({ searchdata }) {
   const navigate = useNavigate();
-  const [book, setbook] = useState();
   const [btn, setbtn] = useState(false);
-  const [athis, setathis] = React.useState(6)
+  const [athis, setathis] = React.useState(6);
   const url = process.env.REACT_APP_URL;
 
-  const refetch = () =>{
-    axios
-    .get(`${url}/api/mypage/bookmark`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((res) => {
-      setbook(res.data.placeBookmarkList.slice(0, 3));
-    })
-    .catch((err) => {
-    });
-  }
-
-  // React.useEffect(() => {
-  //   refetch()
-  // }, []);
-
-  const SearchMore =  () => {
+  const SearchMore = () => {
     setbtn(!btn);
-    if(btn === false){
-      setathis(searchdata.length)
-    } else{
-      setathis(6)
+    if (btn === false) {
+      setathis(searchdata.length);
+    } else {
+      setathis(6);
     }
   };
-
 
   return (
     <>
       <Container>
-        {searchdata.slice(0,athis) &&
-          searchdata.slice(0,athis).map((data, idx) => {
+        {searchdata.slice(0, athis) &&
+          searchdata.slice(0, athis).map((data, idx) => {
             return (
-                <div className="card" key={idx}>
-
+              <div className="card" key={idx}>
                 <div className="cardin">
+                  <div className="cardInto">
+                    <div className="FirsBookBox">
+                      <div className="FirstIn">
+                        <div>
+                          <span
+                            className="titleCard"
+                            onClick={() => {
+                              navigate("/placedetail/" + data.placePostId);
+                            }}
+                          >
+                            {data.title.length > 8
+                              ? data.title.slice(0, 6) + "..."
+                              : data.title}
+                          </span>
+                          <span
+                            className="titleStar"
+                            onClick={() => {
+                              navigate("/placedetail/" + data.placePostId);
+                            }}
+                          >
+                            <FaStar
+                              size={28}
+                              style={{ color: "#FFBA5A", marginLeft: "5px" }}
+                            />
+                            {data.star}점
+                          </span>
+                        </div>
+                      </div>
 
-                <div className="cardInto">
+                      <div className="BookRegion" id={data.placePostId}>
+                        <GrLocation
+                          style={{
+                            marginBottom: "3px",
+                            marginRight: "3px",
+                          }}
+                        />
+                        {data.region.length > 20
+                          ? data.region.slice(0, 19) + ".."
+                          : data.region}
+                      </div>
 
-                <div className="FirsBookBox">
-                <div className="FirstIn">
-                <div>
-                  <span className="titleCard" onClick={()=>{navigate('/placedetail/' + data.placePostId)}}>{data.title.length > 8 ? data.title.slice(0,6) + '...': data.title}</span>
-                  <span className="titleStar" onClick={()=>{navigate('/placedetail/' + data.placePostId)}}><FaStar size={28}style={{color: "#FFBA5A",marginLeft: "5px"}}/>{data.star}점</span>
-                </div>
-                
-                </div>
-
-                <div className="BookRegion" id={data.placePostId}>
-                <GrLocation
-                    style={{
-                      marginBottom: "3px",
-                      marginRight: "3px"
-                    }} />
-                {data.region.length >20 ? data.region.slice(0,19) + '..' : data.region}
-                </div>
-
-                <div className="image" id={data.placePostId} onClick={()=>{navigate('/placedetail/' + data.placePostId)}}>
-                <img src={data.imageUrl[0]} alt="사진" />
-                </div>
-                </div>
-                </div>
+                      <div
+                        className="image"
+                        id={data.placePostId}
+                        onClick={() => {
+                          navigate("/placedetail/" + data.placePostId);
+                        }}
+                      >
+                        <img src={data.imageUrl[0]} alt="사진" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="SecondCard" id={data.placePostId} onClick={()=>{navigate('/placedetail/' + data.placePostId)}}>
-                  <div className="SecondIn" id={data.placePostId} onClick={()=>{navigate('/placedetail/' + data.placePostId)}}>
-                      <span><img src={data.profileUrl} alt="프로필 이미지" className="BookProfileImg" id={data.placePostId}/></span>
-                      <span className="BookmarkNi">{data.nickname}</span>
+                <div
+                  className="SecondCard"
+                  id={data.placePostId}
+                  onClick={() => {
+                    navigate("/placedetail/" + data.placePostId);
+                  }}
+                >
+                  <div
+                    className="SecondIn"
+                    id={data.placePostId}
+                    onClick={() => {
+                      navigate("/placedetail/" + data.placePostId);
+                    }}
+                  >
+                    <span>
+                      <img
+                        src={data.profileUrl}
+                        alt="프로필 이미지"
+                        className="BookProfileImg"
+                        id={data.placePostId}
+                      />
+                    </span>
+                    <span className="BookmarkNi">{data.nickname}</span>
                   </div>
 
-                  <div className="content" id={data.placePostId} onClick={()=>{navigate('/placedetail/' + data.placePostId)}}>
-                    {data.content.length > 17 ? data.content.slice(0,15) + '...' : data.content }
-                    
-                  </div>  
+                  <div
+                    className="content"
+                    id={data.placePostId}
+                    onClick={() => {
+                      navigate("/placedetail/" + data.placePostId);
+                    }}
+                  >
+                    {data.content.length > 17
+                      ? data.content.slice(0, 15) + "..."
+                      : data.content}
+                  </div>
                 </div>
-                </div>
+              </div>
             );
           })}
       </Container>
       <div className="btnBox">
-        <button className="MoreBtn" 
-        onClick={SearchMore}
-        >
-          {btn ? "닫기" :"더보기" }
+        <button className="MoreBtn" onClick={SearchMore}>
+          {btn ? "닫기" : "더보기"}
         </button>
       </div>
-      <hr className="BookHr"/>
+      <hr className="BookHr" />
     </>
   );
 }
@@ -115,13 +144,13 @@ const Container = styled.div`
   .card {
     background: white;
     border-radius: 20px;
-    border: 1px solid #A8A8A8;
+    border: 1px solid #a8a8a8;
     overflow: hidden;
     width: 284px;
     height: 390px;
   }
 
-  .firstT{
+  .firstT {
     width: 165.17px;
     height: 23px;
   }
@@ -132,80 +161,80 @@ const Container = styled.div`
     width: 255.63px;
     height: 56.48px;
   }
-  .FirsBookBox{
+  .FirsBookBox {
     width: 268.87px;
     height: 69.72px;
-    margin:26px 12px 8px 16px;
+    margin: 26px 12px 8px 16px;
   }
 
-.FirstIn{
-  width: 255.63px;
-  height: 31.48px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+  .FirstIn {
+    width: 255.63px;
+    height: 31.48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.titleStar{
-  color: #A8A8A8;
-  font-family: 'NanumGothic';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-  cursor: pointer;
-}
+  .titleStar {
+    color: #a8a8a8;
+    font-family: "NanumGothic";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    cursor: pointer;
+  }
 
-.bookpos{
-  width: 31.48px;
-  height: 31.48px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
+  .bookpos {
+    width: 31.48px;
+    height: 31.48px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 
-.BookRegion{
-  width: 255.63px;
-  height: 20px;
-  margin-top: 10px;
-  font-family: 'NanumGothic';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-  color: #3C3C3C;
-  margin-bottom: 12px;
-}
+  .BookRegion {
+    width: 255.63px;
+    height: 20px;
+    margin-top: 10px;
+    font-family: "NanumGothic";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    color: #3c3c3c;
+    margin-bottom: 12px;
+  }
 
-.SecondCard{
-  width: 262px;
-  height: 104.11px;
-  cursor: pointer;
-}
+  .SecondCard {
+    width: 262px;
+    height: 104.11px;
+    cursor: pointer;
+  }
 
-.SecondIn{
-  width: 262px;
-  height: 35.11px;
-  margin-top: 5px;
-  margin-left:22px;
-  cursor: pointer;
-}
+  .SecondIn {
+    width: 262px;
+    height: 35.11px;
+    margin-top: 5px;
+    margin-left: 22px;
+    cursor: pointer;
+  }
 
-.BookProfileImg{
-  width: 33.11px;
-  height: 35.11px;
-  border: 0.662246px solid #E4E4E4;
-  border-radius: 50%;
-}
+  .BookProfileImg {
+    width: 33.11px;
+    height: 35.11px;
+    border: 0.662246px solid #e4e4e4;
+    border-radius: 50%;
+  }
 
-.BookmarkNi{
-font-family: 'NanumGothic';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 18px;
-margin-left: 8px;
-}
+  .BookmarkNi {
+    font-family: "NanumGothic";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    margin-left: 8px;
+  }
 
   .card-top p {
     display: flex;
@@ -217,8 +246,8 @@ margin-left: 8px;
     display: flex;
   }
 
-  .titleCard{
-    font-family: 'NanumGothic';
+  .titleCard {
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -232,7 +261,7 @@ margin-left: 8px;
     color: black;
   }
 
-  .cardin{
+  .cardin {
     width: 264.43px;
     height: 280px;
   }
@@ -263,18 +292,17 @@ margin-left: 8px;
     border-radius: 25px;
     overflow: hidden;
     position: relative;
-    right:5px;
+    right: 5px;
     top: 7px;
     cursor: pointer;
   }
 
-  .image > img{
+  .image > img {
     width: 258.28px;
     height: 170.2px;
     border-radius: 19.8674px;
-    border: 1px solid #E4E4E4;
+    border: 1px solid #e4e4e4;
   }
-
 
   .profile_box {
     display: flex;
@@ -307,7 +335,7 @@ margin-left: 8px;
   .content {
     width: 250px;
     height: 67px;
-    font-family: 'NanumGothic';
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;

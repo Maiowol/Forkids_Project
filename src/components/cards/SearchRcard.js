@@ -6,71 +6,113 @@ import { MdOutlinePlace } from "react-icons/md";
 import axios from "axios";
 import { GrLocation } from "react-icons/gr";
 
-function SearchRcard({searchdata}) {
+function SearchRcard({ searchdata }) {
   const navigate = useNavigate();
-  const [book, setbook] = React.useState();
-  const [btn, setbtn] = React.useState(true)
-  const [athis, setathis] = React.useState(6)
+  const [btn, setbtn] = React.useState(true);
+  const [athis, setathis] = React.useState(6);
 
-  const SearchMore =  () => {
+  const SearchMore = () => {
     setbtn(!btn);
-    if(btn === false){
-      setathis(searchdata.length)
-    } else{
-      setathis(6)
+    if (btn === false) {
+      setathis(searchdata.length);
+    } else {
+      setathis(6);
     }
   };
 
   return (
     <>
       <Container>
-        {searchdata.slice(0,athis) &&
-          searchdata.slice(0,athis).map((data, idx) => {
+        {searchdata.slice(0, athis) &&
+          searchdata.slice(0, athis).map((data, idx) => {
             return (
-                <div className="card" key={idx}>
-
+              <div className="card" key={idx}>
                 <div className="cardin">
+                  <div className="cardInto">
+                    <div className="FirsBookBox">
+                      <div className="FirstIn">
+                        <div>
+                          <span
+                            className="titleCard"
+                            onClick={() => {
+                              navigate("/reviewdetail/" + data.reviewPostId);
+                            }}
+                          >
+                            {data.title.length > 8
+                              ? data.title.slice(0, 6) + "..."
+                              : data.title}
+                          </span>
+                          <span
+                            className="titleStar"
+                            onClick={() => {
+                              navigate("/reviewdetail/" + data.reviewPostId);
+                            }}
+                          >
+                            {data.productType.length > 5
+                              ? data.productType.slice(0, 4)
+                              : data.productType}
+                          </span>
+                        </div>
+                      </div>
 
-                <div className="cardInto">
+                      <div className="BookRegion">
+                        <GrLocation
+                          style={{
+                            marginBottom: "3px",
+                            marginRight: "3px",
+                          }}
+                        />
+                        {data.url.length > 20
+                          ? data.url.slice(0, 14) + "..."
+                          : data.url}
+                      </div>
 
-                <div className="FirsBookBox">
-                <div className="FirstIn">
-                <div>
-                  <span className="titleCard" onClick={()=>{navigate('/reviewdetail/' + data.reviewPostId)}}>{data.title.length > 8 ? data.title.slice(0,6) + '...': data.title}</span>
-                  <span className="titleStar" onClick={()=>{navigate('/reviewdetail/' + data.reviewPostId)}}>{data.productType.length > 5 ? data.productType.slice(0,4) : data.productType }
-                  </span>
-                </div>
-                
-                </div>
-
-                <div className="BookRegion" >
-                <GrLocation
-                      style={{
-                        marginBottom: "3px",
-                        marginRight: "3px"
-                      }} />
-                {data.url.length >20 ? data.url.slice(0,14) + '...' : data.url}
-                </div>
-
-                <div className="image"  onClick={()=>{navigate('/reviewdetail/' + data.reviewPostId)}}>
-                <img src={data.imageUrl[0]} alt="사진" />
-                </div>
-                </div>
-                </div>
+                      <div
+                        className="image"
+                        onClick={() => {
+                          navigate("/reviewdetail/" + data.reviewPostId);
+                        }}
+                      >
+                        <img src={data.imageUrl[0]} alt="사진" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="SecondCard"  onClick={()=>{navigate('/reviewdetail/' + data.reviewPostId)}}>
-                  <div className="SecondIn"  onClick={()=>{navigate('/reviewdetail/' + data.reviewPostId)}}>
-                      <span><img src={data.profileUrl} alt="프로필 이미지" className="BookProfileImg" /></span>
-                      <span className="BookmarkNi">{data.nickname}</span>
+                <div
+                  className="SecondCard"
+                  onClick={() => {
+                    navigate("/reviewdetail/" + data.reviewPostId);
+                  }}
+                >
+                  <div
+                    className="SecondIn"
+                    onClick={() => {
+                      navigate("/reviewdetail/" + data.reviewPostId);
+                    }}
+                  >
+                    <span>
+                      <img
+                        src={data.profileUrl}
+                        alt="프로필 이미지"
+                        className="BookProfileImg"
+                      />
+                    </span>
+                    <span className="BookmarkNi">{data.nickname}</span>
                   </div>
 
-                  <div className="content"  onClick={()=>{navigate('/reviewdetail/' + data.placePostId)}}>
-                    {data.content.length > 17 ? data.content.slice(0,15) + '...' : data.content }
-                    
-                  </div>  
+                  <div
+                    className="content"
+                    onClick={() => {
+                      navigate("/reviewdetail/" + data.placePostId);
+                    }}
+                  >
+                    {data.content.length > 17
+                      ? data.content.slice(0, 15) + "..."
+                      : data.content}
+                  </div>
                 </div>
-                </div>
+              </div>
             );
           })}
       </Container>
@@ -93,13 +135,13 @@ const Container = styled.div`
   .card {
     background: white;
     border-radius: 20px;
-    border: 1px solid #A8A8A8;
+    border: 1px solid #a8a8a8;
     overflow: hidden;
     width: 284px;
     height: 390px;
   }
 
-  .firstT{
+  .firstT {
     width: 165.17px;
     height: 23px;
   }
@@ -110,112 +152,81 @@ const Container = styled.div`
     width: 255.63px;
     height: 56.48px;
   }
-  .FirsBookBox{
+  .FirsBookBox {
     width: 268.87px;
     height: 69.72px;
-    margin:26px 12px 8px 16px;
+    margin: 26px 12px 8px 16px;
   }
 
-.FirstIn{
-  width: 255.63px;
-  height: 31.48px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+  .FirstIn {
+    width: 255.63px;
+    height: 31.48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.titleStar{
-  color: #A8A8A8;
-  font-family: 'NanumGothic';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-  cursor: pointer;
-  margin-left: 5px;
-}
+  .titleStar {
+    color: #a8a8a8;
+    font-family: "NanumGothic";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
 
-.bookpos{
-  width: 31.48px;
-  height: 31.48px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
+  .bookpos {
+    width: 31.48px;
+    height: 31.48px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 
-.BookRegion{
-  width: 255.63px;
-  height: 20px;
-  margin-top: 10px;
-  font-family: 'NanumGothic';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-  color: #3C3C3C;
-  margin-bottom: 12px;
-}
+  .BookRegion {
+    width: 255.63px;
+    height: 20px;
+    margin-top: 10px;
+    font-family: "NanumGothic";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    color: #3c3c3c;
+    margin-bottom: 12px;
+  }
 
-.SecondCard{
-  width: 262px;
-  height: 104.11px;
-  cursor: pointer;
-}
+  .SecondCard {
+    width: 262px;
+    height: 104.11px;
+    cursor: pointer;
+  }
 
-.SecondIn{
-  width: 262px;
-  height: 35.11px;
-  margin-top: 5px;
-  margin-left:22px;
-  cursor: pointer;
-}
+  .SecondIn {
+    width: 262px;
+    height: 35.11px;
+    margin-top: 5px;
+    margin-left: 22px;
+    cursor: pointer;
+  }
 
-.BookProfileImg{
-  width: 33.11px;
-  height: 35.11px;
-  border: 0.662246px solid #E4E4E4;
-  border-radius: 50%;
-}
+  .BookProfileImg {
+    width: 33.11px;
+    height: 35.11px;
+    border: 0.662246px solid #e4e4e4;
+    border-radius: 50%;
+  }
 
-.BookmarkNi{
-font-family: 'NanumGothic';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 18px;
-margin-left: 8px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .BookmarkNi {
+    font-family: "NanumGothic";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    margin-left: 8px;
+  }
 
   .card-top p {
     display: flex;
@@ -227,8 +238,8 @@ margin-left: 8px;
     display: flex;
   }
 
-  .titleCard{
-    font-family: 'NanumGothic';
+  .titleCard {
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -242,7 +253,7 @@ margin-left: 8px;
     color: black;
   }
 
-  .cardin{
+  .cardin {
     width: 264.43px;
     height: 280px;
   }
@@ -273,18 +284,17 @@ margin-left: 8px;
     border-radius: 25px;
     overflow: hidden;
     position: relative;
-    right:5px;
+    right: 5px;
     top: 7px;
     cursor: pointer;
   }
 
-  .image > img{
+  .image > img {
     width: 258.28px;
     height: 170.2px;
     border-radius: 19.8674px;
-    border: 1px solid #E4E4E4;
+    border: 1px solid #e4e4e4;
   }
-
 
   .profile_box {
     display: flex;
@@ -317,7 +327,7 @@ margin-left: 8px;
   .content {
     width: 250px;
     height: 67px;
-    font-family: 'NanumGothic';
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;

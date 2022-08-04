@@ -4,8 +4,8 @@ import styled from "styled-components";
 import Grid from "../components/elements/Grid";
 import Header from "../components/main/Header";
 import Swiper from "../components/main/Swiper";
-import MainLcard from '../components/cards/MainLcard';
-import MainRcard from '../components/cards/MainRcard';
+import MainLcard from "../components/cards/MainLcard";
+import MainRcard from "../components/cards/MainRcard";
 import Footer from "../components/main/Footer";
 import MainScard from "../components/cards/MainScard";
 import ChatIcon from '../components/main/ChatIcon'
@@ -23,7 +23,6 @@ const Main = () => {
             <Title>
               체험 모집
             </Title>
-
           </div>
           <div className="subtitle">
             <div className="subcontent">
@@ -76,8 +75,6 @@ const Main = () => {
       </Grid>
       <ChatIcon />
       <Footer />
-
-
     </div>
   );
 };
@@ -100,12 +97,12 @@ const Container = styled.div`
     justify-content: space-between;
   }
   hr {
-    color: #A8A8A8;
+    color: #a8a8a8;
     height: 2.5px;
     margin-top: 100px;
   }
-.hrz {
-    color: #A8A8A8;
+  .hrz {
+    color: #a8a8a8;
     height: 2.5px;
     margin-top: 220px;
   }
@@ -115,14 +112,14 @@ const Title = styled.p`
   display: flex;
   font-size: 28px;
   align-items: flex-end;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 800;
   height: 137px;
   margin-left: 170px;
   margin-bottom: 0px;
-  img{
-    width:70px;
-    height:55px;
+  img {
+    width: 70px;
+    height: 55px;
   }
 `;
 
