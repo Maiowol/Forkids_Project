@@ -1,14 +1,12 @@
 //육아템 리뷰
 import React from "react";
 import styled from "styled-components";
-import ChatIcon from "../../components/main/ChatIcon";
-
-//  elements & components
+import ChatIcon from '../../components/main/ChatIcon'
 import Header from "../../components/main/Header";
-import Footer from "../../components/main/Footer";
 import RCard from "../../components/cards/RCard";
 import bottle from "../../images/bottle.png";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Review() {
   const token = localStorage.getItem("accessToken");
@@ -28,21 +26,17 @@ function Review() {
           <span className="spanstyle">내가 써본 육아템, 알려주고 싶다면?</span>
           <div className="button">
             {!token ? (
-              <Btn
-                onClick={() => {
-                  navigate(`/login`);
-                }}
-              >
-                후기 작성하기
-              </Btn>
+              <Link to="/login">
+                <Btn>
+                  후기 작성하기
+                </Btn>
+              </Link>
             ) : (
-              <Btn
-                onClick={() => {
-                  navigate(`/reviewadd`);
-                }}
-              >
-                후기 작성하기
-              </Btn>
+              <Link to="/reviewadd">
+                <Btn>
+                  후기 작성하기
+                </Btn>
+              </Link>
             )}
           </div>
         </TitleBox>

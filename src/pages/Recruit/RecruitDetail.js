@@ -12,8 +12,7 @@ import img_delete from '../../images/delete (1).png'
 import axios from "axios";
 import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { detailPostDB, deletePostDB } from "../../redux/modules/post";
+import { useDispatch } from "react-redux";
 import { GetMyPageAxios } from "../../redux/modules/Data";
 import Swal from "sweetalert2";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
@@ -31,17 +30,17 @@ const RecruitDetail = () => {
   const { recruitPostId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [data,setdata] = useState()
+  const [data, setdata] = useState()
 
   React.useEffect(() => {
     axios
-      .get(`${url}/api/recruits/` + recruitPostId,token ?{
+      .get(`${url}/api/recruits/` + recruitPostId, token ? {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       } : null)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         setState(response.data.recruitDetails);
       })
       .catch((response) => {
@@ -50,17 +49,15 @@ const RecruitDetail = () => {
   }, []);
 
 
-
-
-  const refetch = () =>{
+  const refetch = () => {
     axios
-      .get(`${url}/api/recruits/` + recruitPostId,token ?{
+      .get(`${url}/api/recruits/` + recruitPostId, token ? {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       } : null)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         setState(response.data.recruitDetails);
       })
       .catch((response) => {
@@ -68,29 +65,10 @@ const RecruitDetail = () => {
       });
   }
 
-  // React.useEffect(() => {
-  //   dispatch(detailPostDB(recruitPostId));
-  // }, []);
-
-
-
-
-
-
   // 모집중 , 모집완료 상태 변경하기
   const inputChange = () => {
     setOn(!on);
   };
-
-  // const detail = useSelector((state) => state.post.list);
-
-  // console.log(detail);
-
-
-
-  // const deletePosting = () => {
-  //   dispatch(deletePostDB(recruitPostId, navigate));
-  // };
 
   // 1:1 문의하기 버튼 눌렀을 때 채팅방 생성 + 채팅방 입장하기
   const GoChat = () => {
@@ -104,7 +82,7 @@ const RecruitDetail = () => {
           receiverNick: state.nickname,
           senderNick: nickname,
           profileUrlTwo: state.profileUrl,
-          title : state.title
+          title: state.title
         };
         setdata(JoinData)
         socket.emit("join_room", JoinData);
@@ -114,10 +92,6 @@ const RecruitDetail = () => {
         alert(err.response.data.message);
       });
   };
-
-  console.log(data)
-
-
 
   const deletePosting = () => {
     Swal.fire({
@@ -175,7 +149,7 @@ const RecruitDetail = () => {
               <div className="container">
                 <div className="card-left">
                   <div className="toggle">
-                     {state.status ? <div>모집완료</div>: <p>모집중</p>} 
+                    {state.status ? <div>모집완료</div> : <p>모집중</p>}
                   </div>
                   <div>
                     <strong> 제목 </strong>
@@ -201,7 +175,6 @@ const RecruitDetail = () => {
 
                 {/* 카드 오른쪽: 작성자 프로필, 버튼, 내용 */}
                 <div className="card-right">
-
                   <div className="card-top">
                     {nickname === state.nickname ? (
                       <>
@@ -220,52 +193,52 @@ const RecruitDetail = () => {
                           </button>
 
                           {state.bookmarkStatus === true ? (
-                      <BsFillBookmarkFill
-                        className={token ? "iconbook2" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/recruits/bookmark/` +
-                              state.recruitPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    ) : (
-                      <BsBookmark
-                        className={token ? "iconbook" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/recruits/bookmark/` +
-                              state.recruitPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    )}
+                            <BsFillBookmarkFill
+                              className={token ? "iconbook2" : "none"}
+                              onClick={() => {
+                                axios
+                                  .put(
+                                    `${url}/api/recruits/bookmark/` +
+                                    state.recruitPostId,
+                                    null,
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${localStorage.getItem(
+                                          "accessToken"
+                                        )}`,
+                                      },
+                                    }
+                                  )
+                                  .then((res) => {
+                                    // console.log(res.data)
+                                    refetch()
+                                  });
+                              }}
+                            />
+                          ) : (
+                            <BsBookmark
+                              className={token ? "iconbook" : "none"}
+                              onClick={() => {
+                                axios
+                                  .put(
+                                    `${url}/api/recruits/bookmark/` +
+                                    state.recruitPostId,
+                                    null,
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${localStorage.getItem(
+                                          "accessToken"
+                                        )}`,
+                                      },
+                                    }
+                                  )
+                                  .then((res) => {
+                                    // console.log(res.data)
+                                    refetch()
+                                  });
+                              }}
+                            />
+                          )}
                         </Btn>
 
                         <div className="profile">
@@ -306,83 +279,56 @@ const RecruitDetail = () => {
                               <img src={chatlist} />
                               1:1 채팅
                             </button>
-                            
+
                             {state.bookmarkStatus === true ? (
-                      <BsFillBookmarkFill
-                        className={token ? "iconbook2" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/recruits/bookmark/` +
-                              state.recruitPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    ) : (
-                      <BsBookmark
-                        className={token ? "iconbook" : "none"}
-                        onClick={() => {
-                          axios
-                            .put(
-                              `${url}/api/recruits/bookmark/` +
-                              state.recruitPostId,
-                              null,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "accessToken"
-                                  )}`,
-                                },
-                              }
-                            )
-                            .then((res) => {
-                              console.log(res.data)
-                              refetch()
-                            });
-                        }}
-                      />
-                    )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                              <BsFillBookmarkFill
+                                className={token ? "iconbook2" : "none"}
+                                onClick={() => {
+                                  axios
+                                    .put(
+                                      `${url}/api/recruits/bookmark/` +
+                                      state.recruitPostId,
+                                      null,
+                                      {
+                                        headers: {
+                                          Authorization: `Bearer ${localStorage.getItem(
+                                            "accessToken"
+                                          )}`,
+                                        },
+                                      }
+                                    )
+                                    .then((res) => {
+                                      // console.log(res.data)
+                                      refetch()
+                                    });
+                                }}
+                              />
+                            ) : (
+                              <BsBookmark
+                                className={token ? "iconbook" : "none"}
+                                onClick={() => {
+                                  axios
+                                    .put(
+                                      `${url}/api/recruits/bookmark/` +
+                                      state.recruitPostId,
+                                      null,
+                                      {
+                                        headers: {
+                                          Authorization: `Bearer ${localStorage.getItem(
+                                            "accessToken"
+                                          )}`,
+                                        },
+                                      }
+                                    )
+                                    .then((res) => {
+                                      // console.log(res.data)
+                                      refetch()
+                                    });
+                                }}
+                              />
+                            )}
                           </BtnTwo>
-
                         </div>
-
                       </>
                     )}
                   </div>
@@ -464,8 +410,6 @@ const Detail = styled.div`
     font-weight: 700;
   }
 
-
-
   .iconbook{
     width: 30px;
     height:30px;
@@ -479,11 +423,6 @@ const Detail = styled.div`
     cursor: pointer;
     color: #6b4e16;
   }
-
-
-
-
-
 
   .toggle > div {
     width: 114px;
@@ -713,8 +652,6 @@ const BtnTwo = styled.div`
     margin-right: 30px;
     background-color: #fff;
   }
-
-
 `;
 
 export default RecruitDetail;

@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GetMyPageAxios } from "../../redux/modules/Data";
-import search from "../../images/search.png";
+import search from '../../images/search.png'
+import { Link } from "react-router-dom";
 
 const Header = () => {
   // Hook 선언
@@ -41,9 +42,6 @@ const Header = () => {
     dispatch(GetMyPageAxios(nickname));
   };
 
-  const Bookmark = () => {
-    navigate("/MyBookmark");
-  };
 
   return (
     <>
@@ -51,31 +49,31 @@ const Header = () => {
 
       {!UserCheck ? (
         <Headers>
-          <a className="logo_container" href="/">
-            <div className="logo_img">
+          <Link to="/"
+            className="logo_container"><div className="logo_img">
               <img src={logo} alt="로고" />
             </div>
             <div className="logo">모두의 육아</div>
-          </a>
+            </Link>
 
           {/* 메뉴 리스트 */}
           <ul className="header__menulist">
-            <a href="/recruit">체험 모집</a>
-            <a href="/place" className="list">
-              장소 추천
-            </a>
-            <a href="/review">육아템 리뷰</a>
+            <Link to="/recruit">체험 모집</Link>
+            <Link to="/place"
+              className="list">장소 추천</Link>
+            <Link to="/review">육아템 리뷰</Link>
           </ul>
 
           {/* User 메뉴 리스트 */}
           <ul className="header__right">
             <li className="bell">
-              <a href="/api/search">
-                <img src={search} alt="검색" className="searchiconlogin" />
-              </a>
+              <Link to="/api/search">
+                <img src={search} alt="검색" 
+                className="searchiconlogout" />
+                </Link>
             </li>
             <li className="Login">
-              <a href="/Login">로그인</a>
+            <Link to="/Login">로그인</Link>
             </li>
           </ul>
         </Headers>
@@ -83,28 +81,28 @@ const Header = () => {
         // 로그인 했을 때의 헤더 ==============================================================================
 
         <Headers>
-          <a className="logo_container" href="/">
-            <div className="logo_img">
+           <Link to="/"
+            className="logo_container"><div className="logo_img">
               <img src={logo} alt="로고" />
             </div>
             <div className="logo">모두의 육아</div>
-          </a>
+            </Link>
 
           {/* 메뉴 리스트 */}
           <ul className="header__menulist">
-            <a href="/recruit">체험 모집</a>
-            <a href="/place" className="list">
-              장소 추천
-            </a>
-            <a href="/review">육아템 리뷰</a>
+            <Link to="/recruit">체험 모집</Link>
+            <Link to="/place"
+              className="list">장소 추천</Link>
+            <Link to="/review">육아템 리뷰</Link>
           </ul>
 
           {/* User 메뉴 리스트 */}
           <ul className="header__right">
             <li className="bell">
-              <a href="/api/search">
-                <img src={search} alt="검색" className="searchicon" />
-              </a>
+            <Link to="/api/search">
+                <img src={search} alt="검색" 
+                className="searchiconlogin" />
+                </Link>
             </li>
             <li className="profile">
               <img src={Profile} alt="프로필" />
@@ -127,9 +125,10 @@ const Header = () => {
                 </div>
                 <hr />
                 <div className="menuTwo">
-                  <div onClick={Bookmark}>
+                  <Link to="/MyBookmark"
+                  className="bookmark">
                     <p>북마크관리</p>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </li>
@@ -290,11 +289,11 @@ const Headers = styled.div`
     margin-bottom: -1px;
   }
 
-  .menuTwo > div > p:hover {
+  .bookmark > p:hover {
     color: #6b4e16;
   }
 
-  .menuTwo > div > p {
+  .bookmark {
     cursor: pointer;
     color: #a8a8a8;
     font-family: "Nanum Gothic", sans-serif;
@@ -311,12 +310,14 @@ const Headers = styled.div`
     font-family: "NanumGothic", sans-serif;
     font-weight: 700;
   }
+
   .logo_container {
     display: flex;
     align-items: center;
     margin-left: 18px;
     cursor: pointer;
   }
+
   .logo_img {
     width: 40px;
     height: 40px;
@@ -330,11 +331,21 @@ const Headers = styled.div`
     height: 50px;
     cursor: pointer;
   }
-  .bell > a > img {
+
+  .searchiconlogout {
     width: 30px;
     height: 30px;
     cursor: pointer;
   }
+
+  .searchiconlogin {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 6px;
+  }
+
   .bell > img:hover {
     transform: scale(1.08);
   }
@@ -353,10 +364,6 @@ const Headers = styled.div`
   .bell {
     font-size: 35px;
     cursor: pointer;
-  }
-  .bell > a {
-    display: flex;
-    align-items: center;
   }
 
   .MyPage {

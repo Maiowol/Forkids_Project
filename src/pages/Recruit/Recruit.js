@@ -2,15 +2,13 @@
 import React from "react";
 import styled from "styled-components";
 import ChatIcon from '../../components/main/ChatIcon'
-
-//  elements & components
 import Header from "../../components/main/Header";
 import SCard from "../../components/cards/SCard";
 import hand from '../../images/hand.png';
+import { Link } from "react-router-dom";
 
 function Recruit() {
   const token = localStorage.getItem("accessToken");
-
   return (
     <div>
       <Header />
@@ -26,17 +24,17 @@ function Recruit() {
           <span>내가 하는 활동, 함께 할 팀원을 모집하고 싶다면?</span>
           <div className="button">
             {!token ? (
-              <a href="/login">
+              <Link to="/login">
                 <Btn>
                   모집글 작성하기
                 </Btn>
-              </a>
+              </Link>
             ) : (
-              <a href="/recruitadd">
+               <Link to="/recruitadd">
                 <Btn>
                   모집글 작성하기
                 </Btn>
-              </a>
+              </Link>
             )}
           </div>
         </TitleBox>

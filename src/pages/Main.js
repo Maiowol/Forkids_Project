@@ -8,8 +8,9 @@ import MainLcard from "../components/cards/MainLcard";
 import MainRcard from "../components/cards/MainRcard";
 import Footer from "../components/main/Footer";
 import MainScard from "../components/cards/MainScard";
-import ChatIcon from "../components/main/ChatIcon";
-import "../shared/App.css";
+import ChatIcon from '../components/main/ChatIcon'
+import { Link } from "react-router-dom";
+import '../shared/App.css'
 
 const Main = () => {
   return (
@@ -19,16 +20,20 @@ const Main = () => {
       <Grid maxWidth="1440px" height="100%" margin="0 auto" padding="0 12px">
         <Container>
           <div className="card_title">
-            <Title>체험 모집</Title>
+            <Title>
+              체험 모집
+            </Title>
           </div>
           <div className="subtitle">
             <div className="subcontent">
               <SubTitle>
                 다양한 공동육아 프로그램을 둘러보고, 참여를 신청해요!
               </SubTitle>
-              <a href="/recruit">
-                <Btn>더 보기</Btn>
-              </a>
+              <Link to="/recruit">
+                <Btn>
+                  더 보기
+                </Btn>
+              </Link>
             </div>
           </div>
           <MainScard />
@@ -42,9 +47,11 @@ const Main = () => {
               <SubTitle>
                 아이들과 함께 출입이 가능한 키즈존을 공유해요!
               </SubTitle>
-              <a href="/place">
-                <Btn>더 보기</Btn>
-              </a>
+              <Link to="/place">
+                <Btn>
+                  더 보기
+                </Btn>
+              </Link>
             </div>
           </div>
           <MainLcard />
@@ -56,9 +63,11 @@ const Main = () => {
           <div className="subtitle">
             <div className="subcontent">
               <SubTitle>유용한 육아 아이템들을 소개하고 추천해요!</SubTitle>
-              <a href="/review">
-                <Btn>더 보기</Btn>
-              </a>
+              <Link to="/review">
+                <Btn>
+                  더 보기
+                </Btn>
+              </Link>
             </div>
           </div>
           <MainRcard />

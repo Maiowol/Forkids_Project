@@ -5,6 +5,7 @@ import Header from "../../components/main/Header";
 import LCard from "../../components/cards/Lcard";
 import activity from "../../images/activity.png";
 import ChatIcon from '../../components/main/ChatIcon'
+import { Link } from "react-router-dom";
 
 function Place() {
   const token = localStorage.getItem("accessToken");
@@ -24,19 +25,18 @@ function Place() {
           <span>내가 다녀온 장소, 추천하고 싶다면?</span>
           <div className="button">
             {!token ? (
-              <a href="/login">
+              <Link to="/login">
                 <Btn>
                   추천글 작성하기
                 </Btn>
-              </a>
+              </Link>
 
             ) : (
-              
-              <a href="/placeadd">
+              <Link to="/placeadd">
                 <Btn>
                   추천글 작성하기
                 </Btn>
-              </a>
+              </Link>
             )}
           </div>
         </TitleBox>
