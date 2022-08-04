@@ -5,9 +5,7 @@ import search from "../../images/search.png";
 
 function SearchInput() {
   const navigate = useNavigate();
-  const searchBtn = () => {
-    console.log("key press");
-  };
+  const searchBtn = () => {};
 
   return (
     <SearchBox>

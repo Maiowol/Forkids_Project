@@ -18,7 +18,6 @@ const ChatIcon = () => {
   // 상대방이 보낸 메시지를 알림 이벤트 경로로 데이터를 받음
   React.useEffect(() => {
     socket.off("notify").on("notify", (data) => {
-      console.log(data);
       if (nickname === data.senderNick) {
         return null;
       } else if (nickname !== data.receiverNick) {

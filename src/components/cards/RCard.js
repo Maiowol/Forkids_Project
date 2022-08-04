@@ -1,14 +1,13 @@
 // 육아템 리뷰 카드
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GrLocation } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 function RCard() {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [noMore, setnoMore] = useState(true);
   const [index, setindex] = useState(1);
@@ -172,65 +171,39 @@ function RCard() {
                         )}
                       </div>
                     </div>
-
-                    <div
-                      className="Furl"
-                      onClick={() => {
-                        navigate("/reviewdetail/" + data.reviewPostId);
-                      }}
-                    >
-                      <GrLocation
-                        style={{
-                          marginBottom: "3px",
-                          marginRight: "3px",
-                        }}
-                      />
-                      {data.url.length > 20 ? data.url.slice(0, 20) : data.url}
-                    </div>
-
-                    <div
-                      className="RcardImg"
-                      onClick={() => {
-                        navigate("/reviewdetail/" + data.reviewPostId);
-                      }}
-                    >
-                      <img src={data.imageUrl[0]} alt="사진" />
-                    </div>
-
-                    <div
-                      className="RcardProfile"
-                      onClick={() => {
-                        navigate("/reviewdetail/" + data.reviewPostId);
-                      }}
-                    >
-                      <div
-                        className="Rprofile"
-                        onClick={() => {
-                          navigate("/reviewdetail/" + data.reviewPostId);
-                        }}
-                      >
-                        <img src={data.profileUrl} alt="사진" />
+                    <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                      <div className="Furl">
+                        <GrLocation
+                          style={{
+                            marginBottom: "3px",
+                            marginRight: "3px",
+                          }}
+                        />
+                        {data.url.length > 20
+                          ? data.url.slice(0, 20)
+                          : data.url}
                       </div>
-                      <div
-                        className="Rnickname"
-                        onClick={() => {
-                          navigate("/reviewdetail/" + data.reviewPostId);
-                        }}
-                      >
-                        {data.nickname}
+                    </Link>
+                    <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                      <div className="RcardImg">
+                        <img src={data.imageUrl[0]} alt="사진" />
                       </div>
-                    </div>
-
-                    <div
-                      className="content"
-                      onClick={() => {
-                        navigate("/reviewdetail/" + data.reviewPostId);
-                      }}
-                    >
-                      {data.content.length > 20
-                        ? data.content.slice(0, 100)
-                        : data.content}
-                    </div>
+                    </Link>
+                    <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                      <div className="RcardProfile">
+                        <div className="Rprofile">
+                          <img src={data.profileUrl} alt="사진" />
+                        </div>
+                        <div className="Rnickname">{data.nickname}</div>
+                      </div>
+                    </Link>
+                    <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                      <div className="content">
+                        {data.content.length > 20
+                          ? data.content.slice(0, 100)
+                          : data.content}
+                      </div>
+                    </Link>
                   </div>
                 )
               );
@@ -266,6 +239,11 @@ const Container = styled.div`
     height: 30px;
     display: flex;
     justify-content: space-between;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
   }
 
   .FirstBox {

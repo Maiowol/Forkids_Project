@@ -6,6 +6,7 @@ import axios from "axios";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 function BookLcard() {
   const navigate = useNavigate();

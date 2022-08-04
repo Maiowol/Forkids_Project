@@ -30,9 +30,7 @@ const Comment = (props) => {
       .then((res) => {
         window.alert("댓글 작성 성공");
       })
-      .catch((err) => {
-        console.log(err.response.data.message);
-      });
+      .catch((err) => {});
   };
 
   // 댓글 조회

@@ -10,12 +10,11 @@ import Footer from "../components/main/Footer";
 import MainScard from "../components/cards/MainScard";
 import ChatIcon from "../components/main/ChatIcon";
 import "../shared/App.css";
-import SubHeader from "../components/main/SubHeader";
+
 const Main = () => {
   return (
     <div className="MainBackGround">
       <Header />
-      <SubHeader />
       <Swiper />
       <Grid maxWidth="1440px" height="100%" margin="0 auto" padding="0 12px">
         <Container>

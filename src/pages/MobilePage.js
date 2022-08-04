@@ -27,7 +27,7 @@ const Page = styled.div`
   justify-content: center;
 
   img {
-    widht: 100px;
+    width: 100px;
     height: 100px;
     margin-left: 25%;
     margin-bottom: 25px;
