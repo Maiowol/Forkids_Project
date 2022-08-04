@@ -1,19 +1,18 @@
 // 모집 카드
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import location from "../../images/location.png";
 import time from "../../images/time.png";
 import age from "../../images/age.png";
 import calendar from "../../images/calendar.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { GrLocation } from "react-icons/gr";
 import { BiTimeFive } from "react-icons/bi";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { TbMoodKid } from "react-icons/tb";
 
 function SearchScard({ Morerecruit, keyword }) {
-  const navigate = useNavigate();
   const [btn, setBtn] = useState(false);
   const [athis, setathis] = React.useState(6);
 
@@ -38,46 +37,40 @@ function SearchScard({ Morerecruit, keyword }) {
                   {item.status === true ? <p>모집완료</p> : <span>모집중</span>}
                 </div>
                 {/* 카드 타이틀 */}
-                <div
-                  className="titleTwo"
-                  onClick={() => {
-                    navigate("/recruitdetail/" + item.recruitPostId);
-                  }}
-                >
-                  <span>
-                    {item.title.length > 12
-                      ? item.title.slice(0, 11) + "..."
-                      : item.title}
-                  </span>
-                </div>
+                <Link to={`/recruitdetail/${item.recruitPostId}`}>
+                  <div className="titleTwo">
+                    <span>
+                      {item.title.length > 12
+                        ? item.title.slice(0, 11) + "..."
+                        : item.title}
+                    </span>
+                  </div>
+                </Link>
                 {/* 카드 내용물 */}
-                <div
-                  className="card-bottom"
-                  onClick={() => {
-                    navigate("/recruitdetail/" + item.recruitPostId);
-                  }}
-                >
-                  <div>
-                    <GrLocation style={{ marginRight: "8px" }} />
-                    {item.place.length > 14
-                      ? item.place.slice(0, 13) + "..."
-                      : item.place}
-                  </div>
-                  <div>
+                <Link to={`/recruitdetail/${item.recruitPostId}`}>
+                  <div className="card-bottom">
                     <div>
-                      <AiOutlineCalendar style={{ marginRight: "8px" }} />
-                      {item != null && item.date}
+                      <GrLocation style={{ marginRight: "8px" }} />
+                      {item.place.length > 14
+                        ? item.place.slice(0, 13) + "..."
+                        : item.place}
                     </div>
-                    <BiTimeFive style={{ marginRight: "8px" }} />
-                    {item != null && item.time}
+                    <div>
+                      <div>
+                        <AiOutlineCalendar style={{ marginRight: "8px" }} />
+                        {item != null && item.date}
+                      </div>
+                      <BiTimeFive style={{ marginRight: "8px" }} />
+                      {item != null && item.time}
+                    </div>
+                    <div>
+                      <TbMoodKid style={{ marginRight: "8px" }} />
+                      {item.age.length > 14
+                        ? item.age.slice(0, 13) + "..."
+                        : item.age}
+                    </div>
                   </div>
-                  <div>
-                    <TbMoodKid style={{ marginRight: "8px" }} />
-                    {item.age.length > 14
-                      ? item.age.slice(0, 13) + "..."
-                      : item.age}
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })}
@@ -113,6 +106,11 @@ const Container = styled.div`
     height: 30px;
     justify-content: space-between;
     margin: 20px 20px 25px 20px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
   }
   .card-top > p {
     width: 114px;

@@ -1,7 +1,7 @@
 // 모집 카드
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import axios from "axios";
 import { GetMainAxois, GetMainLogin } from "../../redux/modules/Data";
@@ -12,7 +12,6 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { TbMoodKid } from "react-icons/tb";
 
 function MainScard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = localStorage.getItem("accessToken");
   const url = process.env.REACT_APP_URL;
@@ -92,47 +91,39 @@ function MainScard() {
                       )}
                     </div>
                     {/* 카드 타이틀 */}
-                    <div
-                      className="titleTwo"
-                      onClick={() => {
-                        navigate("/recruitdetail/" + item.recruitPostId);
-                      }}
-                    >
-                      <span className="spantitle">
-                        {item.title.length > 12
-                          ? item.title.slice(0, 11) + "..."
-                          : item.title}
-                      </span>
-                    </div>
+                    <Link to={`/recruitdetail/${item.recruitPostId}`}>
+                      <div className="titleTwo">
+                        <span className="spantitle">
+                          {item.title.length > 12
+                            ? item.title.slice(0, 11) + "..."
+                            : item.title}
+                        </span>
+                      </div>
 
-                    {/* 카드 내용물 */}
-                    <div
-                      className="card-bottom"
-                      onClick={() => {
-                        navigate("/recruitdetail/" + item.recruitPostId);
-                      }}
-                    >
-                      <div>
-                        <GrLocation style={{ marginRight: "8px" }} />
-                        {item.place.length > 14
-                          ? item.place.slice(0, 13) + "..."
-                          : item.place}
+                      {/* 카드 내용물 */}
+                      <div className="card-bottom">
+                        <div>
+                          <GrLocation style={{ marginRight: "8px" }} />
+                          {item.place.length > 14
+                            ? item.place.slice(0, 13) + "..."
+                            : item.place}
+                        </div>
+                        <div>
+                          <AiOutlineCalendar style={{ marginRight: "8px" }} />
+                          {item != null && item.date}
+                        </div>
+                        <div>
+                          <BiTimeFive style={{ marginRight: "8px" }} />
+                          {item != null && item.time}
+                        </div>
+                        <div>
+                          <TbMoodKid style={{ marginRight: "8px" }} />
+                          {item.age.length > 14
+                            ? item.age.slice(0, 13) + "..."
+                            : item.age}
+                        </div>
                       </div>
-                      <div>
-                        <AiOutlineCalendar style={{ marginRight: "8px" }} />
-                        {item != null && item.date}
-                      </div>
-                      <div>
-                        <BiTimeFive style={{ marginRight: "8px" }} />
-                        {item != null && item.time}
-                      </div>
-                      <div>
-                        <TbMoodKid style={{ marginRight: "8px" }} />
-                        {item.age.length > 14
-                          ? item.age.slice(0, 13) + "..."
-                          : item.age}
-                      </div>
-                    </div>
+                    </Link>
                   </div>
                 )
               );
@@ -170,6 +161,11 @@ const Container = styled.div`
     height: 30px;
     justify-content: space-between;
     margin: 20px 20px 25px 20px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
   }
   .card-top > p {
     width: 114px;

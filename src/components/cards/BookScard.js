@@ -1,7 +1,7 @@
 // 모집 카드
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import axios from "axios";
 import { GrLocation } from "react-icons/gr";
@@ -10,7 +10,6 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { TbMoodKid } from "react-icons/tb";
 
 function BookScard() {
-  const navigate = useNavigate();
   const [book, setBook] = React.useState();
   const [btn, setBtn] = React.useState(true);
   const url = process.env.REACT_APP_URL;
@@ -103,46 +102,38 @@ function BookScard() {
                   )}
                 </div>
                 {/* 카드 타이틀 */}
-                <div
-                  className="titleTwo"
-                  onClick={() => {
-                    navigate("/recruitdetail/" + item.recruitPostId);
-                  }}
-                >
-                  <span>
-                    {item.title.length > 12
-                      ? item.title.slice(0, 11) + "..."
-                      : item.title}
-                  </span>
-                </div>
-                {/* 카드 내용물 */}
-                <div
-                  className="card-bottom"
-                  onClick={() => {
-                    navigate("/recruitdetail/" + item.recruitPostId);
-                  }}
-                >
-                  <div>
-                    <GrLocation style={{ marginRight: "8px" }} />
-                    {item.place.length > 14
-                      ? item.place.slice(0, 13) + "..."
-                      : item.place}
+                <Link to={`/recruitdetail/${item.recruitPostId}`}>
+                  <div className="titleTwo">
+                    <span>
+                      {item.title.length > 12
+                        ? item.title.slice(0, 11) + "..."
+                        : item.title}
+                    </span>
                   </div>
-                  <div>
+                  {/* 카드 내용물 */}
+                  <div className="card-bottom">
                     <div>
-                      <AiOutlineCalendar style={{ marginRight: "8px" }} />
-                      {item != null && item.date}
+                      <GrLocation style={{ marginRight: "8px" }} />
+                      {item.place.length > 14
+                        ? item.place.slice(0, 13) + "..."
+                        : item.place}
                     </div>
-                    <BiTimeFive style={{ marginRight: "8px" }} />
-                    {item != null && item.time}
+                    <div>
+                      <div>
+                        <AiOutlineCalendar style={{ marginRight: "8px" }} />
+                        {item != null && item.date}
+                      </div>
+                      <BiTimeFive style={{ marginRight: "8px" }} />
+                      {item != null && item.time}
+                    </div>
+                    <div>
+                      <TbMoodKid style={{ marginRight: "8px" }} />
+                      {item.age.length > 14
+                        ? item.age.slice(0, 13) + "..."
+                        : item.age}
+                    </div>
                   </div>
-                  <div>
-                    <TbMoodKid style={{ marginRight: "8px" }} />
-                    {item.age.length > 14
-                      ? item.age.slice(0, 13) + "..."
-                      : item.age}
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })}
@@ -196,6 +187,10 @@ const Container = styled.div`
     align-items: center;
   }
 
+  a {
+    text-decoration: none;
+    color: black;
+  }
   .card-top span {
     width: 114px;
     height: 28px;

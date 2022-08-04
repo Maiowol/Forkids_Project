@@ -2,15 +2,14 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { GetMainAxois, GetMainLogin } from "../../redux/modules/Data";
 import { GrLocation } from "react-icons/gr";
 
 function MainLcard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = localStorage.getItem("accessToken");
   const url = process.env.REACT_APP_URL;
@@ -37,38 +36,32 @@ function MainLcard() {
                   key={index}
                 >
                   {/* 카드 왼쪽 '이미지' */}
-                  <div
-                    className="card-left"
-                    onClick={() => {
-                      navigate("/placedetail/" + item.placePostId);
-                    }}
-                  >
-                    <img src={item.imageUrl[0]} alt="사진" />
-                  </div>
+                  <Link to={`/placedetail/${item.placePostId}`}>
+                    <div className="card-left">
+                      <img src={item.imageUrl[0]} alt="사진" />
+                    </div>
+                  </Link>
                   {/* 카드 오른쪽 '타이틀 및 설명' */}
                   <div className="card-right">
                     <div className="title">
-                      <div
-                        className="titleBox"
-                        onClick={() => {
-                          navigate("/placedetail/" + item.placePostId);
-                        }}
-                      >
-                        <div className="threebox">
-                          <span className="threeTitle">
-                            {item.title.length > 8
-                              ? item.title.slice(0, 7) + "..."
-                              : item.title}
-                          </span>
-                          <span>
-                            <FaStar
-                              size={28}
-                              style={{ color: "#FFBA5A", marginLeft: "5px" }}
-                            />
-                          </span>
-                          <span className="threeStar">{item.star}점</span>
+                      <Link to={`/placedetail/${item.placePostId}`}>
+                        <div className="titleBox">
+                          <div className="threebox">
+                            <span className="threeTitle">
+                              {item.title.length > 8
+                                ? item.title.slice(0, 7) + "..."
+                                : item.title}
+                            </span>
+                            <span>
+                              <FaStar
+                                size={28}
+                                style={{ color: "#FFBA5A", marginLeft: "5px" }}
+                              />
+                            </span>
+                            <span className="threeStar">{item.star}점</span>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                       <div>
                         {item.bookmarkStatus === true ? (
                           <BsFillBookmarkFill
@@ -117,45 +110,32 @@ function MainLcard() {
                         )}
                       </div>
                     </div>
-                    <div
-                      className="atag"
-                      onClick={() => {
-                        navigate("/placedetail/" + item.placePostId);
-                      }}
-                    >
-                      <GrLocation
-                        style={{
-                          marginBottom: "3px",
-                          marginRight: "3px",
-                        }}
-                      />
-                      {item.region.length > 27
-                        ? item.region.slice(0, 26) + "..."
-                        : item.region}
-                    </div>
-                    <div
-                      className="profile_box"
-                      onClick={() => {
-                        navigate("/placedetail/" + item.placePostId);
-                      }}
-                    >
-                      <div className="detail_profile">
-                        <img src={item.profileUrl} alt="프로필" />
+                    <Link to={`/placedetail/${item.placePostId}`}>
+                      <div className="atag">
+                        <GrLocation
+                          style={{
+                            marginBottom: "3px",
+                            marginRight: "3px",
+                          }}
+                        />
+                        {item.region.length > 27
+                          ? item.region.slice(0, 26) + "..."
+                          : item.region}
                       </div>
-                      <strong>{item.nickname}</strong>
-                    </div>
-                    <div
-                      className="content"
-                      onClick={() => {
-                        navigate("/placedetail/" + item.placePostId);
-                      }}
-                    >
-                      <span>
-                        {item.content.length > 90
-                          ? item.content.slice(0, 90) + "..."
-                          : item.content}
-                      </span>
-                    </div>
+                      <div className="profile_box">
+                        <div className="detail_profile">
+                          <img src={item.profileUrl} alt="프로필" />
+                        </div>
+                        <strong>{item.nickname}</strong>
+                      </div>
+                      <div className="content">
+                        <span>
+                          {item.content.length > 90
+                            ? item.content.slice(0, 90) + "..."
+                            : item.content}
+                        </span>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               )
@@ -191,6 +171,11 @@ const Container = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
     cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
   }
 
   .threebox {
