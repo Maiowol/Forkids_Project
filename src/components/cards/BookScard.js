@@ -11,30 +11,26 @@ import { TbMoodKid } from "react-icons/tb";
 
 function BookScard() {
   const navigate = useNavigate();
-  const [book, setbook] = React.useState();
-  const [btn, setbtn] = React.useState(true);
+  const [book, setBook] = React.useState();
+  const [btn, setBtn] = React.useState(true);
   const url = process.env.REACT_APP_URL;
 
-  const refetch = () =>{
+  const refetch = () => {
     axios
-    .get(`${url}/api/mypage/bookmark/`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((res) => {
-      setbook(res.data.recruitBookmarkList.slice(0, 6));
-    })
-    .catch((err) => {
-    });
-  }
+      .get(`${url}/api/mypage/bookmark/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        setBook(res.data.recruitBookmarkList.slice(0, 6));
+      })
+      .catch((err) => {});
+  };
 
-
-  
   React.useEffect(() => {
-    refetch()
+    refetch();
   }, []);
-
 
   const recruitsMore = async () => {
     await axios
@@ -44,10 +40,10 @@ function BookScard() {
         },
       })
       .then((res) => {
-        setbtn(!btn);
+        setBtn(!btn);
         btn
-          ? setbook(res.data.recruitBookmarkList)
-          : setbook(res.data.recruitBookmarkList.slice(0, 6));
+          ? setBook(res.data.recruitBookmarkList)
+          : setBook(res.data.recruitBookmarkList.slice(0, 6));
       });
   };
 
@@ -78,8 +74,7 @@ function BookScard() {
                             }
                           )
                           .then((res) => {
-           
-                            refetch()
+                            refetch();
                           });
                       }}
                     />
@@ -101,7 +96,7 @@ function BookScard() {
                             }
                           )
                           .then((res) => {
-                            refetch()
+                            refetch();
                           });
                       }}
                     />
@@ -114,7 +109,11 @@ function BookScard() {
                     navigate("/recruitdetail/" + item.recruitPostId);
                   }}
                 >
-                  <span>{item.title.length > 12 ? item.title.slice(0,11) + '...' : item.title}</span>
+                  <span>
+                    {item.title.length > 12
+                      ? item.title.slice(0, 11) + "..."
+                      : item.title}
+                  </span>
                 </div>
                 {/* 카드 내용물 */}
                 <div
@@ -123,18 +122,26 @@ function BookScard() {
                     navigate("/recruitdetail/" + item.recruitPostId);
                   }}
                 >
-                <div>          
-                  <GrLocation style={{marginRight:"8px"}}/>
-                  {item.place.length > 14 ? item.place.slice(0,13) + '...' : item.place}</div>
                   <div>
+                    <GrLocation style={{ marginRight: "8px" }} />
+                    {item.place.length > 14
+                      ? item.place.slice(0, 13) + "..."
+                      : item.place}
+                  </div>
                   <div>
-                    <AiOutlineCalendar style={{marginRight:"8px"}}/>
-                  {item != null && item.date}</div>
-                  <BiTimeFive style={{marginRight:"8px"}}/>
-                  {item != null && item.time}</div>
+                    <div>
+                      <AiOutlineCalendar style={{ marginRight: "8px" }} />
+                      {item != null && item.date}
+                    </div>
+                    <BiTimeFive style={{ marginRight: "8px" }} />
+                    {item != null && item.time}
+                  </div>
                   <div>
-                    <TbMoodKid style={{marginRight:"8px"}}/>
-                    {item.age.length > 14 ? item.age.slice(0,13) + '...' : item.age}</div>
+                    <TbMoodKid style={{ marginRight: "8px" }} />
+                    {item.age.length > 14
+                      ? item.age.slice(0, 13) + "..."
+                      : item.age}
+                  </div>
                 </div>
               </div>
             );
@@ -145,7 +152,7 @@ function BookScard() {
           {btn ? "더보기" : "닫기"}
         </button>
       </div>
-      <hr className="BookHr"/>
+      <hr className="BookHr" />
     </>
   );
 }
@@ -163,7 +170,7 @@ const Container = styled.div`
     background: white;
     border-radius: 20px;
     border: none;
-    border: 1px solid #A8A8A8;
+    border: 1px solid #a8a8a8;
   }
   .card-top {
     display: flex;
@@ -178,31 +185,31 @@ const Container = styled.div`
     background-color: #a8a8a8;
     border: 1px solid #a8a8a8;
     border-radius: 20px;
-    color: #FFFFFF;
-    font-family: 'NanumGothic';
+    color: #ffffff;
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
     line-height: 18px;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
   }
 
   .card-top span {
     width: 114px;
     height: 28px;
-    background: #F4B03E;
-    border: 1px solid #F4B03E;
+    background: #f4b03e;
+    border: 1px solid #f4b03e;
     border-radius: 30px;
-    color: #FFFFFF;
-    font-family: 'NanumGothic';
+    color: #ffffff;
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
     line-height: 18px;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
   }
 
@@ -219,7 +226,7 @@ const Container = styled.div`
     width: 234px;
     height: 23px;
     cursor: pointer;
-    font-family: 'NanumGothic';
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -234,14 +241,14 @@ const Container = styled.div`
   }
   .card-bottom div {
     margin-bottom: 8px;
-    font-family: 'NanumGothic';
+    font-family: "NanumGothic";
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 18px;
   }
 
-  .card-bottom > div > img{
+  .card-bottom > div > img {
     margin-right: 8px;
   }
   .checkIcon {

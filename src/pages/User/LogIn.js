@@ -12,15 +12,13 @@ import { Link } from "react-router-dom";
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>;
 
 function LogIn() {
-
   const [email, setEmail] = useState("");
   const [password, setPw] = useState("");
   const navigate = useNavigate();
 
   const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-  const url = process.env.REACT_APP_URL
-
+  const url = process.env.REACT_APP_URL;
 
   //카카오톡 로그인
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -42,7 +40,7 @@ function LogIn() {
           text: `로그인이 완료되었습니다!`,
           icon: "success",
           confirmButtonText: "확인",
-          confirmButtonColor: '#ffb300'
+          confirmButtonColor: "#ffb300",
         }).then((result) => {
           if (result.isConfirmed) {
             navigate("/");
@@ -50,7 +48,7 @@ function LogIn() {
         });
         localStorage.setItem("profileUrl", response.data.profileUrl);
         localStorage.setItem("accessToken", response.data.accessToken);
-        localStorage.setItem('nickname', response.data.nickname)
+        localStorage.setItem("nickname", response.data.nickname);
       })
       .catch((error) => {
         alert("로그인을 다시 해주세요");
@@ -63,7 +61,12 @@ function LogIn() {
       <Header />
       <BackGround>
         <Grid height="100vh" overflowY="hidden">
-          <Grid maxWidth="1440px" height="100%" margin="0 auto" padding="0 12px">
+          <Grid
+            maxWidth="1440px"
+            height="100%"
+            margin="0 auto"
+            padding="0 12px"
+          >
             <Box>
               <Container>
                 <Grid height="700px">
@@ -110,14 +113,14 @@ function LogIn() {
                           <FormSeperator>OR</FormSeperator>
                         </Grid>
                         <Grid margin="32px 0 0 0" height="auto" align="center">
-                          <SocialLogin
-                            onClick={kakaoURL}
-                          >
+                          <SocialLogin onClick={kakaoURL}>
                             <RiKakaoTalkFill size="30" />
-                            <p style={{
-                              fontFamily: 'Nanum Gothic',
-                              fontWeight: "700"
-                            }}>
+                            <p
+                              style={{
+                                fontFamily: "Nanum Gothic",
+                                fontWeight: "700",
+                              }}
+                            >
                               Login with Kakao
                             </p>
                           </SocialLogin>
@@ -146,7 +149,7 @@ function LogIn() {
 }
 
 const Container = styled.div`
-  font-family: "Nanum Gothic"; 
+  font-family: "Nanum Gothic";
   width: 100%;
   height: 100%;
   display: flex;
@@ -157,7 +160,7 @@ const Container = styled.div`
   .has-error {
     .form-label {
       color: #e25c3d;
-      font-family: 'Nanum Gothic', sans-serif;
+      font-family: "Nanum Gothic", sans-serif;
       font-weight: 700;
     }
     .form-input {
@@ -174,30 +177,30 @@ const Container = styled.div`
 `;
 
 const BackGround = styled.div`
-background: #FAFAFA;
-padding-bottom: 100px;
+  background: #fafafa;
+  padding-bottom: 100px;
 `;
 
 const Box = styled.div`
-width: 550px;
-height: 650px;
+  width: 550px;
+  height: 650px;
 
-background: white;
+  background: white;
 
-margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
-margin-top: 80px;
-margin-bottom: 32px;
-display: flex;
-flex-direction: column;
+  margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
+  margin-top: 80px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
 
-border: 1px solid lightgray;
-border-radius: 10px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
 `;
 
 const LoginTitle = styled.h1`
   font-size: 28px;
   margin: 0 0 8px 0;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 700;
 `;
 
@@ -221,7 +224,7 @@ const SocialLogin = styled.a`
   p {
     margin-top: 3px;
   }
-  
+
   svg {
     margin-right: 8px;
   }
@@ -239,7 +242,7 @@ const FormSeperator = styled.p`
   text-align: center;
   margin-top: 20px;
   margin-bottom: -12px;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 800;
 `;
 
@@ -258,7 +261,7 @@ const FormGroup = styled.div`
     margin-bottom: 6px;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: "Nanum Gothic", sans-serif;
     font-weight: 700;
   }
 
@@ -280,14 +283,14 @@ const FormGroup = styled.div`
     box-sizing: border-box;
 
     &:focus {
-      border: 1px solid #F4B03E;
+      border: 1px solid #f4b03e;
       outline: none;
     }
 
     ::placeholder {
       font-size: 15px;
-      color: #A8A8A8;
-    } 
+      color: #a8a8a8;
+    }
   }
 `;
 
@@ -318,7 +321,7 @@ const JoinLink = styled.a`
     opacity 0.1s ease-in-out;
   cursor: pointer;
   text-decoration: none;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 700;
 
   &:hover {

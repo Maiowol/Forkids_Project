@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ChatIcon from '../../components/main/ChatIcon'
 import Header from "../../components/main/Header";
 import RCard from "../../components/cards/RCard";
-import bottle from '../../images/bottle.png';
+import bottle from "../../images/bottle.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -67,7 +67,7 @@ const Container = styled.div`
   }
 
   .card_box {
-    background: #FAFAFA;
+    background: #fafafa;
   }
 
   .button {
@@ -99,7 +99,7 @@ const Title = styled.p`
   font-weight: 750;
   margin-bottom: 0px;
   color: #6b4e16;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 800;
 `;
 
@@ -110,7 +110,7 @@ const SubTitle = styled.p`
   color: #3c3c3c;
   margin-bottom: 20px;
   padding-top: 15px;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 700;
 `;
 
