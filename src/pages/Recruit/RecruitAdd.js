@@ -12,7 +12,7 @@ import Footer from "../../components/main/Footer";
 import ChatIcon from '../../components/main/ChatIcon'
 import moment from 'moment';
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const RecruitAdd = () => {
   const navigate = useNavigate();
@@ -175,11 +175,11 @@ const RecruitAdd = () => {
                     예) 아이 연령대 및 성향, 육아 스타일, 이동수단, 최소 인원, 준비물, 예상 금액 등"
                     />
                   <Btn>
-                  <a href="/recruit">
-                    <button className="cancel">
+                    <Link to="/recruit">
+                       <button className="cancel">
                       취소
                     </button>
-                    </a>
+                    </Link>
                     <button className="btn"
                       onClick={addPost}
                       >
