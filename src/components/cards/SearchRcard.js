@@ -1,13 +1,10 @@
 // 육아템 리뷰 카드
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { MdOutlinePlace } from "react-icons/md";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import { GrLocation } from "react-icons/gr";
 
 function SearchRcard({ searchdata }) {
-  const navigate = useNavigate();
   const [btn, setbtn] = React.useState(true);
   const [athis, setathis] = React.useState(6);
 
@@ -31,28 +28,20 @@ function SearchRcard({ searchdata }) {
                   <div className="cardInto">
                     <div className="FirsBookBox">
                       <div className="FirstIn">
-                        <div>
-                          <span
-                            className="titleCard"
-                            onClick={() => {
-                              navigate("/reviewdetail/" + data.reviewPostId);
-                            }}
-                          >
-                            {data.title.length > 8
-                              ? data.title.slice(0, 6) + "..."
-                              : data.title}
-                          </span>
-                          <span
-                            className="titleStar"
-                            onClick={() => {
-                              navigate("/reviewdetail/" + data.reviewPostId);
-                            }}
-                          >
-                            {data.productType.length > 5
-                              ? data.productType.slice(0, 4)
-                              : data.productType}
-                          </span>
-                        </div>
+                        <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                          <div>
+                            <span className="titleCard">
+                              {data.title.length > 8
+                                ? data.title.slice(0, 6) + "..."
+                                : data.title}
+                            </span>
+                            <span className="titleStar">
+                              {data.productType.length > 5
+                                ? data.productType.slice(0, 4)
+                                : data.productType}
+                            </span>
+                          </div>
+                        </Link>
                       </div>
 
                       <div className="BookRegion">
@@ -66,52 +55,34 @@ function SearchRcard({ searchdata }) {
                           ? data.url.slice(0, 14) + "..."
                           : data.url}
                       </div>
-
-                      <div
-                        className="image"
-                        onClick={() => {
-                          navigate("/reviewdetail/" + data.reviewPostId);
-                        }}
-                      >
-                        <img src={data.imageUrl[0]} alt="사진" />
-                      </div>
+                      <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                        <div className="image">
+                          <img src={data.imageUrl[0]} alt="사진" />
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
+                <Link to={`/reviewdetail/${data.reviewPostId}`}>
+                  <div className="SecondCard">
+                    <div className="SecondIn">
+                      <span>
+                        <img
+                          src={data.profileUrl}
+                          alt="프로필 이미지"
+                          className="BookProfileImg"
+                        />
+                      </span>
+                      <span className="BookmarkNi">{data.nickname}</span>
+                    </div>
 
-                <div
-                  className="SecondCard"
-                  onClick={() => {
-                    navigate("/reviewdetail/" + data.reviewPostId);
-                  }}
-                >
-                  <div
-                    className="SecondIn"
-                    onClick={() => {
-                      navigate("/reviewdetail/" + data.reviewPostId);
-                    }}
-                  >
-                    <span>
-                      <img
-                        src={data.profileUrl}
-                        alt="프로필 이미지"
-                        className="BookProfileImg"
-                      />
-                    </span>
-                    <span className="BookmarkNi">{data.nickname}</span>
+                    <div className="content">
+                      {data.content.length > 17
+                        ? data.content.slice(0, 15) + "..."
+                        : data.content}
+                    </div>
                   </div>
-
-                  <div
-                    className="content"
-                    onClick={() => {
-                      navigate("/reviewdetail/" + data.placePostId);
-                    }}
-                  >
-                    {data.content.length > 17
-                      ? data.content.slice(0, 15) + "..."
-                      : data.content}
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })}
@@ -271,9 +242,6 @@ const Container = styled.div`
     cursor: pointer;
   }
 
-  a {
-    margin-left: 51px;
-  }
   .card-body {
     width: 264.43px;
     height: 274px;

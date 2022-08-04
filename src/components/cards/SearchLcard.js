@@ -1,16 +1,13 @@
 // 육아템 리뷰 카드
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 function SearchLcard({ searchdata }) {
-  const navigate = useNavigate();
   const [btn, setbtn] = useState(false);
   const [athis, setathis] = React.useState(6);
-  const url = process.env.REACT_APP_URL;
 
   const SearchMore = () => {
     setbtn(!btn);
@@ -32,30 +29,22 @@ function SearchLcard({ searchdata }) {
                   <div className="cardInto">
                     <div className="FirsBookBox">
                       <div className="FirstIn">
-                        <div>
-                          <span
-                            className="titleCard"
-                            onClick={() => {
-                              navigate("/placedetail/" + data.placePostId);
-                            }}
-                          >
-                            {data.title.length > 8
-                              ? data.title.slice(0, 6) + "..."
-                              : data.title}
-                          </span>
-                          <span
-                            className="titleStar"
-                            onClick={() => {
-                              navigate("/placedetail/" + data.placePostId);
-                            }}
-                          >
-                            <FaStar
-                              size={28}
-                              style={{ color: "#FFBA5A", marginLeft: "5px" }}
-                            />
-                            {data.star}점
-                          </span>
-                        </div>
+                        <Link to={`/placedetail/${data.placePostId}`}>
+                          <div>
+                            <span className="titleCard">
+                              {data.title.length > 8
+                                ? data.title.slice(0, 6) + "..."
+                                : data.title}
+                            </span>
+                            <span className="titleStar">
+                              <FaStar
+                                size={28}
+                                style={{ color: "#FFBA5A", marginLeft: "5px" }}
+                              />
+                              {data.star}점
+                            </span>
+                          </div>
+                        </Link>
                       </div>
 
                       <div className="BookRegion" id={data.placePostId}>
@@ -69,57 +58,35 @@ function SearchLcard({ searchdata }) {
                           ? data.region.slice(0, 19) + ".."
                           : data.region}
                       </div>
-
-                      <div
-                        className="image"
-                        id={data.placePostId}
-                        onClick={() => {
-                          navigate("/placedetail/" + data.placePostId);
-                        }}
-                      >
-                        <img src={data.imageUrl[0]} alt="사진" />
-                      </div>
+                      <Link to={`/placedetail/${data.placePostId}`}>
+                        <div className="image" id={data.placePostId}>
+                          <img src={data.imageUrl[0]} alt="사진" />
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
+                <Link to={`/placedetail/${data.placePostId}`}>
+                  <div className="SecondCard" id={data.placePostId}>
+                    <div className="SecondIn" id={data.placePostId}>
+                      <span>
+                        <img
+                          src={data.profileUrl}
+                          alt="프로필 이미지"
+                          className="BookProfileImg"
+                          id={data.placePostId}
+                        />
+                      </span>
+                      <span className="BookmarkNi">{data.nickname}</span>
+                    </div>
 
-                <div
-                  className="SecondCard"
-                  id={data.placePostId}
-                  onClick={() => {
-                    navigate("/placedetail/" + data.placePostId);
-                  }}
-                >
-                  <div
-                    className="SecondIn"
-                    id={data.placePostId}
-                    onClick={() => {
-                      navigate("/placedetail/" + data.placePostId);
-                    }}
-                  >
-                    <span>
-                      <img
-                        src={data.profileUrl}
-                        alt="프로필 이미지"
-                        className="BookProfileImg"
-                        id={data.placePostId}
-                      />
-                    </span>
-                    <span className="BookmarkNi">{data.nickname}</span>
+                    <div className="content" id={data.placePostId}>
+                      {data.content.length > 17
+                        ? data.content.slice(0, 15) + "..."
+                        : data.content}
+                    </div>
                   </div>
-
-                  <div
-                    className="content"
-                    id={data.placePostId}
-                    onClick={() => {
-                      navigate("/placedetail/" + data.placePostId);
-                    }}
-                  >
-                    {data.content.length > 17
-                      ? data.content.slice(0, 15) + "..."
-                      : data.content}
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })}
@@ -279,9 +246,6 @@ const Container = styled.div`
     cursor: pointer;
   }
 
-  a {
-    margin-left: 51px;
-  }
   .card-body {
     width: 264.43px;
     height: 274px;
