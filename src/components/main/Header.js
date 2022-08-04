@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GetMyPageAxios } from "../../redux/modules/Data";
 import search from '../../images/search.png'
+import { Link } from "react-router-dom";
 
 const Header = () => {
 
@@ -53,65 +54,63 @@ const Header = () => {
 
       {!UserCheck ? (
         <Headers>
-          <a className="logo_container"
-            href="/">
-            <div className="logo_img">
+
+          <Link to="/"
+            className="logo_container"><div className="logo_img">
               <img src={logo} alt="로고" />
             </div>
             <div className="logo">모두의 육아</div>
-          </a>
+            </Link>
 
           {/* 메뉴 리스트 */}
           <ul className="header__menulist">
-            <a href="/recruit">체험 모집</a>
-            <a href="/place"
-              className="list">장소 추천</a>
-            <a href="/review">육아템 리뷰</a>
+            <Link to="/recruit">체험 모집</Link>
+            <Link to="/place"
+              className="list">장소 추천</Link>
+            <Link to="/review">육아템 리뷰</Link>
           </ul>
 
           {/* User 메뉴 리스트 */}
           <ul className="header__right">
             <li className="bell">
-              <a href="/api/search">
-                <img src={search} alt="검색" className="searchiconlogin" />
-              </a>
+              <Link to="/api/search">
+                <img src={search} alt="검색" 
+                className="searchiconlogin" />
+                </Link>
             </li>
             <li className="Login">
-              <a href="/Login">로그인</a>
-            </li>
-            <li className="LogoOut">
-              <a href="/Signup">회원가입</a>
+            <Link to="/Login">로그인</Link>
             </li>
           </ul>
         </Headers>
 
       ) : (
-        
+
         // 로그인 했을 때의 헤더 ==============================================================================
 
         <Headers>
-          <a className="logo_container"
-            href="/">
-            <div className="logo_img">
+           <Link to="/"
+            className="logo_container"><div className="logo_img">
               <img src={logo} alt="로고" />
             </div>
             <div className="logo">모두의 육아</div>
-          </a>
+            </Link>
 
           {/* 메뉴 리스트 */}
           <ul className="header__menulist">
-            <a href="/recruit">체험 모집</a>
-            <a href="/place"
-              className="list">장소 추천</a>
-            <a href="/review">육아템 리뷰</a>
+            <Link to="/recruit">체험 모집</Link>
+            <Link to="/place"
+              className="list">장소 추천</Link>
+            <Link to="/review">육아템 리뷰</Link>
           </ul>
 
           {/* User 메뉴 리스트 */}
           <ul className="header__right">
             <li className="bell">
-              <a href="/api/search">
-                <img src={search} alt="검색" className="searchicon" />
-              </a>
+            <Link to="/api/search">
+                <img src={search} alt="검색" 
+                className="searchiconlogin" />
+                </Link>
             </li>
             <li className="profile">
               <img src={Profile} alt="프로필" />
@@ -120,10 +119,10 @@ const Header = () => {
               <input type="checkbox" id="answer01" />
               <label htmlFor="answer01">
                 <div className="nickname">
-                   <p>{nickname}</p>
-                <em>
-                  <HiChevronDown className="DownDrop"></HiChevronDown>
-                </em>
+                  <p>{nickname}</p>
+                  <em>
+                    <HiChevronDown className="DownDrop"></HiChevronDown>
+                  </em>
                 </div>
               </label>
               <div className="menu animate__animated animate__fadeInUp">
@@ -389,6 +388,7 @@ const Headers = styled.div`
     display: flex;
     align-items: center;
     margin-top: 16px;
+    margin-right: 80px;
   }
 
   .header__right div {
