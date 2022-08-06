@@ -115,21 +115,21 @@
 
 |  이름 | 사용 이유  | 버전  |
 |---|---|---|
-|  react-daum-postcode | 주소 검색  |  3.1.1  |
 |  axios | 서버 & 클라이언트 데이터통신  |  0.27.2 |
 |  animate.css |  애니메이션 효과 | 4.1.1  |
+|  react-daum-postcode | 주소 검색  |  3.1.1  |
 |  react-scroll-to-bottom | 채팅창 스크롤 자동하단  | 4.2.0  |
 |  react-redux |  전역 상태 관리 | 8.0.2 |
 |  redux-thunk | 비동기 통신 미들웨어  | 2.4.1  |
 |  react-toastify |  토스트 알림 기능 |  8.2.0 |
 |  socket.io-client |  실시간 채팅 기능 | 4.5.1 |
-| sweetalert2  |  디자인 된 알림창 | 11.4.23 |
-| react-modal  | 모달창 띄우기  |  3.15.1 |
-| react-datepicker  |  달력 띄우기 | 4.8.0  |
-| react-infinite-scroll-component  |  무한 스크롤 구현 | 6.1.0  |
-| styled-components  | 스타일 css  |  5.3.5 |
-| react-router-dom  |  라우터 |  6.3.0 |
-| react-icons  |  리액트 아이콘 |  4.4.0 |
+|  sweetalert2  |  디자인 된 알림창 | 11.4.23 |
+|  react-modal  | 모달창 띄우기  |  3.15.1 |
+|  react-datepicker  |  달력 띄우기 | 4.8.0  |
+|  react-infinite-scroll-component  |  무한 스크롤 구현 | 6.1.0  |
+|  styled-components  | 스타일 css  |  5.3.5 |
+|  react-router-dom  |  라우터 |  6.3.0 |
+|  react-icons  |  리액트 아이콘 |  4.4.0 |
 |  react-device-detect | 모바일 감지 | 2.2.2  |
 </div>
 </details>
