@@ -6,7 +6,7 @@ const { kakao } = window;
 const url = process.env.REACT_APP_URL;
 
 const KakaoMap = () => {
-  const [Places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState([]);
   const { placePostId } = useParams();
   const container = useRef(null);
 
@@ -36,7 +36,7 @@ const KakaoMap = () => {
     // console.log(geocoder)
 
     // 주소로 좌표를 검색
-    geocoder.addressSearch(`${Places.region}`, function (result, status) {
+    geocoder.addressSearch(`${places.region}`, function (result, status) {
      
       if (status === kakao.maps.services.Status.OK) {
         console.log(result);
@@ -54,7 +54,7 @@ const KakaoMap = () => {
         var infowindow = new kakao.maps.InfoWindow({
           content:
             '<div style="width:150px;text-align:center;padding:6px 0;font-family:Nanum Gothic;font-weight:700px;">' +
-            Places.location +
+            places.location +
             "</div>",
         });
         infowindow.open(map, marker);
@@ -64,7 +64,7 @@ const KakaoMap = () => {
     });
   });
 
-  if (!Places) {
+  if (!places) {
     return <div></div>;
   }
 
