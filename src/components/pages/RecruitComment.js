@@ -54,11 +54,16 @@ const RecruitComment = () => {
 
   const refetch = () => {
     axios
-      .get(`${url}/api/recruits/` + recruitPostId, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      .get(
+        `${url}/api/recruits/` + recruitPostId,
+        token
+          ? {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          : null
+      )
       .then((res) => {
         console.log(res.data);
         setState(res.data.recruitComments);

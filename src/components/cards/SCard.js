@@ -16,7 +16,7 @@ function SCard() {
   const [index, setindex] = useState(1);
   const token = localStorage.getItem("accessToken");
   const url = process.env.REACT_APP_URL;
-
+  const [test, settest] = useState();
   // 페이지 로드될 때 서버 데이터 요청
   React.useEffect(() => {
     axios
@@ -31,6 +31,8 @@ function SCard() {
           : null
       )
       .then((res) => {
+        console.log(res.data.recruitPosts);
+        settest(res.data.recruitPosts);
         let data = res.data.recruitPosts.slice(0, 3);
         setData([...data]);
       });
@@ -134,7 +136,10 @@ function SCard() {
                               }
                             )
                             .then((res) => {
-                              refetch();
+                              console.log(res);
+                              let copy = [...test];
+                              copy[idx].bookmarkStatus = false;
+                              settest(copy);
                             });
                         }}
                       />
@@ -156,7 +161,11 @@ function SCard() {
                               }
                             )
                             .then((res) => {
-                              refetch();
+                              console.log(res);
+                              let copy = [...test];
+                              copy[idx].bookmarkStatus = true;
+                              settest(copy);
+                              console.log(copy == test);
                             });
                         }}
                       />
